@@ -20,9 +20,18 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("USER")
+  position_x     Float?
+  position_y     Float?
 
   tokens   Token[]
   sessions Session[]
+
+  createdList           Shoppinglist[] @relation("createdList")
+  acceptedList          Shoppinglist[] @relation("acceptedList")
+  sentMessages          Message[]      @relation("sentMessage")
+  receivedMessages      Message[]      @relation("receivedMessage")
+  receivedAdminMessages AdminMessage[] @relation("receivedAdminMessage")
+
 }
 
 model Session {
@@ -55,6 +64,51 @@ model Token {
   userId Int
 
   @@unique([hashedToken, type])
+}
+
+model Shoppinglist {
+  id      Int    @id @default(autoincrement())
+  store   String
+  comment String
+  status  Int
+
+  createdBy  User  @relation("createdList", fields: [creatorId], references: [id])
+  creatorId  Int
+  acceptedBy User? @relation("acceptedList", fields: [acceptorId], references: [id])
+  acceptorId Int?
+
+  items Item[] @relation("includedItems")
+
+}
+
+model Item {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  listedIn Shoppinglist @relation("includedItems", fields: [listId], references: [id])
+  listId   Int
+}
+
+model Message {
+  id      Int      @id @default(autoincrement())
+  sendAt  DateTime
+  content String
+
+  sentFrom   User @relation("sentMessage", fields: [sentFromId], references: [id])
+  sentFromId Int
+
+  sentTo   User @relation("receivedMessage", fields: [sendToId], references: [id])
+  sendToId Int
+}
+
+model AdminMessage {
+  id      Int      @id @default(autoincrement())
+  sentAt  DateTime
+  Content String
+
+
+  sentTo   User @relation("receivedAdminMessage", fields: [sendToId], references: [id])
+  sendToId Int
 }
 
 // NOTE: It's highly recommended to use an enum for the token type

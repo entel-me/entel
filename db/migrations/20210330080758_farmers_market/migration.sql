@@ -1,0 +1,43 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN "position_x" REAL;
+ALTER TABLE "User" ADD COLUMN "position_y" REAL;
+
+-- CreateTable
+CREATE TABLE "Shoppinglist" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "store" TEXT NOT NULL,
+    "comment" TEXT NOT NULL,
+    "status" INTEGER NOT NULL,
+    "creatorId" INTEGER NOT NULL,
+    "acceptorId" INTEGER,
+    FOREIGN KEY ("creatorId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY ("acceptorId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Item" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "listId" INTEGER NOT NULL,
+    FOREIGN KEY ("listId") REFERENCES "Shoppinglist" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Message" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "sendAt" DATETIME NOT NULL,
+    "content" TEXT NOT NULL,
+    "sentFromId" INTEGER NOT NULL,
+    "sendToId" INTEGER NOT NULL,
+    FOREIGN KEY ("sentFromId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY ("sendToId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "AdminMessage" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "sentAt" DATETIME NOT NULL,
+    "Content" TEXT NOT NULL,
+    "sendToId" INTEGER NOT NULL,
+    FOREIGN KEY ("sendToId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
