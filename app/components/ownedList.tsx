@@ -2,6 +2,8 @@ import {
   Container,
   Box,
   Flex,
+  List,
+  ListIcon,
   Heading,
   ListItem,
   Text,
@@ -9,15 +11,22 @@ import {
   UnorderedList,
   Link,
 } from "@chakra-ui/react"
-import { EditIcon, ChatIcon } from "@chakra-ui/icons"
+import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
 
 interface OwnedListProps {
   marketName: String
   itemsList: String[]
   status: Number
   acceptedName?: String
+  specialWish?: String
 }
-export default function OwnedList({ marketName, itemsList, status, acceptedName }: OwnedListProps) {
+export default function OwnedList({
+  marketName,
+  itemsList,
+  status,
+  acceptedName,
+  specialWish,
+}: OwnedListProps) {
   let statusBadge
   if (status == 1) {
     statusBadge = <Badge colorScheme="green">in progress</Badge>
@@ -45,14 +54,22 @@ export default function OwnedList({ marketName, itemsList, status, acceptedName 
             return <ListItem>{item}</ListItem>
           })}
         </UnorderedList>
-        {status == 1 && (
-          <Text>
-            ~angenommen von {acceptedName}{" "}
-            <Link href="/">
-              <ChatIcon />
-            </Link>
-          </Text>
-        )}
+        <List>
+          {specialWish && (
+            <ListItem>
+              <ListIcon as={InfoIcon} /> {specialWish}
+            </ListItem>
+          )}
+          {status == 1 && (
+            <ListItem>
+              <ListIcon as={InfoIcon} />
+              angenommen von <b>{acceptedName}</b>{" "}
+              <Link href="/">
+                <ChatIcon />
+              </Link>
+            </ListItem>
+          )}
+        </List>
       </Box>
       <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
         {statusBadge}

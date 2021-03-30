@@ -1,5 +1,5 @@
 {
-  "name": "testApp",
+  "name": "farmers-market",
   "version": "1.0.0",
   "scripts": {
     "dev": "blitz dev",
