@@ -66,7 +66,7 @@ export default function AcceptedList({
             <InfoIcon /> {specialWish}
           </Text>
         )}
-        <Button marginTop="0.5rem" onClick={() => doneListMutation(listId)}>
+        <Button marginTop="0.5rem" onClick={async () => doneListMutation(listId)}>
           {" "}
           Done{" "}
         </Button>

@@ -56,7 +56,7 @@ export default function PublicList({
         </Flex>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
-        <Flex justifyContent="süpace-between" flexDirection="column">
+        <Flex justifyContent="space-between" flexDirection="column">
           <Divider height="0.25rem" color="black" />
           <UnorderedList>
             {itemsList.map((item) => {
@@ -68,7 +68,7 @@ export default function PublicList({
               <InfoIcon /> {specialWish}
             </Text>
           )}
-          <Button marginTop="0.5rem" onClick={() => acceptListMutation(listId)}>
+          <Button marginTop="0.5rem" onClick={async () => acceptListMutation(listId)}>
             {" "}
             Accept{" "}
           </Button>

@@ -6,6 +6,7 @@ import {
   AuthorizationError,
   ErrorFallbackProps,
 } from "blitz"
+import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
@@ -26,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
           queryCache.resetErrorBoundaries()
         }}
       >
-        {getLayout(<Component {...pageProps} />)}
+        <Suspense fallback="Loading ...">{getLayout(<Component {...pageProps} />)}</Suspense>
       </ErrorBoundary>
     </ChakraProvider>
   )

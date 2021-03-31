@@ -89,7 +89,7 @@ export default function OwnedList({
         </Flex>
       </Flex>
       {status == 2 && (
-        <Button marginTop="0.5rem" onClick={() => renewListMutation(listId)}>
+        <Button marginTop="0.5rem" onClick={async () => renewListMutation(listId)}>
           Renew
         </Button>
       )}

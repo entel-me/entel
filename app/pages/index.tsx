@@ -1,271 +1,163 @@
 import { Suspense } from "react"
-import { Link, BlitzPage, useMutation } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import { BlitzPage, useMutation } from "blitz"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import logout from "app/auth/mutations/logout"
 
+import {
+  Flex,
+  Wrap,
+  WrapItem,
+  Heading,
+  Link,
+  VStack,
+  Text,
+  Button,
+  HStack,
+  Box,
+  Center,
+} from "@chakra-ui/react"
+import { IconButton, SlideFade, useDisclosure } from "@chakra-ui/react"
+import { SettingsIcon } from "@chakra-ui/icons"
+import Layout from "../components/layout"
+import { useQuery } from "blitz"
+import getOwnListByStatus from "../queries/getMyLists"
+import OwnedList from "../components/ownedList"
+import PublicList from "../components/publicList"
+import getAvailableLists from "../queries/getAvailableLists"
+import getPosition from "../queries/getPositionOfUser"
+import { useState } from 'react';
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
 
-const UserInfo = () => {
-  const currentUser = useCurrentUser()
-  const [logoutMutation] = useMutation(logout)
+function pythagoras(x1, y1, x2, y2){
+  return Math.sqrt((x1-x2)**2 + (y1-y2)**2)
+}// Bin auch für kleine Königstieger ;)
 
+const Home: BlitzPage = () => {
+  const currentUser = useCurrentUser()
+  const { isOpen, onToggle } = useDisclosure()
   if (currentUser) {
+
+    const [numLists, setNumLists] = useState(10);
+    const [acceptedLists] = useQuery(getOwnListByStatus, 1)
+    const [pendingLists] = useQuery(getOwnListByStatus, 0)
+    const [position] = useQuery(getPosition, null)
+    const [availableLists] = useQuery(getAvailableLists, null)
+
     return (
-      <>
-        <button
-          className="button small"
-          onClick={async () => {
-            await logoutMutation()
-          }}
-        >
-          Logout
-        </button>
-        <div>
-          User id: <code>{currentUser.id}</code>
-          <br />
-          User role: <code>{currentUser.role}</code>
-        </div>
-      </>
+      <Layout>
+        <Flex textAlign="left" direction="column" width="full">
+          <Heading as="h2" fontSize="3xl" align="center" marginY="0.5rem">
+            My lists
+          </Heading>
+          <Wrap justify="center">
+            {acceptedLists.concat(pendingLists).map((Shoppinglist) => {
+              return (
+                <WrapItem>
+                  <OwnedList
+                    marketName={Shoppinglist.store}
+                    status={Shoppinglist.status}
+                    acceptedName={Shoppinglist.acceptedBy == null? undefined: Shoppinglist.acceptedBy!.name!}
+                    specialWish={Shoppinglist.comment}
+                    itemsList={(Shoppinglist.items).map((itemsList)=>{return(itemsList.name)})}
+                    listId={Shoppinglist.id}
+                  />
+                </WrapItem>
+              )
+            })}
+          </Wrap>
+          <Box
+            padding="0.4rem"
+            marginTop="0.5rem"
+            marginBottom="1rem"
+            alignSelf="center"
+            textAlign="center"
+            maxWidth="300px"
+            borderWidth="0.1rem"
+            borderRadius="md"
+            as="a"
+            href="/"
+          >
+            Create new list
+          </Box>
+          <Heading as="h2" fontSize="3xl" align="center">
+            Available lists
+          </Heading>
+          <Wrap justify="center">
+            {availableLists.sort((listA, listB) => {
+              return (pythagoras(position.user_x, position.user_y, listA.createdBy.position_x, listA.createdBy.position_x)-pythagoras(position.user_x, position.user_y, listB.createdBy.position_x, listB.createdBy.position_x))
+            }).slice(0, numLists).map((Shoppinglist) => {
+              return (
+                <WrapItem>
+                  <PublicList
+                    distance={Math.ceil(pythagoras(position.user_x, position.user_y, Shoppinglist.createdBy.position_x, Shoppinglist.createdBy.position_y))}
+                    marketName={Shoppinglist.store}
+                    ownerName={Shoppinglist.createdBy.name!}
+                    specialWish={Shoppinglist.comment}
+                    itemsList={(Shoppinglist.items).map((itemsList)=>{return(itemsList.name)})}
+                    listId={Shoppinglist.id}
+                  />
+                </WrapItem>
+              )
+            })}
+          </Wrap>
+          <Button
+            padding="0.4rem"
+            marginTop="0.5rem"
+            marginBottom="1rem"
+            alignSelf="center"
+            textAlign="center"
+            maxWidth="300px"
+            borderWidth="0.1rem"
+            borderRadius="md"
+            onClick={()=>{setNumLists(numLists+10)}}
+          >
+            Show more lists
+          </Button>
+        </Flex>
+      </Layout>
     )
   } else {
     return (
-      <>
-        <Link href="/signup">
-          <a className="button small">
-            <strong>Sign Up</strong>
-          </a>
-        </Link>
-        <Link href="/login">
-          <a className="button small">
-            <strong>Login</strong>
-          </a>
-        </Link>
-      </>
+      <Flex
+        minHeight="100vh"
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        alignContent="center"
+      >
+        <Heading fontSize="5xl">Farmers' Market</Heading>
+        <Text margin="1rem">bla bla bla</Text>
+        <HStack align="center">
+          <Box padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
+            <Link href="/signup">
+              <Text align="center">Sign Up</Text>
+            </Link>
+          </Box>
+          <Text>{" - "}</Text>
+          <Link href="/login">
+            <Box padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
+              <Text align="center">Login</Text>
+            </Box>
+          </Link>
+        </HStack>
+      </Flex>
     )
   }
 }
 
-const Home: BlitzPage = () => {
-  return (
-    <div className="container">
-      <main>
-        <div className="logo">
-          <img src="/logo.png" alt="blitz.js" />
-        </div>
-        <p>
-          <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in.
-        </p>
-        <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
-          <Suspense fallback="Loading...">
-            <UserInfo />
-          </Suspense>
-        </div>
-        <p>
-          <strong>
-            To add a new model to your app, <br />
-            run the following in your terminal:
-          </strong>
-        </p>
-        <pre>
-          <code>blitz generate all project name:string</code>
-        </pre>
-        <div style={{ marginBottom: "1rem" }}>(And select Yes to run prisma migrate)</div>
-        <div>
-          <p>
-            Then <strong>restart the server</strong>
-          </p>
-          <pre>
-            <code>Ctrl + c</code>
-          </pre>
-          <pre>
-            <code>blitz dev</code>
-          </pre>
-          <p>
-            and go to{" "}
-            <Link href="/projects">
-              <a>/projects</a>
-            </Link>
-          </p>
-        </div>
-        <div className="buttons" style={{ marginTop: "5rem" }}>
-          <a
-            className="button"
-            href="https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-          <a
-            className="button-outline"
-            href="https://github.com/blitz-js/blitz"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Github Repo
-          </a>
-          <a
-            className="button-outline"
-            href="https://discord.blitzjs.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Discord Community
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by Blitz.js
-        </a>
-      </footer>
-
-      <style jsx global>{`
-        @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap");
-
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: "Libre Franklin", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-        }
-
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          box-sizing: border-box;
-        }
-        .container {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main p {
-          font-size: 1.2rem;
-        }
-
-        p {
-          text-align: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 60px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: #45009d;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer a {
-          color: #f4f4f4;
-          text-decoration: none;
-        }
-
-        .logo {
-          margin-bottom: 2rem;
-        }
-
-        .logo img {
-          width: 300px;
-        }
-
-        .buttons {
-          display: grid;
-          grid-auto-flow: column;
-          grid-gap: 0.5rem;
-        }
-        .button {
-          font-size: 1rem;
-          background-color: #6700eb;
-          padding: 1rem 2rem;
-          color: #f4f4f4;
-          text-align: center;
-        }
-
-        .button.small {
-          padding: 0.5rem 1rem;
-        }
-
-        .button:hover {
-          background-color: #45009d;
-        }
-
-        .button-outline {
-          border: 2px solid #6700eb;
-          padding: 1rem 2rem;
-          color: #6700eb;
-          text-align: center;
-        }
-
-        .button-outline:hover {
-          border-color: #45009d;
-          color: #45009d;
-        }
-
-        pre {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          text-align: center;
-        }
-        code {
-          font-size: 0.9rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-            Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-    </div>
-  )
-}
-
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
 
 export default Home
+{
+  /*<button
+      className="button small"
+      onClick={async () => {
+        await logoutMutation()
+      }}
+    >
+      Logout
+    </button>)*/
+}
+
