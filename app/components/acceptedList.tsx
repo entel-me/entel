@@ -13,9 +13,9 @@ import {
 } from "@chakra-ui/react"
 import { InfoIcon } from "@chakra-ui/icons"
 import { useMutation } from "blitz"
-import acceptList from "../mutations/acceptList"
+import doneList from "../mutations/doneList"
 
-interface PublicListProps {
+interface AcceptedListProps {
   distance: Number
   marketName: String
   itemsList: String[]
@@ -23,16 +23,16 @@ interface PublicListProps {
   specialWish?: String
   listId: Number
 }
-export default function PublicList({
+export default function AcceptedList({
   distance,
   marketName,
   itemsList,
   ownerName,
   specialWish,
   listId,
-}: PublicListProps) {
-  const { isOpen, onToggle } = useDisclosure()
-  const [acceptListMutation] = useMutation(acceptList)
+}: AcceptedListProps) {
+  const [doneListMutation] = useMutation(doneList)
+
   return (
     <Flex
       justifyContent="space-between"
@@ -43,7 +43,6 @@ export default function PublicList({
       margin="0.5rem"
       borderRadius="lg"
       borderColor="gray.500"
-      onClick={onToggle}
     >
       <Flex justifyContent="space-between" flexDirection="row">
         <Box>
@@ -55,25 +54,23 @@ export default function PublicList({
           <Text>{marketName}</Text>
         </Flex>
       </Flex>
-      <Collapse in={isOpen} animateOpacity>
-        <Flex justifyContent="süpace-between" flexDirection="column">
-          <Divider height="0.25rem" color="black" />
-          <UnorderedList>
-            {itemsList.map((item) => {
-              return <ListItem>{item}</ListItem>
-            })}
-          </UnorderedList>
-          {specialWish && (
-            <Text>
-              <InfoIcon /> {specialWish}
-            </Text>
-          )}
-          <Button marginTop="0.5rem" onClick={() => acceptListMutation(listId)}>
-            {" "}
-            Accept{" "}
-          </Button>
-        </Flex>
-      </Collapse>
+      <Flex justifyContent="süpace-between" flexDirection="column">
+        <Divider height="0.25rem" color="black" />
+        <UnorderedList>
+          {itemsList.map((item) => {
+            return <ListItem>{item}</ListItem>
+          })}
+        </UnorderedList>
+        {specialWish && (
+          <Text>
+            <InfoIcon /> {specialWish}
+          </Text>
+        )}
+        <Button marginTop="0.5rem" onClick={() => doneListMutation(listId)}>
+          {" "}
+          Done{" "}
+        </Button>
+      </Flex>
     </Flex>
   )
 }

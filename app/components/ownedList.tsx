@@ -10,8 +10,12 @@ import {
   Badge,
   UnorderedList,
   Link,
+  layout,
+  Button,
 } from "@chakra-ui/react"
 import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
+import { useMutation } from "blitz"
+import renewList from "../mutations/renewList"
 
 interface OwnedListProps {
   marketName: String
@@ -19,6 +23,7 @@ interface OwnedListProps {
   status: Number
   acceptedName?: String
   specialWish?: String
+  listId: Number
 }
 export default function OwnedList({
   marketName,
@@ -26,6 +31,7 @@ export default function OwnedList({
   status,
   acceptedName,
   specialWish,
+  listId,
 }: OwnedListProps) {
   let statusBadge
   if (status == 1) {
@@ -35,50 +41,58 @@ export default function OwnedList({
   } else {
     statusBadge = <Badge colorScheme="blue">archived</Badge>
   }
+  const [renewListMutation] = useMutation(renewList)
 
   return (
     <Flex
-      justifyContent="space-between"
-      flexDirection="row"
+      flexDirection="column"
       borderWidth="4px"
       width="sm"
       padding="0.5rem"
       margin="0.5rem"
       borderRadius="lg"
       borderColor="gray.500"
+      justifyContent="space-between"
     >
-      <Box>
-        <Heading fontSize="3xl">{marketName}</Heading>
-        <UnorderedList>
-          {itemsList.map((item) => {
-            return <ListItem>{item}</ListItem>
-          })}
-        </UnorderedList>
-        <List>
-          {specialWish && (
-            <ListItem>
-              <ListIcon as={InfoIcon} /> {specialWish}
-            </ListItem>
+      <Flex flexDirection="row" justifyContent="space-between">
+        <Box>
+          <Heading fontSize="3xl">{marketName}</Heading>
+          <UnorderedList>
+            {itemsList.map((item) => {
+              return <ListItem>{item}</ListItem>
+            })}
+          </UnorderedList>
+          <List>
+            {specialWish && (
+              <ListItem>
+                <ListIcon as={InfoIcon} /> {specialWish}
+              </ListItem>
+            )}
+            {status == 1 && (
+              <ListItem>
+                <ListIcon as={InfoIcon} />
+                angenommen von <b>{acceptedName}</b>{" "}
+                <Link href="/">
+                  <ChatIcon />
+                </Link>
+              </ListItem>
+            )}
+          </List>
+        </Box>
+        <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
+          {statusBadge}
+          {status == 0 && (
+            <Link href="/">
+              <EditIcon />
+            </Link>
           )}
-          {status == 1 && (
-            <ListItem>
-              <ListIcon as={InfoIcon} />
-              angenommen von <b>{acceptedName}</b>{" "}
-              <Link href="/">
-                <ChatIcon />
-              </Link>
-            </ListItem>
-          )}
-        </List>
-      </Box>
-      <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
-        {statusBadge}
-        {status == 0 && (
-          <Link href="/">
-            <EditIcon />
-          </Link>
-        )}
+        </Flex>
       </Flex>
+      {status == 2 && (
+        <Button marginTop="0.5rem" onClick={() => renewListMutation(listId)}>
+          Renew
+        </Button>
+      )}
     </Flex>
   )
 }
