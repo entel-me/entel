@@ -71,6 +71,7 @@ export default function Layout({ children }) {
               <MenuList>
                 <MenuItem
                   onClick={async () => {
+                    window.location.href = "/"
                     await logoutMutation()
                   }}
                 >
