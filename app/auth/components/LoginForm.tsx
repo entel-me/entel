@@ -13,13 +13,7 @@ export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
 
   return (
-    <Flex
-      minHeight="100vh"
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      alignContent="center"
-    >
+    <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
       <Heading size="2xl" margin="1rem">
         Login
       </Heading>
@@ -52,10 +46,6 @@ export const LoginForm = (props: LoginFormProps) => {
           </Link>
         </div>
       </Form>
-
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href="/signup">Sign Up</Link>
-      </div>
     </Flex>
   )
 }
