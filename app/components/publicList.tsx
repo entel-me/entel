@@ -14,6 +14,7 @@ import {
 import { InfoIcon } from "@chakra-ui/icons"
 import { useMutation } from "blitz"
 import acceptList from "../mutations/acceptList"
+import { useState } from "react"
 
 interface PublicListProps {
   distance: Number
@@ -34,20 +35,23 @@ export default function PublicList({
   refetch,
 }: PublicListProps) {
   const { isOpen, onToggle } = useDisclosure()
+  const [isHovered, onHover] = useState(false)
   const [acceptListMutation] = useMutation(acceptList)
   return (
     <Flex
       justifyContent="space-between"
+      overflow="hidden"
       flexDirection="column"
       borderWidth="4px"
       width="sm"
-      padding="0.5rem"
       margin="0.5rem"
       borderRadius="lg"
       borderColor="gray.500"
       onClick={onToggle}
+      onMouseEnter={() => onHover(true)}
+      onMouseLeave={() => onHover(false)}
     >
-      <Flex justifyContent="space-between" flexDirection="row">
+      <Flex padding="0.5rem" justifyContent="space-between" flexDirection="row">
         <Box>
           <Heading fontSize="2xl">{distance} km</Heading>
           <Text>{ownerName}</Text>
@@ -58,7 +62,7 @@ export default function PublicList({
         </Flex>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
-        <Flex justifyContent="space-between" flexDirection="column">
+        <Flex padding="0.5rem" justifyContent="space-between" flexDirection="column">
           <Divider height="0.25rem" color="black" />
           <UnorderedList>
             {itemsList.map((item) => {
@@ -80,6 +84,20 @@ export default function PublicList({
             {" "}
             Accept{" "}
           </Button>
+        </Flex>
+      </Collapse>
+      <Collapse in={isHovered && !isOpen} animateOpacity>
+        <Flex
+          textAlign="center"
+          justifyContent="center"
+          _hover={{ background: "gray.200" }}
+          backgroundColor="gray.100"
+          flexDirection="column"
+          height="1.5rem"
+        >
+          <Text fontSize="1rem" fontWeight="semibold">
+            show more
+          </Text>
         </Flex>
       </Collapse>
     </Flex>
