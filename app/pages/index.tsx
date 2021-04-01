@@ -73,7 +73,8 @@ function App() {
             )
           })}
         </Wrap>
-        <Box
+        <Button
+          onClick={() => (window.location.href = "/")}
           padding="0.4rem"
           marginTop="0.5rem"
           marginBottom="1rem"
@@ -86,7 +87,7 @@ function App() {
           href="/"
         >
           Create new list
-        </Box>
+        </Button>
         <Heading as="h2" fontSize="3xl" textAlign="center">
           Available lists
         </Heading>

@@ -42,10 +42,8 @@ export default function Layout({ children }) {
             borderRadius="lg"
             direction="row"
             justifyContent="space-between"
-            paddingY="0.5rem"
-            margin="1rem"
-            paddingY="0.5rem"
-            margin="1rem"
+            margin="0.5rem"
+            padding="0.5rem"
           >
             <Flex>
               <Breadcrumb separator="/">
