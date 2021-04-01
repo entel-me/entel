@@ -46,7 +46,11 @@ export function Form<S extends z.ZodType<any, any>>({
           )}
 
           {submitText && (
-            <button type="submit" disabled={submitting}>
+            <button
+              style={{ borderWidth: "0.1rem", padding: "0.3rem", borderRadius: "10px" }}
+              type="submit"
+              disabled={submitting}
+            >
               {submitText}
             </button>
           )}

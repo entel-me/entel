@@ -1,5 +1,6 @@
 import {
   Flex,
+  Link,
   Heading,
   Menu,
   MenuList,
@@ -41,15 +42,15 @@ export default function Layout({ children }) {
             <Flex>
               <Breadcrumb separator="/">
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
 
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="#">Shoppinglist</BreadcrumbLink>
+                  <BreadcrumbLink href="/activeLists">Shoppinglist</BreadcrumbLink>
                 </BreadcrumbItem>
 
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="#">Chat</BreadcrumbLink>
+                  <BreadcrumbLink href="/">Chat</BreadcrumbLink>
                 </BreadcrumbItem>
               </Breadcrumb>
             </Flex>
@@ -69,7 +70,9 @@ export default function Layout({ children }) {
                 >
                   Logout{" "}
                 </MenuItem>
-                <MenuItem>Archived Lists</MenuItem>
+                <Link href="/archivedLists">
+                  <MenuItem>Archived Lists</MenuItem>
+                </Link>
               </MenuList>
             </Menu>
           </Flex>

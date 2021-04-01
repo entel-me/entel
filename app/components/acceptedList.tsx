@@ -22,6 +22,7 @@ interface AcceptedListProps {
   ownerName: String
   specialWish?: String
   listId: Number
+  refetch
 }
 export default function AcceptedList({
   distance,
@@ -30,6 +31,7 @@ export default function AcceptedList({
   ownerName,
   specialWish,
   listId,
+  refetch,
 }: AcceptedListProps) {
   const [doneListMutation] = useMutation(doneList)
 
@@ -66,7 +68,13 @@ export default function AcceptedList({
             <InfoIcon /> {specialWish}
           </Text>
         )}
-        <Button marginTop="0.5rem" onClick={async () => doneListMutation(listId)}>
+        <Button
+          marginTop="0.5rem"
+          onClick={async () => {
+            await doneListMutation(listId)
+            refetch()
+          }}
+        >
           {" "}
           Done{" "}
         </Button>

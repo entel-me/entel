@@ -22,6 +22,7 @@ interface PublicListProps {
   ownerName: String
   specialWish?: String
   listId: Number
+  refetch
 }
 export default function PublicList({
   distance,
@@ -30,6 +31,7 @@ export default function PublicList({
   ownerName,
   specialWish,
   listId,
+  refetch,
 }: PublicListProps) {
   const { isOpen, onToggle } = useDisclosure()
   const [acceptListMutation] = useMutation(acceptList)
@@ -68,7 +70,13 @@ export default function PublicList({
               <InfoIcon /> {specialWish}
             </Text>
           )}
-          <Button marginTop="0.5rem" onClick={async () => acceptListMutation(listId)}>
+          <Button
+            marginTop="0.5rem"
+            onClick={async () => {
+              await acceptListMutation(listId)
+              refetch()
+            }}
+          >
             {" "}
             Accept{" "}
           </Button>

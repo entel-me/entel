@@ -24,6 +24,7 @@ interface OwnedListProps {
   acceptedName?: String
   specialWish?: String
   listId: Number
+  refetch?
 }
 export default function OwnedList({
   marketName,
@@ -32,6 +33,7 @@ export default function OwnedList({
   acceptedName,
   specialWish,
   listId,
+  refetch,
 }: OwnedListProps) {
   let statusBadge
   if (status == 1) {
@@ -89,7 +91,13 @@ export default function OwnedList({
         </Flex>
       </Flex>
       {status == 2 && (
-        <Button marginTop="0.5rem" onClick={async () => renewListMutation(listId)}>
+        <Button
+          marginTop="0.5rem"
+          onClick={async () => {
+            await renewListMutation(listId)
+            refetch()
+          }}
+        >
           Renew
         </Button>
       )}
