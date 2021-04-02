@@ -10,7 +10,7 @@ export default async function getActiveLists(_ = null, context: Ctx) {
       comment: true,
       store: true,
       items: { select: { name: true } },
-      createdBy: { select: { name: true, position_x: true, position_y: true } },
+      createdBy: { select: { name: true, last_latitude: true, last_longitude: true } },
     },
   })
   return lists
