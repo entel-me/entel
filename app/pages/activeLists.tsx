@@ -4,15 +4,12 @@ import Layout from "../components/layout"
 import getPosition from "../queries/getPositionOfUser"
 import getActiveLists from "../queries/getActiveLists"
 import AcceptedList from "../components/acceptedList"
-
-function pythagoras(x1, y1, x2, y2) {
-  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-}
+import { getDistanceByHaversine } from "../lib/position"
 
 export default function ActiveLists() {
   const [activeList, activeListsExtras] = useQuery(getActiveLists, null, { refetchInterval: 2000 })
-  const [position] = useQuery(getPosition, null, { refetchInterval: 2000 })
   const activeListsRefetch = activeListsExtras.refetch
+  const [{ user_latitude, user_longitude }] = useQuery(getPosition, null)
 
   return (
     <Layout>
@@ -30,11 +27,11 @@ export default function ActiveLists() {
                     return itemsList.name
                   })}
                   distance={Math.ceil(
-                    pythagoras(
-                      position.user_x,
-                      position.user_y,
-                      YourList.createdBy.position_x,
-                      YourList.createdBy.position_y
+                    getDistanceByHaversine(
+                      user_latitude,
+                      user_longitude,
+                      YourList.createdBy.last_latitude,
+                      YourList.createdBy.last_longitude
                     )
                   )}
                   ownerName={YourList.createdBy!.name!}
