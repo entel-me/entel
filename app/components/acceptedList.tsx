@@ -56,7 +56,7 @@ export default function AcceptedList({
           <Text>{marketName}</Text>
         </Flex>
       </Flex>
-      <Flex justifyContent="süpace-between" flexDirection="column">
+      <Flex justifyContent="space-between" flexDirection="column">
         <Divider height="0.25rem" color="black" />
         <UnorderedList>
           {itemsList.map((item) => {

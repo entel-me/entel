@@ -84,7 +84,7 @@ function App() {
           borderWidth="0.1rem"
           borderRadius="md"
           as="a"
-          href="/"
+          href="/createLists"
         >
           Create new list
         </Button>
