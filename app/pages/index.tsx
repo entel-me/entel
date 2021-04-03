@@ -107,7 +107,7 @@ function App() {
               return (
                 <WrapItem>
                   <PublicList
-                    distance={Math.ceil(
+                    distance={Math.floor(
                       getDistanceByHaversine(
                         user_latitude,
                         user_longitude,

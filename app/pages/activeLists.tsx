@@ -26,7 +26,7 @@ export default function ActiveLists() {
                   itemsList={YourList.items.map((itemsList) => {
                     return itemsList.name
                   })}
-                  distance={Math.ceil(
+                  distance={Math.floor(
                     getDistanceByHaversine(
                       user_latitude,
                       user_longitude,
