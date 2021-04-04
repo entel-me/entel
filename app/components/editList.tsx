@@ -17,20 +17,27 @@ import {
   FormLabel,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
-import createList from "../mutations/createList"
 import { useRouter, BlitzPage } from "blitz"
 import { DeleteIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
+import getShoppinglist from "../queries/getShoppinglist"
+import createList from "../mutations/createList"
+import { useQuery } from "blitz"
+import removeShoppinglist from "../mutations/removeShoppinglist"
 
-export default function CreateLists({ isOpen, onClose }) {
+export default function EditLists({ isOpen, onClose, listId }) {
   const [createListMutation, { data }] = useMutation(createList)
   const [addItemMutation] = useMutation(addItem)
+  const [removeShoppinglistMutation] = useMutation(removeShoppinglist, listId)
+  const [getList] = useQuery(getShoppinglist, listId)
   const router = useRouter()
-  const [countItems, setCountItems] = useState(1)
-  const [idList, setIdList] = useState([0])
 
+  const [countItems, setCountItems] = useState(getList!.items.length)
+  const [idList, setIdList] = useState(Array.from(Array(countItems).keys()))
+
+  console.log(listId)
   return (
     <Modal
       isOpen={isOpen}
@@ -42,22 +49,23 @@ export default function CreateLists({ isOpen, onClose }) {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Create new List</ModalHeader>
+        <ModalHeader>Edit List</ModalHeader>
         <ModalCloseButton />
         <Form
           onSubmit={async (values) => {
             try {
-              const shoppinglistId = await createListMutation({
+              const test = await createListMutation({
                 store: !values.store ? "Unspecified" : values.store,
                 specialWish: !values.specialWish ? "No special wishes given" : values.specialWish,
               })
 
               idList.forEach(function (value) {
                 addItemMutation({
-                  listId: shoppinglistId.id,
+                  listId: test.id,
                   itemName: values["item" + value],
                 })
               })
+              await removeShoppinglistMutation
             } catch (error) {}
           }}
           validate={(values) => {
@@ -80,6 +88,7 @@ export default function CreateLists({ isOpen, onClose }) {
                         {...input}
                         type="text"
                         placeholder="Type in your store if wanted"
+                        value={getList!.store}
                       />
                       <FormErrorMessage>{meta.error}</FormErrorMessage>
                     </FormControl>
@@ -91,7 +100,13 @@ export default function CreateLists({ isOpen, onClose }) {
                     {({ input, meta }) => (
                       <FormControl isInvalid={meta.error && meta.touched}>
                         <HStack justifyContent="space-between">
-                          <Input margin="0.2rem" {...input} type="text" placeholder="Item" />
+                          <Input
+                            margin="0.2rem"
+                            {...input}
+                            type="text"
+                            placeholder="Item"
+                            value={getList!.items[id].name}
+                          />
                           {idList.length != 1 && (
                             <IconButton
                               isRound="true"
@@ -124,6 +139,7 @@ export default function CreateLists({ isOpen, onClose }) {
                         {...input}
                         type="text"
                         placeholder="Type in your special wish if wanted"
+                        value={getList!.comment}
                       />
                       <FormErrorMessage>{meta.error}</FormErrorMessage>
                     </FormControl>
@@ -140,7 +156,7 @@ export default function CreateLists({ isOpen, onClose }) {
                     setCountItems(1)
                   }}
                 >
-                  create list
+                  save changes
                 </Button>
                 <Button
                   marginLeft="0.2rem"
@@ -163,34 +179,3 @@ export default function CreateLists({ isOpen, onClose }) {
     </Modal>
   )
 }
-
-/*
-<Form
-          submitText="CreateList"
-          initialValues={{ store: "", specialWish: "" }}
-          onSubmit={async (values) => {
-            if (values.store == "" && values.specialWish == "") {
-              await createListMutation({
-                store: "Unspecified",
-                specialWish: "No special wishes given",
-              })
-              router.push("/")
-            } else if (values.store == "") {
-              await createListMutation({ store: "Unspecified", specialWish: values.specialWish })
-              router.push("/")
-            } else if (values.specialWish == "") {
-              await createListMutation({
-                store: values.store,
-                specialWish: "No special wishes given",
-              })
-              router.push("/")
-            } else {
-              await createListMutation(values)
-              router.push("/")
-            }
-          }}
-        >
-          <LabeledTextField name="store" label="Store" placeholder="required" />
-          <LabeledTextField name="specialWish" label="Special Wishes" placeholder="optional" />
-        </Form>
-*/

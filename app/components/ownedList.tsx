@@ -12,10 +12,13 @@ import {
   Link,
   layout,
   Button,
+  useDisclosure,
+  IconButton,
 } from "@chakra-ui/react"
 import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
 import { useMutation } from "blitz"
 import renewList from "../mutations/renewList"
+import EditLists from "../components/editList"
 
 interface OwnedListProps {
   marketName: String
@@ -44,6 +47,7 @@ export default function OwnedList({
     statusBadge = <Badge colorScheme="blue">archived</Badge>
   }
   const [renewListMutation] = useMutation(renewList)
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Flex
@@ -84,9 +88,7 @@ export default function OwnedList({
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
           {statusBadge}
           {status == 0 && (
-            <Link href="/">
-              <EditIcon />
-            </Link>
+            <IconButton aria-label="Edit List" icon={<EditIcon />} onClick={onOpen} />
           )}
         </Flex>
       </Flex>
@@ -101,6 +103,7 @@ export default function OwnedList({
           Renew
         </Button>
       )}
+      <EditLists isOpen={isOpen} onClose={onClose} listId={listId} />
     </Flex>
   )
 }
