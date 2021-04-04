@@ -13,13 +13,7 @@ export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
 
   return (
-    <Flex
-      minHeight="100vh"
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      alignContent="center"
-    >
+    <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
       <Heading size="2xl" margin="1rem">
         Create an Account
       </Heading>
