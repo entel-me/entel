@@ -27,21 +27,16 @@ import createList from "../mutations/createList"
 import { useQuery } from "blitz"
 import removeShoppinglist from "../mutations/removeShoppinglist"
 
-export default function EditLists({ isOpen, onClose, listId }) {
+export default function EditLists({ isOpen, onClose, getList }) {
   const [createListMutation, { data }] = useMutation(createList)
   const [addItemMutation] = useMutation(addItem)
   const [removeShoppinglistMutation] = useMutation(removeShoppinglist)
-  const [getList] = useQuery(getShoppinglist, { id: listId })
-  const router = useRouter()
 
   const [countItems, setCountItems] = useState(getList!.items.length)
   const [idList, setIdList] = useState(Array.from(Array(countItems).keys()))
-
-  let defaultValues = { store: getList.store, comment: getList.comment }
-  Array.from(Array(countItems).keys()).forEach((id) => {
-    console.log(getList)
-    console.log(id)
-    defaultValues["item" + id] = getList.items[id].name
+  let defaultValues = { store: getList.store, specialWish: getList.comment }
+  Array.from(Array(getList.items.length).keys()).forEach((id) => {
+    defaultValues["item" + id] = getList.items[id]
   })
 
   return (
@@ -65,7 +60,7 @@ export default function EditLists({ isOpen, onClose, listId }) {
                   itemName: values["item" + value],
                 })
               })
-              await removeShoppinglistMutation({ id: listId })
+              await removeShoppinglistMutation({ id: getList.id })
             } catch (error) {}
           }}
           validate={(values) => {

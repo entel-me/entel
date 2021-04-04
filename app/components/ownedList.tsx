@@ -103,7 +103,11 @@ export default function OwnedList({
           Renew
         </Button>
       )}
-      <EditLists isOpen={isOpen} onClose={onClose} listId={listId} />
+      <EditLists
+        isOpen={isOpen}
+        onClose={onClose}
+        getList={{ id: listId, store: marketName, comment: specialWish, items: itemsList }}
+      />
     </Flex>
   )
 }
