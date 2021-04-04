@@ -12,6 +12,14 @@ import {
   Button,
   HStack,
   Box,
+  Center,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react"
 import Layout from "../components/layout"
 import { useQuery } from "blitz"
@@ -21,11 +29,39 @@ import PublicList from "../components/publicList"
 import getAvailableLists from "../queries/getAvailableLists"
 import getPosition from "../queries/getPositionOfUser"
 import { useState } from "react"
+import { LoginForm } from "app/auth/components/LoginForm"
+import { SignupForm } from "app/auth/components/SignupForm"
+import { useRouter } from "blitz"
 import { getDistanceByHaversine, useCurrentPosition } from "../lib/position"
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
+
+const CustomModal = ({ showModalButtonText, modalHeader, modalBody }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  return (
+    <>
+      <Button onClick={onOpen} padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
+        {showModalButtonText}
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{modalHeader}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{modalBody}</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  )
+}
 
 function App() {
   const [acceptedLists] = useQuery(getOwnListByStatus, 1, { refetchInterval: 2000 })
@@ -150,6 +186,8 @@ function App() {
 
 const Welcome: BlitzPage = () => {
   const currentUser = useCurrentUser()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
   if (currentUser) return <App />
 
   return (
@@ -163,17 +201,26 @@ const Welcome: BlitzPage = () => {
       <Heading fontSize="5xl">Farmers' Market</Heading>
       <Text margin="1rem">bla bla bla</Text>
       <HStack align="center">
-        <Box padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
-          <Link href="/signup">
-            <Text textAlign="center">Sign Up</Text>
-          </Link>
-        </Box>
+        <CustomModal
+          showModalButtonText="Sign Up"
+          modalHeader=""
+          modalBody={<SignupForm onSuccess={() => router.push("/")} />}
+        />
         <Text>{" - "}</Text>
-        <Link href="/login">
-          <Box padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
-            <Text textAlign="center">Login</Text>
-          </Box>
-        </Link>
+        <CustomModal
+          showModalButtonText="Login"
+          modalHeader=""
+          modalBody={
+            <LoginForm
+              onSuccess={() => {
+                const next = router.query.next
+                  ? decodeURIComponent(router.query.next as string)
+                  : "/"
+                router.push(next)
+              }}
+            />
+          }
+        />
       </HStack>
     </Flex>
   )
