@@ -30,12 +30,14 @@ import removeShoppinglist from "../mutations/removeShoppinglist"
 export default function EditLists({ isOpen, onClose, listId }) {
   const [createListMutation, { data }] = useMutation(createList)
   const [addItemMutation] = useMutation(addItem)
-  const [removeShoppinglistMutation] = useMutation(removeShoppinglist, listId)
+  const [removeShoppinglistMutation] = useMutation(removeShoppinglist)
   const [getList] = useQuery(getShoppinglist, listId)
   const router = useRouter()
 
   const [countItems, setCountItems] = useState(getList!.items.length)
   const [idList, setIdList] = useState(Array.from(Array(countItems).keys()))
+  const [storeValue, setStoreValue] = useState(getList!.store)
+  const [commentValue, setCommentValue] = useState(getList!.comment)
 
   console.log(listId)
   return (
@@ -65,7 +67,7 @@ export default function EditLists({ isOpen, onClose, listId }) {
                   itemName: values["item" + value],
                 })
               })
-              await removeShoppinglistMutation
+              await removeShoppinglistMutation({ id: listId })
             } catch (error) {}
           }}
           validate={(values) => {
@@ -88,7 +90,8 @@ export default function EditLists({ isOpen, onClose, listId }) {
                         {...input}
                         type="text"
                         placeholder="Type in your store if wanted"
-                        value={getList!.store}
+                        value={storeValue}
+                        onChange={(event) => setStoreValue(event.target.value)}
                       />
                       <FormErrorMessage>{meta.error}</FormErrorMessage>
                     </FormControl>
@@ -139,7 +142,8 @@ export default function EditLists({ isOpen, onClose, listId }) {
                         {...input}
                         type="text"
                         placeholder="Type in your special wish if wanted"
-                        value={getList!.comment}
+                        value={commentValue}
+                        onChange={(event) => setCommentValue(event.target.value)}
                       />
                       <FormErrorMessage>{meta.error}</FormErrorMessage>
                     </FormControl>
