@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { BlitzPage, useMutation } from "blitz"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
@@ -22,8 +21,6 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react"
-import { IconButton, SlideFade, useDisclosure } from "@chakra-ui/react"
-import { SettingsIcon } from "@chakra-ui/icons"
 import Layout from "../components/layout"
 import { useQuery } from "blitz"
 import getOwnListByStatus from "../queries/getMyLists"
@@ -35,14 +32,11 @@ import { useState } from "react"
 import { LoginForm } from "app/auth/components/LoginForm"
 import { SignupForm } from "app/auth/components/SignupForm"
 import { useRouter } from "blitz"
+import { getDistanceByHaversine, useCurrentPosition } from "../lib/position"
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
-
-function pythagoras(x1, y1, x2, y2) {
-  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-}
 
 const CustomModal = ({ showModalButtonText, modalHeader, modalBody }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -70,11 +64,11 @@ const CustomModal = ({ showModalButtonText, modalHeader, modalBody }) => {
 }
 
 function App() {
-  const { isOpen, onToggle } = useDisclosure()
   const [acceptedLists] = useQuery(getOwnListByStatus, 1, { refetchInterval: 2000 })
   const [pendingLists] = useQuery(getOwnListByStatus, 0, { refetchInterval: 2000 })
-  const [position] = useQuery(getPosition, null)
 
+  useCurrentPosition()
+  const [{ user_latitude, user_longitude }] = useQuery(getPosition, null)
   const [availableLists, availableListsExtras] = useQuery(getAvailableLists, null, {
     refetchInterval: 2000,
   })
@@ -130,17 +124,17 @@ function App() {
           {availableLists
             .sort((listA, listB) => {
               return (
-                pythagoras(
-                  position.user_x,
-                  position.user_y,
-                  listA.createdBy.position_x,
-                  listA.createdBy.position_x
+                getDistanceByHaversine(
+                  user_latitude,
+                  user_longitude,
+                  listA.createdBy.last_latitude,
+                  listA.createdBy.last_longitude
                 ) -
-                pythagoras(
-                  position.user_x,
-                  position.user_y,
-                  listB.createdBy.position_x,
-                  listB.createdBy.position_x
+                getDistanceByHaversine(
+                  user_latitude,
+                  user_longitude,
+                  listB.createdBy.last_latitude,
+                  listB.createdBy.last_longitude
                 )
               )
             })
@@ -149,12 +143,12 @@ function App() {
               return (
                 <WrapItem>
                   <PublicList
-                    distance={Math.ceil(
-                      pythagoras(
-                        position.user_x,
-                        position.user_y,
-                        Shoppinglist.createdBy.position_x,
-                        Shoppinglist.createdBy.position_y
+                    distance={Math.floor(
+                      getDistanceByHaversine(
+                        user_latitude,
+                        user_longitude,
+                        Shoppinglist.createdBy.last_latitude,
+                        Shoppinglist.createdBy.last_longitude
                       )
                     )}
                     marketName={Shoppinglist.store}

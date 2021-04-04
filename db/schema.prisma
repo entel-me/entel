@@ -20,8 +20,8 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("USER")
-  position_x     Float?
-  position_y     Float?
+  last_latitude  Float?
+  last_longitude Float?
 
   tokens   Token[]
   sessions Session[]

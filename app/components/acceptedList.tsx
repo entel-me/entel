@@ -48,7 +48,9 @@ export default function AcceptedList({
     >
       <Flex justifyContent="space-between" flexDirection="row">
         <Box>
-          <Heading fontSize="2xl">{distance} km</Heading>
+          <Heading fontSize="2xl">
+            {Number.isNaN(distance) ? "∞" : distance == 0 ? "< 1" : distance} km
+          </Heading>
           <Text>{ownerName}</Text>
         </Box>
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
