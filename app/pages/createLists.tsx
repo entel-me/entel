@@ -1,14 +1,24 @@
-import { Flex, Heading, Wrap, WrapItem } from "@chakra-ui/react"
+import { Flex, Heading, Wrap, WrapItem, HStack, Text, IconButton, Box, Button, Input } from "@chakra-ui/react"
 import { useMutation } from "blitz"
 import Layout from "../components/layout"
 import createList from "../mutations/createList"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import { useRouter, BlitzPage } from "blitz"
+import { DeleteIcon } from "@chakra-ui/icons"
+import { useState, useEffect} from "react"
 
 export default function createLists() {
   const [createListMutation] = useMutation(createList)
   const router = useRouter()
+
+  const initialItems = [{body: "test"}, {body: "test2"}];
+
+  const [Items, setItems] = useState(initialItems)
+
+  function handleSubmit( ) {
+
+}
 
   return (
     <Layout>
