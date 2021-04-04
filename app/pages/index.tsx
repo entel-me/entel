@@ -20,6 +20,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react"
 import Layout from "../components/layout"
 import { useQuery } from "blitz"
