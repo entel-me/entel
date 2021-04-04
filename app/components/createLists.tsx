@@ -22,9 +22,11 @@ import { useRouter, BlitzPage } from "blitz"
 import { DeleteIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
+import addItem from "../mutations/addItem"
 
 export default function CreateLists({ isOpen, onClose }) {
-  const [createListMutation] = useMutation(createList)
+  const [createListMutation, { data }] = useMutation(createList)
+  const [addItemMutation] = useMutation(addItem)
   const router = useRouter()
   const [countItems, setCountItems] = useState(1)
   const [idList, setIdList] = useState([0])
@@ -45,25 +47,17 @@ export default function CreateLists({ isOpen, onClose }) {
         <Form
           onSubmit={async (values) => {
             try {
-              if (values.store == "" && values.specialWish == "") {
-                await createListMutation({
-                  store: "Unspecified",
-                  specialWish: "No special wishes given",
+              const test = await createListMutation({
+                store: !values.store ? "Unspecified" : values.store,
+                specialWish: !values.specialWish ? "No special wishes given" : values.specialWish,
+              })
+
+              idList.forEach(function (value) {
+                addItemMutation({
+                  listId: test.id,
+                  itemName: values["item" + value],
                 })
-                router.push("/")
-              } else if (values.store == "") {
-                await createListMutation({ store: "Unspecified", specialWish: values.specialWish })
-                router.push("/")
-              } else if (values.specialWish == "") {
-                await createListMutation({
-                  store: values.store,
-                  specialWish: "No special wishes given",
-                })
-                router.push("/")
-              } else {
-                await createListMutation(values)
-                router.push("/")
-              }
+              })
             } catch (error) {}
           }}
           validate={(values) => {
@@ -137,7 +131,15 @@ export default function CreateLists({ isOpen, onClose }) {
                 </Field>
               </ModalBody>
               <ModalFooter>
-                <Button type="submit" disabled={submitting}>
+                <Button
+                  type="submit"
+                  disabled={submitting}
+                  onClick={() => {
+                    onClose()
+                    setIdList([0])
+                    setCountItems(1)
+                  }}
+                >
                   create list
                 </Button>
                 <Button

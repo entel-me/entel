@@ -1,10 +1,9 @@
 import db from "db"
 import { Ctx } from "blitz"
 
-export default async function acceptList(listId, itemName, context: Ctx) {
+export default async function addItem({ listId, itemName }, context: Ctx) {
   context.session.$authorize()
-  await db.shoppinglist.update({
-    where: { id: listId },
-    data: { acceptedBy: { connect: { id: context.session.userId } } },
+  await db.item.create({
+    data: { name: itemName, listedIn: { connect: { id: listId } } },
   })
 }
