@@ -31,29 +31,27 @@ export default function EditLists({ isOpen, onClose, listId }) {
   const [createListMutation, { data }] = useMutation(createList)
   const [addItemMutation] = useMutation(addItem)
   const [removeShoppinglistMutation] = useMutation(removeShoppinglist)
-  const [getList] = useQuery(getShoppinglist, listId)
+  const [getList] = useQuery(getShoppinglist, { id: listId })
   const router = useRouter()
 
   const [countItems, setCountItems] = useState(getList!.items.length)
   const [idList, setIdList] = useState(Array.from(Array(countItems).keys()))
-  const [storeValue, setStoreValue] = useState(getList!.store)
-  const [commentValue, setCommentValue] = useState(getList!.comment)
 
-  console.log(listId)
+  let defaultValues = { store: getList.store, comment: getList.comment }
+  Array.from(Array(countItems).keys()).forEach((id) => {
+    console.log(getList)
+    console.log(id)
+    defaultValues["item" + id] = getList.items[id].name
+  })
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => {
-        onClose()
-        setIdList([0])
-        setCountItems(1)
-      }}
-    >
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit List</ModalHeader>
         <ModalCloseButton />
         <Form
+          initialValues={defaultValues}
           onSubmit={async (values) => {
             try {
               const test = await createListMutation({
@@ -90,8 +88,6 @@ export default function EditLists({ isOpen, onClose, listId }) {
                         {...input}
                         type="text"
                         placeholder="Type in your store if wanted"
-                        value={storeValue}
-                        onChange={(event) => setStoreValue(event.target.value)}
                       />
                       <FormErrorMessage>{meta.error}</FormErrorMessage>
                     </FormControl>
@@ -103,13 +99,7 @@ export default function EditLists({ isOpen, onClose, listId }) {
                     {({ input, meta }) => (
                       <FormControl isInvalid={meta.error && meta.touched}>
                         <HStack justifyContent="space-between">
-                          <Input
-                            margin="0.2rem"
-                            {...input}
-                            type="text"
-                            placeholder="Item"
-                            value={getList!.items[id].name}
-                          />
+                          <Input margin="0.2rem" {...input} type="text" placeholder="Item" />
                           {idList.length != 1 && (
                             <IconButton
                               isRound="true"
@@ -142,8 +132,6 @@ export default function EditLists({ isOpen, onClose, listId }) {
                         {...input}
                         type="text"
                         placeholder="Type in your special wish if wanted"
-                        value={commentValue}
-                        onChange={(event) => setCommentValue(event.target.value)}
                       />
                       <FormErrorMessage>{meta.error}</FormErrorMessage>
                     </FormControl>
@@ -151,15 +139,7 @@ export default function EditLists({ isOpen, onClose, listId }) {
                 </Field>
               </ModalBody>
               <ModalFooter>
-                <Button
-                  type="submit"
-                  disabled={submitting}
-                  onClick={() => {
-                    onClose()
-                    setIdList([0])
-                    setCountItems(1)
-                  }}
-                >
+                <Button type="submit" disabled={submitting} onClick={onClose}>
                   save changes
                 </Button>
                 <Button
@@ -167,11 +147,7 @@ export default function EditLists({ isOpen, onClose, listId }) {
                   variant="outline"
                   colorScheme="yellow"
                   mr={3}
-                  onClick={() => {
-                    onClose()
-                    setIdList([0])
-                    setCountItems(1)
-                  }}
+                  onClick={onClose}
                 >
                   Close
                 </Button>

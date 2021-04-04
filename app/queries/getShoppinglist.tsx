@@ -1,10 +1,10 @@
 import db from "db"
 import { Ctx } from "blitz"
 
-export default async function getShoppinglist({ listId }, context: Ctx) {
+export default async function getShoppinglist({ id }, context: Ctx) {
   context.session.$authorize()
   const list = await db.shoppinglist.findFirst({
-    where: { id: listId },
+    where: { id: id },
     select: {
       id: true,
       comment: true,
@@ -12,5 +12,5 @@ export default async function getShoppinglist({ listId }, context: Ctx) {
       items: { select: { id: true, name: true } },
     },
   })
-  return list
+  return list!
 }
