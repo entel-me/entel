@@ -25,13 +25,15 @@ import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
 import createList from "../mutations/createList"
 import removeShoppinglist from "../mutations/removeShoppinglist"
+import updateStoreComment from "../mutations/updateStoreComment"
+import removeAllItems from "../mutations/removeAllItems"
 
-let countItems = 0
+let countItems: number
 function setCountItems(newValue) {
   countItems = newValue
 }
 
-let idList = []
+let idList: number[]
 function setIdList(newValue) {
   idList = newValue
 }
@@ -39,9 +41,9 @@ function setIdList(newValue) {
 export default function EditLists({ getList }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [createListMutation] = useMutation(createList)
   const [addItemMutation] = useMutation(addItem)
-  const [removeShoppinglistMutation] = useMutation(removeShoppinglist)
+  const [updateStoreCommentMutation] = useMutation(updateStoreComment)
+  const [removeAllItemsMutation] = useMutation(removeAllItems)
 
   let defaultValues = { store: getList.store, specialWish: getList.comment }
   Array.from(Array(getList.items.length).keys()).forEach((id) => {
@@ -68,18 +70,22 @@ export default function EditLists({ getList }) {
             initialValues={defaultValues}
             onSubmit={async (values) => {
               try {
-                const test = await createListMutation({
+                await updateStoreCommentMutation({
+                  id: getList.id,
                   store: !values.store ? "Unspecified" : values.store,
-                  specialWish: !values.specialWish ? "No special wishes given" : values.specialWish,
+                  comment: !values.specialWish ? "No special wishes given" : values.specialWish,
                 })
 
-                await idList.forEach(function (value) {
-                  addItemMutation({
-                    listId: test.id,
+                await removeAllItemsMutation({
+                  id: getList.id,
+                })
+
+                idList.forEach(async function (value) {
+                  await addItemMutation({
+                    listId: getList.id,
                     itemName: values["item" + value],
                   })
                 })
-                await removeShoppinglistMutation({ id: getList.id })
                 onClose()
               } catch (error) {}
             }}
@@ -91,7 +97,7 @@ export default function EditLists({ getList }) {
               }
               return errors
             }}
-            render={({ submitError, handleSubmit, form, submitting, pristine, values }) => (
+            render={({ handleSubmit, submitting }) => (
               <form onSubmit={handleSubmit}>
                 <ModalBody>
                   <Field name="store">
@@ -132,7 +138,7 @@ export default function EditLists({ getList }) {
                   <Button
                     margin="0.2rem"
                     onClick={() => {
-                      setIdList(idList.concat(Array([countItems])))
+                      setIdList(idList.concat(countItems))
                       setCountItems(countItems + 1)
                     }}
                   >
