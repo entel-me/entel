@@ -14,11 +14,14 @@ import {
   Button,
   useDisclosure,
   IconButton,
+  CloseButton,
+  HStack,
 } from "@chakra-ui/react"
 import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
 import { useMutation } from "blitz"
 import renewList from "../mutations/renewList"
 import EditLists from "../components/editList"
+import RemoveList from "../components/removeListModal"
 
 interface OwnedListProps {
   marketName: String
@@ -86,7 +89,16 @@ export default function OwnedList({
           </List>
         </Box>
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
-          {statusBadge}
+          <HStack>
+            {statusBadge}
+            {status == 0 && (
+              <RemoveList
+                modalHeader="Confirmation"
+                modalBody="Are you sure you want to delete this Shoppinglist permanently?"
+                modalFooter={listId}
+              />
+            )}
+          </HStack>
           {status == 0 && (
             <IconButton aria-label="Edit List" icon={<EditIcon />} onClick={onOpen} />
           )}
