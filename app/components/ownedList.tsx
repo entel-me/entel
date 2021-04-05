@@ -88,7 +88,9 @@ export default function OwnedList({
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
           {statusBadge}
           {status == 0 && (
-            <IconButton aria-label="Edit List" icon={<EditIcon />} onClick={onOpen} />
+            <EditLists
+              getList={{ id: listId, store: marketName, comment: specialWish, items: itemsList }}
+            />
           )}
         </Flex>
       </Flex>
@@ -103,11 +105,6 @@ export default function OwnedList({
           Renew
         </Button>
       )}
-      <EditLists
-        isOpen={isOpen}
-        onClose={onClose}
-        getList={{ id: listId, store: marketName, comment: specialWish, items: itemsList }}
-      />
     </Flex>
   )
 }

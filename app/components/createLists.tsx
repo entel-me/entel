@@ -52,12 +52,15 @@ export default function CreateLists({ isOpen, onClose }) {
                 specialWish: !values.specialWish ? "No special wishes given" : values.specialWish,
               })
 
-              idList.forEach(function (value) {
+              await idList.forEach(function (value) {
                 addItemMutation({
                   listId: shoppinglistId.id,
                   itemName: values["item" + value],
                 })
               })
+              setIdList([0])
+              setCountItems(1)
+              onClose()
             } catch (error) {}
           }}
           validate={(values) => {
@@ -94,7 +97,7 @@ export default function CreateLists({ isOpen, onClose }) {
                           <Input margin="0.2rem" {...input} type="text" placeholder="Item" />
                           {idList.length != 1 && (
                             <IconButton
-                              isRound="true"
+                              isRound={true}
                               aria-label="Delete Icon"
                               icon={<DeleteIcon />}
                               onClick={() => setIdList(idList.filter((item) => id != item))}
@@ -131,15 +134,7 @@ export default function CreateLists({ isOpen, onClose }) {
                 </Field>
               </ModalBody>
               <ModalFooter>
-                <Button
-                  type="submit"
-                  disabled={submitting}
-                  onClick={() => {
-                    onClose()
-                    setIdList([0])
-                    setCountItems(1)
-                  }}
-                >
+                <Button type="submit" disabled={submitting}>
                   create list
                 </Button>
                 <Button
