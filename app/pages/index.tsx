@@ -34,6 +34,7 @@ import { LoginForm } from "app/auth/components/LoginForm"
 import { SignupForm } from "app/auth/components/SignupForm"
 import { useRouter } from "blitz"
 import { getDistanceByHaversine, useCurrentPosition } from "../lib/position"
+import CreateLists from "../components/createLists"
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
@@ -77,6 +78,7 @@ function App() {
 
   const [numLists, setNumLists] = useState(10)
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Layout>
       <Flex textAlign="left" direction="column" width="full">
@@ -104,7 +106,7 @@ function App() {
           })}
         </Wrap>
         <Button
-          onClick={() => (window.location.href = "/")}
+          onClick={onOpen}
           padding="0.4rem"
           marginTop="0.5rem"
           marginBottom="1rem"
@@ -113,8 +115,6 @@ function App() {
           maxWidth="300px"
           borderWidth="0.1rem"
           borderRadius="md"
-          as="a"
-          href="/"
         >
           Create new list
         </Button>
@@ -181,6 +181,7 @@ function App() {
           Show more lists
         </Button>
       </Flex>
+      <CreateLists isOpen={isOpen} onClose={onClose} />
     </Layout>
   )
 }

@@ -46,7 +46,7 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
             font-size: 1rem;
             padding: 0.25rem 0.5rem;
             border-radius: 3px;
-            border: 1px solid purple;
+            border: 1px solid;
             appearance: none;
             margin-top: 0.5rem;
           }
