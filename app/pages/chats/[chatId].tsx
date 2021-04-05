@@ -5,11 +5,9 @@ import {
   Stack,
   HStack,
   Text,
-  Box,
   Textarea,
-  InputGroup,
-  InputRightElement,
   IconButton,
+  useToast,
 } from "@chakra-ui/react"
 import AdminMessage from "app/components/chats/adminMessage"
 import OwnMessage from "app/components/chats/ownMessage"
@@ -19,15 +17,28 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import getMessagesByChat from "app/queries/getMessagesByChat"
 import { useQuery, useParam, useMutation } from "blitz"
 import { Form, Field } from "react-final-form"
-import getUserByChatId from "../../queries/getUserByChatId"
+import { FORM_ERROR } from "final-form"
+import getParticipantsByChatId from "../../queries/getParticipantsByChatId"
 import sendMessage from "../../mutations/sendMessage"
+import { useEffect } from "react"
 
 export default function ArchivedLists() {
   const chatId = useParam("chatId", "number")
-  const [oppositeName] = useQuery(getUserByChatId, { id: chatId! })
-  const [messages] = useQuery(getMessagesByChat, { chatId })
   const currentUser = useCurrentUser()
+  const [participants] = useQuery(getParticipantsByChatId, { id: chatId! })
+
+  if (!participants.map((part) => part.id).includes(currentUser!.id)) {
+    window.location.href = "/"
+  }
+
+  const oppositeName = participants.filter((part) => part.id != currentUser?.id)[0]
+  const [messages, messagesExtra] = useQuery(getMessagesByChat, { chatId })
   const [sendMessageMutation] = useMutation(sendMessage)
+
+  useEffect(() => {
+    const message = document.getElementById("messages")!
+    message.scrollTop = message.scrollHeight
+  })
 
   return (
     <Layout>
@@ -38,7 +49,16 @@ export default function ArchivedLists() {
             <Text fontWeight="extrabold">{oppositeName.name}</Text>
           </HStack>
         </Heading>
-        <Stack width="full" height="800px" overflowY="scroll">
+        <Stack
+          id="messages"
+          width="full"
+          overflowY="auto"
+          maxHeight="800px"
+          borderRadius="10px"
+          padding="0.5rem"
+          borderWidth="2px"
+          marginY="1rem"
+        >
           {messages.map((m) => {
             if (!m.sentFrom) {
               return <AdminMessage content={m.content} />
@@ -57,51 +77,53 @@ export default function ArchivedLists() {
             }
           })}
         </Stack>
-
         <Form
           onSubmit={async (values) => {
+            if (!values.content)
+              return { [FORM_ERROR]: "Don't you want to send your friend a message?" }
+
             await sendMessageMutation({
               content: values.content,
               chatId: chatId,
               partId: oppositeName.id,
             })
+            messagesExtra.refetch()
           }}
-          validate={(values) => {
-            const errors = {}
-            if (!values.content) errors.content = "Don't you want to send your friend a message?"
-            return errors
-          }}
-          render={({ handleSubmit, submitting }) => (
-            <form onSubmit={handleSubmit}>
-              <InputGroup size="md">
+          initialValues={{ content: "" }}
+          render={({ submitError, handleSubmit, submitting, pristine, form }) => (
+            <form
+              onSubmit={(ev) => {
+                handleSubmit(ev)
+                form.reset()
+              }}
+            >
+              <HStack alignItems="top">
                 <Field name="content">
-                  {({ input, meta }) => {
+                  {({ input }) => {
                     return (
-                      <Stack>
+                      <Stack flex="1" width="full">
                         <Textarea
-                          overflowY="scroll"
+                          pr="4.5rem"
+                          isFullWidth
                           {...input}
-                          style={{ overflow: "auto" }}
-                          placeholder="Pleas type your message her"
+                          placeholder="Please type your message in here"
                         />
-                        {meta.error && meta.touched && (
+                        {submitError && (
                           <Text fontSize="sm" textColor="red">
-                            {meta.error}
+                            {submitError}
                           </Text>
                         )}
                       </Stack>
                     )
                   }}
                 </Field>
-                <InputRightElement>
-                  <IconButton
-                    aria-label="submit"
-                    type="submit"
-                    disabled={submitting}
-                    icon={<ArrowRightIcon />}
-                  />
-                </InputRightElement>
-              </InputGroup>
+                <IconButton
+                  aria-label="submit"
+                  type="submit"
+                  disabled={submitting || pristine}
+                  icon={<ArrowRightIcon />}
+                />
+              </HStack>
             </form>
           )}
         />
