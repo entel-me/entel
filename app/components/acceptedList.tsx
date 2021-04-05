@@ -8,12 +8,14 @@ import {
   Collapse,
   useDisclosure,
   Divider,
+  HStack,
   Button,
   List,
 } from "@chakra-ui/react"
 import { InfoIcon } from "@chakra-ui/icons"
 import { useMutation } from "blitz"
 import doneList from "../mutations/doneList"
+import renewList from "../mutations/renewList"
 
 interface AcceptedListProps {
   distance: Number
@@ -34,6 +36,7 @@ export default function AcceptedList({
   refetch,
 }: AcceptedListProps) {
   const [doneListMutation] = useMutation(doneList)
+  const [undoAcceptMutation] = useMutation(renewList)
 
   return (
     <Flex
@@ -58,7 +61,9 @@ export default function AcceptedList({
           <Text>{marketName}</Text>
         </Flex>
       </Flex>
+
       <Flex justifyContent="space-between" flexDirection="column">
+
         <Divider height="0.25rem" color="black" />
         <UnorderedList>
           {itemsList.map((item) => {
@@ -70,16 +75,30 @@ export default function AcceptedList({
             <InfoIcon /> {specialWish}
           </Text>
         )}
-        <Button
-          marginTop="0.5rem"
-          onClick={async () => {
-            await doneListMutation(listId)
-            refetch()
-          }}
-        >
-          {" "}
-          Done{" "}
-        </Button>
+        <Flex marginTop="0.8rem" flexDirection="row" justifyContent="center">
+          <Button
+            flex={1}
+            margin="0.2rem"
+            onClick={async () => {
+              await doneListMutation(listId)
+              refetch()
+            }}
+          >
+            {" "}
+            Done{" "}
+          </Button>
+          <Button
+            flex={1}
+            margin="0.2rem"
+            onClick={async () => {
+              await undoAcceptMutation(listId)
+              refetch()
+            }}
+          >
+            {" "}
+            Cancel{" "}
+          </Button>
+        </Flex>
       </Flex>
     </Flex>
   )
