@@ -75,7 +75,7 @@ export default function Layout({ children }) {
                 </BreadcrumbItem>
 
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Chat</BreadcrumbLink>
+                  <BreadcrumbLink href="/chats">Chats</BreadcrumbLink>
                 </BreadcrumbItem>
               </Breadcrumb>
             </Flex>

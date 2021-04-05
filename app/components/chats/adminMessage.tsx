@@ -7,7 +7,8 @@ export default function AdminMessage({ content }: AdminMessageProps) {
   return (
     <Box
       padding="0.5rem"
-      borderColor="gray.100"
+      borderColor="gray.600"
+      backgroundColor="gray.300"
       borderWidth="2px"
       borderRadius="10px"
       textAlign="center"
