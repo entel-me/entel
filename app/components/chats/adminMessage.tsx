@@ -6,16 +6,14 @@ interface AdminMessageProps {
 export default function AdminMessage({ content }: AdminMessageProps) {
   return (
     <Box
-      padding="0.5rem"
-      borderColor="gray.600"
-      backgroundColor="gray.300"
-      borderWidth="2px"
+      padding="0.2rem"
+      backgroundColor="brandSilver.600"
       borderRadius="10px"
       textAlign="center"
       marginX="1rem"
       marginY="0.1rem"
     >
-      <Text>{content}</Text>
+      <Text color="white">{content}</Text>
     </Box>
   )
 }

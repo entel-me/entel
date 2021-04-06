@@ -10,11 +10,13 @@ import {
   Divider,
   Button,
   List,
+  HStack,
 } from "@chakra-ui/react"
 import { InfoIcon } from "@chakra-ui/icons"
 import { useMutation } from "blitz"
 import acceptList from "../mutations/acceptList"
 import { useState } from "react"
+import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
 
 interface PublicListProps {
   distance: Number
@@ -42,30 +44,38 @@ export default function PublicList({
       justifyContent="space-between"
       overflow="hidden"
       flexDirection="column"
-      borderWidth="4px"
+      borderWidth="2px"
       width="sm"
       margin="0.5rem"
       borderRadius="lg"
-      borderColor="gray.500"
+      borderColor="brandGreen.800"
       onClick={onToggle}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
     >
-      <Flex padding="0.5rem" justifyContent="space-between" flexDirection="row">
+      <Flex paddingX="1rem" paddingY=".5rem" justifyContent="space-between" flexDirection="row">
         <Box>
-          <Heading fontSize="2xl">
-            {Number.isNaN(distance) ? "∞" : distance == 0 ? "< 1" : distance} km
+          <Heading color="brandGreen.900" fontSize="2xl">
+            {Number.isNaN(distance) ? "∞" : distance == 0 ? "<1" : distance} km
           </Heading>
-          <Text>{ownerName}</Text>
+          <HStack>
+            <BiUserCircle />
+            <Text>{ownerName}</Text>
+          </HStack>
         </Box>
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
-          <Text>{itemsList.length} items</Text>
-          <Text>{marketName}</Text>
+          <HStack>
+            <Text>{itemsList.length} item(s)</Text>
+            <BiShoppingBag />
+          </HStack>
+          <HStack>
+            <Text>{marketName}</Text>
+            <BiStore />
+          </HStack>
         </Flex>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
         <Flex padding="0.5rem" justifyContent="space-between" flexDirection="column">
-          <Divider height="0.25rem" color="black" />
           <UnorderedList>
             {itemsList.map((item) => {
               return <ListItem>{item}</ListItem>
@@ -73,10 +83,11 @@ export default function PublicList({
           </UnorderedList>
           {specialWish && (
             <Text>
-              <InfoIcon /> {specialWish}
+              <InfoIcon color="brandGreen.700" /> {specialWish}
             </Text>
           )}
           <Button
+            variant="brand"
             marginTop="0.5rem"
             onClick={async () => {
               await acceptListMutation(listId)
@@ -92,8 +103,9 @@ export default function PublicList({
         <Flex
           textAlign="center"
           justifyContent="center"
-          _hover={{ background: "gray.200" }}
-          backgroundColor="gray.100"
+          _hover={{ background: "brandGreen.600", cursor: "pointer" }}
+          backgroundColor="brandGreen.500"
+          textColor="white"
           flexDirection="column"
           height="1.5rem"
         >

@@ -24,7 +24,7 @@ const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
         onClick={onOpen}
         isRound="true"
         size="sm"
-        _hover={{ backgroundColor: "red", color: "white" }}
+        _hover={{ backgroundColor: "brandGreen.500", color: "white" }}
       />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -35,11 +35,8 @@ const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
 
           <ModalFooter>
             <HStack>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Cancel
-              </Button>
               <Button
-                colorScheme="red"
+                variant="brand"
                 mr={3}
                 onClick={() => {
                   onClose()
@@ -47,6 +44,9 @@ const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
                 }}
               >
                 Delete List
+              </Button>
+              <Button variant="brand-close" mr={3} onClick={onClose}>
+                Cancel
               </Button>
             </HStack>
           </ModalFooter>

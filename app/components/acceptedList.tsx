@@ -42,16 +42,16 @@ export default function AcceptedList({
     <Flex
       justifyContent="space-between"
       flexDirection="column"
-      borderWidth="4px"
+      borderWidth="2px"
       width="sm"
       padding="0.5rem"
       margin="0.5rem"
       borderRadius="lg"
-      borderColor="gray.500"
+      borderColor="brandGreen.800"
     >
       <Flex justifyContent="space-between" flexDirection="row">
         <Box>
-          <Heading fontSize="2xl">
+          <Heading color="brandGreen.900" fontSize="2xl">
             {Number.isNaN(distance) ? "∞" : distance == 0 ? "< 1" : distance} km
           </Heading>
           <Text>{ownerName}</Text>
@@ -63,7 +63,6 @@ export default function AcceptedList({
       </Flex>
 
       <Flex justifyContent="space-between" flexDirection="column">
-
         <Divider height="0.25rem" color="black" />
         <UnorderedList>
           {itemsList.map((item) => {
@@ -77,6 +76,7 @@ export default function AcceptedList({
         )}
         <Flex marginTop="0.8rem" flexDirection="row" justifyContent="center">
           <Button
+            variant="brand"
             flex={1}
             margin="0.2rem"
             onClick={async () => {
@@ -88,6 +88,7 @@ export default function AcceptedList({
             Done{" "}
           </Button>
           <Button
+            variant="brand"
             flex={1}
             margin="0.2rem"
             onClick={async () => {

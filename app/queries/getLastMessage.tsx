@@ -1,9 +1,16 @@
 import db from "db"
 import { Ctx } from "blitz"
+import { NumberLiteralType } from "typescript"
+
+interface Message {
+  content: string
+  sentAt: Date
+  sentFrom?: { name: string | null }
+}
 
 export default async function getLastMessage({ chatId }, context: Ctx) {
   context.session.$authorize()
-  const lastMessage = await db.message.findFirst({
+  const lastMessage: Message | null = await db.message.findFirst({
     where: { sentInId: chatId },
     orderBy: { sentAt: "desc" },
     select: {
@@ -13,7 +20,7 @@ export default async function getLastMessage({ chatId }, context: Ctx) {
     },
   })
 
-  const lastAdminMessage = await db.adminMessage.findFirst({
+  const lastAdminMessage: Message | null = await db.adminMessage.findFirst({
     where: { sentInId: chatId },
     orderBy: { sentAt: "desc" },
     select: {

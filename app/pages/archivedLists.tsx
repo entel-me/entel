@@ -1,4 +1,4 @@
-import { Flex, Heading, Wrap, WrapItem } from "@chakra-ui/react"
+import { Flex, Heading, Text, Wrap, WrapItem } from "@chakra-ui/react"
 import Layout from "../components/layout"
 import OwnedList from "../components/ownedList"
 import getArchivedLists from "../queries/getArchivedLists"
@@ -12,25 +12,37 @@ export default function ArchivedLists() {
   return (
     <Layout>
       <Flex textAlign="left" direction="column" width="full">
-        <Heading as="h2" fontSize="3xl" textAlign="center" marginY="0.5rem">
+        <Heading
+          as="h2"
+          fontFamily="Raleway"
+          fontWeight="bolder"
+          fontSize="4xl"
+          textAlign="center"
+          alignSelf="center"
+          marginY="1rem"
+        >
           My archived lists
         </Heading>
         <Wrap justify="center">
-          {archivedLists.map((list) => {
-            return (
-              <WrapItem>
-                <OwnedList
-                  marketName={list.store}
-                  itemsList={list.items.map((item) => item.name)}
-                  status={2}
-                  acceptedName={list.acceptedBy!.name!}
-                  specialWish={list.comment}
-                  listId={list.id}
-                  refetch={archivedListsRefetch}
-                />
-              </WrapItem>
-            )
-          })}
+          {archivedLists.length != 0 ? (
+            archivedLists.map((list) => {
+              return (
+                <WrapItem>
+                  <OwnedList
+                    marketName={list.store}
+                    itemsList={list.items.map((item) => item.name)}
+                    status={2}
+                    acceptedName={list.acceptedBy!.name!}
+                    specialWish={list.comment}
+                    listId={list.id}
+                    refetch={archivedListsRefetch}
+                  />
+                </WrapItem>
+              )
+            })
+          ) : (
+            <Text>Here, you can see archived lists.</Text>
+          )}
         </Wrap>
       </Flex>
     </Layout>

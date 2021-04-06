@@ -47,25 +47,26 @@ export default function OwnedList({
   } else if (status == 0) {
     statusBadge = <Badge colorScheme="gray">pending</Badge>
   } else {
-    statusBadge = <Badge colorScheme="blue">archived</Badge>
+    statusBadge = <Badge colorScheme="yellow">archived</Badge>
   }
   const [renewListMutation] = useMutation(renewList)
-  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Flex
       flexDirection="column"
-      borderWidth="4px"
+      borderWidth="2px"
       width="sm"
       padding="0.5rem"
       margin="0.5rem"
       borderRadius="lg"
-      borderColor="gray.500"
+      borderColor="brandGreen.800"
       justifyContent="space-between"
     >
       <Flex flexDirection="row" justifyContent="space-between">
         <Box>
-          <Heading fontSize="3xl">{marketName}</Heading>
+          <Heading color="brandGreen.900" fontSize="3xl">
+            {marketName}
+          </Heading>
           <UnorderedList>
             {itemsList.map((item) => {
               return <ListItem>{item}</ListItem>
@@ -74,12 +75,12 @@ export default function OwnedList({
           <List>
             {specialWish && (
               <ListItem>
-                <ListIcon as={InfoIcon} /> {specialWish}
+                <ListIcon as={InfoIcon} color="brandGreen.700" /> {specialWish}
               </ListItem>
             )}
             {status == 1 && (
               <ListItem>
-                <ListIcon as={InfoIcon} />
+                <ListIcon as={InfoIcon} color="brandGreen.700" />
                 angenommen von <b>{acceptedName}</b>{" "}
                 <Link href="/">
                   <ChatIcon />
@@ -108,6 +109,7 @@ export default function OwnedList({
       </Flex>
       {status == 2 && (
         <Button
+          variant="brand"
           marginTop="0.5rem"
           onClick={async () => {
             await renewListMutation(listId)

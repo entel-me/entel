@@ -14,7 +14,15 @@ export default function ArchivedLists() {
   return (
     <Layout>
       <Flex alignSelf="center" textAlign="left" direction="column" width="full">
-        <Heading as="h2" fontSize="3xl" textAlign="center" marginY="0.5rem">
+        <Heading
+          as="h2"
+          fontFamily="Raleway"
+          fontWeight="bolder"
+          fontSize="4xl"
+          textAlign="center"
+          alignSelf="center"
+          marginY="1rem"
+        >
           Chats
         </Heading>
         <Stack>

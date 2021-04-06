@@ -21,10 +21,10 @@ const theme = extendTheme({
       300: "#C2C69E",
       400: "#ABB079",
       500: "#939959",
-      600: "#868C52",
-      700: "#7C814C",
-      800: "#727746",
-      900: "#676C3F",
+      600: "#727746",
+      700: "#535633",
+      800: "#343620",
+      900: "#15160D",
     },
     brandChestnut: {
       100: "#F1ECE7",
@@ -32,10 +32,10 @@ const theme = extendTheme({
       300: "#C6B29E",
       400: "#B09679",
       500: "#967959",
-      600: "#8C7052",
-      700: "#81684C",
-      800: "#775F46",
-      900: "#6C563F",
+      600: "#775F46",
+      700: "#564533",
+      800: "#362B20",
+      900: "#16110D",
     },
     brandSilver: {
       100: "#ECECEC",
@@ -53,7 +53,32 @@ const theme = extendTheme({
     Button: {
       baseStyle: {
         _focus: {
-          boxShadow: "0 0 0 2px #D9DBC2",
+          boxShadow: "0 0 0 1px #D9DBC2",
+        },
+      },
+      variants: {
+        brand: {
+          borderWidth: "2px",
+          borderColor: "#727746",
+          _hover: {
+            bgColor: "#939959",
+            color: "white",
+          },
+        },
+        "brand-ghost": {
+          _hover: {
+            bgColor: "#939959",
+            color: "white",
+          },
+        },
+        "brand-close": {
+          borderWidth: "2px",
+          borderColor: "#967959",
+          bgColor: "#F1ECE7",
+          _hover: {
+            bgColor: "#B09679",
+            color: "white",
+          },
         },
       },
     },

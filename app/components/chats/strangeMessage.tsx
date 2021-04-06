@@ -10,12 +10,12 @@ export default function StrangeMessage({ content, timeStamp, userName }: Strange
     <Stack spacing="0.1rem" textAlign="left" margin="0.5rem">
       <Box
         padding="0.5rem"
-        backgroundColor="green.100"
+        backgroundColor="brandGreen.600"
         borderTopRadius="10px"
         borderRightRadius="10px"
         marginRight="2rem"
       >
-        <Text>{content}</Text>
+        <Text color="white">{content}</Text>
       </Box>
       <Text fontSize="sm">{timeStamp.toDateString()}</Text>
     </Stack>

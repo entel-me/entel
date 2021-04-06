@@ -9,7 +9,13 @@ export default function Loading() {
       justifyContent="center"
       alignContent="center"
     >
-      <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="brandGreen.500"
+        size="xl"
+      />
     </Flex>
   )
 }

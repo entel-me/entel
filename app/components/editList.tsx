@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
 import { useRouter, BlitzPage } from "blitz"
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
+import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
@@ -44,8 +44,10 @@ export default function EditLists({ getList }) {
   return (
     <>
       <IconButton
-        aria-label="Edit List"
         icon={<EditIcon />}
+        size="xs"
+        variant="brand-ghost"
+        aria-label="Edit List"
         onClick={() => {
           setCountItems(getList!.items.length)
           setIdList(Array.from(Array(getList!.items.length).keys()))
@@ -55,7 +57,7 @@ export default function EditLists({ getList }) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit List</ModalHeader>
+          <ModalHeader>Edit list</ModalHeader>
           <ModalCloseButton />
           <Form
             initialValues={defaultValues}
@@ -64,7 +66,7 @@ export default function EditLists({ getList }) {
                 await updateStoreCommentMutation({
                   id: getList.id,
                   store: !values.store ? "Unspecified" : values.store,
-                  comment: !values.specialWish ? "No special wishes given" : values.specialWish,
+                  comment: values.specialWish ? values.specialWish : "",
                 })
 
                 await removeAllItemsMutation({
@@ -118,7 +120,9 @@ export default function EditLists({ getList }) {
                             <Input margin="0.2rem" {...input} type="text" placeholder="Item" />
                             {idList.length != 1 && (
                               <IconButton
-                                isRound={true}
+                                variant="brand"
+                                borderWidth="1px"
+                                borderRadius="5px"
                                 aria-label="Delete Icon"
                                 icon={<DeleteIcon />}
                                 onClick={() => setIdList(idList.filter((item) => id != item))}
@@ -130,15 +134,21 @@ export default function EditLists({ getList }) {
                       )}
                     </Field>
                   ))}
-                  <Button
-                    margin="0.2rem"
-                    onClick={() => {
-                      setIdList(idList.concat(countItems))
-                      setCountItems(countItems + 1)
-                    }}
-                  >
-                    add item
-                  </Button>
+
+                  <Flex flex="1" justifyContent="center">
+                    <IconButton
+                      icon={<AddIcon />}
+                      aria-label="add"
+                      variant="brand"
+                      borderRadius="20px"
+                      width="5rem"
+                      margin="0.2rem"
+                      onClick={() => {
+                        setIdList(idList.concat(countItems))
+                        setCountItems(countItems + 1)
+                      }}
+                    />
+                  </Flex>
                   <Field name="specialWish">
                     {({ input, meta }) => (
                       <FormControl isInvalid={meta.error && meta.touched}>
@@ -155,16 +165,10 @@ export default function EditLists({ getList }) {
                   </Field>
                 </ModalBody>
                 <ModalFooter>
-                  <Button type="submit" disabled={submitting}>
-                    save changes
+                  <Button type="submit" variant="brand" disabled={submitting}>
+                    Save changes
                   </Button>
-                  <Button
-                    marginLeft="0.2rem"
-                    variant="outline"
-                    colorScheme="yellow"
-                    mr={3}
-                    onClick={onClose}
-                  >
+                  <Button marginLeft="0.2rem" variant="brand-close" mr={3} onClick={onClose}>
                     Close
                   </Button>
                 </ModalFooter>

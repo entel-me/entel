@@ -10,7 +10,7 @@ export default function OwnMessage({ content, timeStamp, userName }: StrangeMess
     <Stack spacing="0.1rem" textAlign="right" margin="0.5rem">
       <Box
         padding="0.5rem"
-        borderColor="green.200"
+        borderColor="brandGreen.600"
         borderWidth="2px"
         borderTopRadius="17px"
         borderLeftRadius="17px"
