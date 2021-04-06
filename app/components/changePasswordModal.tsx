@@ -57,9 +57,9 @@ export function ChangePassword({ isOpen, onClose }) {
             const errors = {}
 
             if (!z.string().min(10).max(100).check(values.newPassword))
-              errors.newPassword = "You password should have more than 10 charakters."
+              errors["newPassword"] = "You password should have more than 10 charakters."
             else if (values.newPassword !== values.newPasswordRepeat)
-              errors.newPasswordRepeat = "The passwords doesn't match."
+              errors["newPasswordRepeat"] = "The passwords doesn't match."
             console.log(errors)
             return errors
           }}
