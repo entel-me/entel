@@ -166,6 +166,7 @@ function App() {
                       })}
                       listId={Shoppinglist.id}
                       refetch={availableListsRefetch}
+                      ownerId={Shoppinglist.createdBy.id!}
                     />
                   </WrapItem>
                 )
