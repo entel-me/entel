@@ -36,16 +36,18 @@ import changePassword from "app/auth/mutations/changePassword"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import * as z from "zod"
+import { useMediaQuery } from "react-responsive"
 
 export default function Layout({ children }) {
   const [logoutMutation] = useMutation(logout)
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
 
   const menuLinks: { name: string; link: string }[] = [
-    { name: "HOME", link: "/" },
-    { name: "ACTIVE LISTS", link: "/activeLists" },
-    { name: "CHATS", link: "/chats" },
+    { name: "Home", link: "/" },
+    { name: "Active lists", link: "/activeLists" },
+    { name: "Chats", link: "/chats" },
   ]
   return (
     <>
@@ -62,15 +64,13 @@ export default function Layout({ children }) {
           width="full"
           justifyContent="center"
         >
-          <Flex width={["100vw", "850px"]} direction="row" justifyContent="space-between">
-            <Heading
-              fontSize="6xl"
-              fontWeight="extrabold"
-              marginBottom="1rem"
-              bgClip="text"
-              bgGradient="linear(to-r, green.600, green.400, yellow.400, yellow.600)"
-              fontFamily="Raleway"
-            >
+          <Flex
+            width={["100vw", "850px"]}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="self-end"
+          >
+            <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
               entel
             </Heading>
             <Flex
@@ -80,15 +80,17 @@ export default function Layout({ children }) {
               paddingX="0.5rem"
               paddingTop="0.5rem"
             >
-              <Flex marginRight="1rem">
-                <HStack>
+              {!isMobile && (
+                <HStack marginRight="1rem">
                   {menuLinks.map(({ name, link }) => {
                     return (
                       <Link
+                        textTransform="uppercase"
+                        fontFamily="Raleway"
+                        fontWeight="semibold"
                         paddingX="0.4rem"
                         fontSize="lg"
                         borderBottomWidth="0.3rem"
-                        fontWeight="semibold"
                         borderBottomColor={
                           window.location.pathname == link ? "brandGreen.500" : "brandSilver.200"
                         }
@@ -100,7 +102,7 @@ export default function Layout({ children }) {
                     )
                   })}
                 </HStack>
-              </Flex>
+              )}
               <Menu placement="bottom-end" closeOnBlur={true}>
                 <MenuButton
                   as={IconButton}
@@ -120,6 +122,21 @@ export default function Layout({ children }) {
                   borderWidth="2px"
                   borderColor="brandSilver.300"
                 >
+                  {isMobile && (
+                    <>
+                      {menuLinks.map(({ name, link }) => {
+                        return (
+                          <MenuItem
+                            _focus={{ backgroundColor: "brandSilver.200" }}
+                            _hover={{ backgroundColor: "brandSilver.200" }}
+                            onClick={() => (window.location.href = link)}
+                          >
+                            {name}
+                          </MenuItem>
+                        )
+                      })}
+                    </>
+                  )}
                   <MenuItem
                     _focus={{ backgroundColor: "brandSilver.200" }}
                     _hover={{ backgroundColor: "brandSilver.200" }}
