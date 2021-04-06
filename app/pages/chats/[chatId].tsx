@@ -20,7 +20,7 @@ import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import getParticipantsByChatId from "../../queries/getParticipantsByChatId"
 import sendMessage from "../../mutations/sendMessage"
-import { useEffect } from "react"
+import { useLayoutEffect } from "react"
 
 export default function ArchivedLists() {
   const chatId = useParam("chatId", "number")
@@ -35,7 +35,7 @@ export default function ArchivedLists() {
   const [messages, messagesExtra] = useQuery(getMessagesByChat, { chatId })
   const [sendMessageMutation] = useMutation(sendMessage)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const message = document.getElementById("messages")!
     message.scrollTop = message.scrollHeight
   })
