@@ -154,6 +154,7 @@ function App() {
                     )}
                     marketName={Shoppinglist.store}
                     ownerName={Shoppinglist.createdBy.name!}
+                    ownerId={Shoppinglist.createdBy.id!}
                     specialWish={Shoppinglist.comment}
                     itemsList={Shoppinglist.items.map((itemsList) => {
                       return itemsList.name
