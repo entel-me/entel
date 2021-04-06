@@ -26,11 +26,11 @@ model User {
   tokens   Token[]
   sessions Session[]
 
-  createdList           Shoppinglist[] @relation("createdList")
-  acceptedList          Shoppinglist[] @relation("acceptedList")
-  sentMessages          Message[]      @relation("sentMessage")
-  receivedMessages      Message[]      @relation("receivedMessage")
-  receivedAdminMessages AdminMessage[] @relation("receivedAdminMessage")
+  createdList      Shoppinglist[] @relation("createdList")
+  acceptedList     Shoppinglist[] @relation("acceptedList")
+  sentMessages     Message[]      @relation("sentMessage")
+  receivedMessages Message[]      @relation("receivedMessage")
+  participatesIn   Chat[]         @relation("participatesIn")
 
 }
 
@@ -91,24 +91,34 @@ model Item {
 
 model Message {
   id      Int      @id @default(autoincrement())
-  sendAt  DateTime
+  sentAt  DateTime @default(now())
   content String
 
   sentFrom   User @relation("sentMessage", fields: [sentFromId], references: [id])
   sentFromId Int
 
-  sentTo   User @relation("receivedMessage", fields: [sendToId], references: [id])
-  sendToId Int
+  sentTo   User @relation("receivedMessage", fields: [sentToId], references: [id])
+  sentToId Int
+
+  sentIn   Chat @relation("messageIn", fields: [sentInId], references: [id])
+  sentInId Int
+}
+
+model Chat {
+  id Int @id @default(autoincrement())
+
+  adminMessages      AdminMessage[] @relation("adminMessageIn")
+  messages           Message[]      @relation("messageIn")
+  participatingUsers User[]         @relation("participatesIn")
 }
 
 model AdminMessage {
   id      Int      @id @default(autoincrement())
   sentAt  DateTime
-  Content String
+  content String
 
-
-  sentTo   User @relation("receivedAdminMessage", fields: [sendToId], references: [id])
-  sendToId Int
+  sentIn   Chat @relation("adminMessageIn", fields: [sentInId], references: [id])
+  sentInId Int
 }
 
 // NOTE: It's highly recommended to use an enum for the token type

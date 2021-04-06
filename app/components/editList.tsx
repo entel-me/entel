@@ -23,20 +23,8 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
-import createList from "../mutations/createList"
-import removeShoppinglist from "../mutations/removeShoppinglist"
 import updateStoreComment from "../mutations/updateStoreComment"
 import removeAllItems from "../mutations/removeAllItems"
-
-let countItems: number
-function setCountItems(newValue) {
-  countItems = newValue
-}
-
-let idList: number[]
-function setIdList(newValue) {
-  idList = newValue
-}
 
 export default function EditLists({ getList }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -44,6 +32,9 @@ export default function EditLists({ getList }) {
   const [addItemMutation] = useMutation(addItem)
   const [updateStoreCommentMutation] = useMutation(updateStoreComment)
   const [removeAllItemsMutation] = useMutation(removeAllItems)
+
+  const [countItems, setCountItems] = useState(getList!.items.length)
+  const [idList, setIdList] = useState(Array.from(Array(countItems).keys()))
 
   let defaultValues = { store: getList.store, specialWish: getList.comment }
   Array.from(Array(getList.items.length).keys()).forEach((id) => {
@@ -57,7 +48,7 @@ export default function EditLists({ getList }) {
         icon={<EditIcon />}
         onClick={() => {
           setCountItems(getList!.items.length)
-          setIdList(Array.from(Array(countItems).keys()))
+          setIdList(Array.from(Array(getList!.items.length).keys()))
           onOpen()
         }}
       />
@@ -80,12 +71,16 @@ export default function EditLists({ getList }) {
                   id: getList.id,
                 })
 
-                idList.forEach(async function (value) {
+                const promises = idList.map(async (value) => {
                   await addItemMutation({
                     listId: getList.id,
                     itemName: values["item" + value],
                   })
                 })
+
+                for await (let _ of promises) {
+                }
+
                 onClose()
               } catch (error) {}
             }}
