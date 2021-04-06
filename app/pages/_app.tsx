@@ -10,16 +10,16 @@ import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
-import { ChakraProvider, extendTheme } from "@chakra-ui/react"
+import { ChakraProvider, extendTheme, shadow } from "@chakra-ui/react"
 import Loading from "../components/loading"
 
 const theme = extendTheme({
   colors: {
     brandGreen: {
-      100: "#B3B885",
-      200: "#ABB079",
-      300: "#9CA261",
-      400: "#9CA261",
+      100: "#F0F1E7",
+      200: "#D9DBC2",
+      300: "#C2C69E",
+      400: "#ABB079",
       500: "#939959",
       600: "#868C52",
       700: "#7C814C",
@@ -27,10 +27,10 @@ const theme = extendTheme({
       900: "#676C3F",
     },
     brandChestnut: {
-      100: "#B89F85",
-      200: "#B09679",
-      300: "#A98C6D",
-      400: "#A28361",
+      100: "#F1ECE7",
+      200: "#DBCFC2",
+      300: "#C6B29E",
+      400: "#B09679",
       500: "#967959",
       600: "#8C7052",
       700: "#81684C",
@@ -38,15 +38,31 @@ const theme = extendTheme({
       900: "#6C563F",
     },
     brandSilver: {
-      100: "#9E9E9E",
-      200: "#959595",
-      300: "#8B8B8B",
-      400: "#828282",
+      100: "#ECECEC",
+      200: "#CFCFCF",
+      300: "#B2B2B2",
+      400: "#959595",
       500: "#787878",
       600: "#6F6F6F",
       700: "#676767",
       800: "#5E5E5E",
       900: "#565656",
+    },
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        _focus: {
+          boxShadow: "0 0 0 2px #D9DBC2",
+        },
+      },
+    },
+    Link: {
+      baseStyle: {
+        _focus: {
+          boxShadow: "0 0 0 2px #D9DBC2",
+        },
+      },
     },
   },
 })
