@@ -48,12 +48,14 @@ export default function Layout({ children }) {
       <ColorModeScript initialColorMode="light" />
       <Flex direction="column" alignItems="center">
         <Heading
-          fontSize="2xl"
+          fontSize="6xl"
+          fontWeight="extrabold"
           marginBottom="1rem"
           bgClip="text"
           bgGradient="linear(to-r, green.600, green.400, yellow.400, yellow.600)"
+          fontFamily="Raleway"
         >
-          Farmers' Market
+          entel
         </Heading>
         <Flex width={["100vw", "850px"]} grow={1} direction="column" justifyContent="space-between">
           <Flex
