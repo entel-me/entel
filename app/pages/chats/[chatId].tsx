@@ -21,6 +21,7 @@ import { FORM_ERROR } from "final-form"
 import getParticipantsByChatId from "../../queries/getParticipantsByChatId"
 import sendMessage from "../../mutations/sendMessage"
 import { useLayoutEffect } from "react"
+import { RiMailSendLine } from "react-icons/ri"
 
 export default function ArchivedLists() {
   const chatId = useParam("chatId", "number")
@@ -121,7 +122,7 @@ export default function ArchivedLists() {
                   aria-label="submit"
                   type="submit"
                   disabled={submitting || pristine}
-                  icon={<ArrowRightIcon />}
+                  icon={<RiMailSendLine />}
                 />
               </HStack>
             </form>
