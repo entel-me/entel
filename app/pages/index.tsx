@@ -102,6 +102,9 @@ function App() {
                     acceptedName={
                       Shoppinglist.acceptedBy == null ? undefined : Shoppinglist.acceptedBy!.name!
                     }
+                    acceptedId={
+                      Shoppinglist.acceptedBy == null ? undefined : Shoppinglist.acceptedBy!.id!
+                    }
                     specialWish={Shoppinglist.comment}
                     itemsList={Shoppinglist.items.map((itemsList) => {
                       return itemsList.name

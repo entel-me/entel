@@ -19,8 +19,7 @@ import { useState } from "react"
 import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
 import createChat from "../mutations/createChat"
 import createAdminMessage from "../mutations/createAdminMessage"
-import getChats from "../queries/getChats"
-import { RiChatSmileLine } from "react-icons/ri"
+import getChatByParticipants from "../queries/getChatByParticipants"
 
 interface PublicListProps {
   distance: Number
@@ -47,7 +46,8 @@ export default function PublicList({
   const [acceptListMutation] = useMutation(acceptList)
   const [createChatMutation] = useMutation(createChat)
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
-  const [chats] = useQuery(getChats, null)
+  const [chat] = useQuery(getChatByParticipants, { ownerId })
+
   return (
     <Flex
       justifyContent="space-between"
@@ -84,6 +84,7 @@ export default function PublicList({
         </Box>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
+        <Divider height="0.25rem" color="black" />
         <Flex padding="0.5rem" justifyContent="space-between" flexDirection="column">
           <UnorderedList>
             {itemsList.map((item) => {
@@ -101,30 +102,11 @@ export default function PublicList({
             onClick={async () => {
               await acceptListMutation(listId)
               refetch()
-              if (
-                chats
-                  .map((chat) => {
-                    return chat.participatingUsers
-                      .map((object) => {
-                        return object.id
-                      })
-                      .includes(ownerId)
-                  })
-                  .some((element, index, array) => {
-                    return element
-                  })
-              ) {
-                const chat = chats.filter((chat) => {
-                  return chat.participatingUsers
-                    .map((object) => {
-                      return object.id
-                    })
-                    .includes(ownerId)
-                })
+              if (chat) {
                 await createAdminMessageMutation({
                   content:
                     "Here you can talk about your most recent accepted/created Shoppinglist. Please be nice!",
-                  chatId: chat[0].id,
+                  chatId: chat.id,
                 })
               } else {
                 const chatId = await createChatMutation({ opponentId: ownerId })

@@ -80,6 +80,14 @@ const theme = extendTheme({
             color: "white",
           },
         },
+        "brand-chat": {
+          color: "#535633",
+          minW: "min-content",
+          height: "min-content",
+          _focus: {
+            boxShadow: "0 0 0 1px #D9DBC2",
+          },
+        },
       },
     },
     Link: {

@@ -1,19 +1,18 @@
-import { Flex, Heading, Stack, WrapItem } from "@chakra-ui/react"
+import { Flex, Heading, Stack, Text, WrapItem } from "@chakra-ui/react"
 import Layout from "../components/layout"
 import ChatPreview from "../components/chats/chatPreview"
-import getArchivedLists from "../queries/getArchivedLists"
 import { useQuery } from "blitz"
-import getChats from "../queries/getChats"
+import getChatsWithLastMessage from "../queries/getChatsWithLastMessage"
 
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 export default function ArchivedLists() {
-  const [chats] = useQuery(getChats, null)
-
+  const [chats] = useQuery(getChatsWithLastMessage, null)
   const currentUser = useCurrentUser()
+
   return (
     <Layout>
-      <Flex alignSelf="center" textAlign="left" direction="column" width="full">
+      <Flex alignSelf="center" textAlign="center" direction="column" width="full">
         <Heading
           as="h2"
           fontFamily="Raleway"
@@ -25,16 +24,30 @@ export default function ArchivedLists() {
         >
           Chats
         </Heading>
-        <Stack>
-          {chats.map((chat) => {
-            return (
-              <ChatPreview
-                chatId={chat.id}
-                userName={chat.participatingUsers.filter((u) => u.id != currentUser?.id)[0].name!}
-              />
-            )
-          })}
-        </Stack>
+        {chats.length != 0 ? (
+          <Stack textAlign="left">
+            {chats
+              .sort((chatA, chatB) => {
+                return -chatA.lastMessage!.sentAt.getTime() + chatB.lastMessage!.sentAt.getTime()
+              })
+              .map((chat) => {
+                return (
+                  <ChatPreview
+                    chatId={chat.id}
+                    userName={
+                      chat.participatingUsers.filter((u) => u.id != currentUser?.id)[0].name!
+                    }
+                    lastMessage={chat.lastMessage!}
+                  />
+                )
+              })}
+          </Stack>
+        ) : (
+          <Text>
+            Here, you will see your archived lists. But first you have to accept a list or create
+            one.
+          </Text>
+        )}
       </Flex>
     </Layout>
   )

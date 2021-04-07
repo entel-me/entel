@@ -18,16 +18,18 @@ import {
   HStack,
 } from "@chakra-ui/react"
 import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
-import { useMutation } from "blitz"
+import { useMutation, useQuery, useRouter } from "blitz"
 import renewList from "../mutations/renewList"
 import EditLists from "../components/editList"
 import RemoveList from "../components/removeListModal"
+import getChatByParticipants from "app/queries/getChatByParticipants"
 
 interface OwnedListProps {
   marketName: String
   itemsList: String[]
   status: Number
   acceptedName?: String
+  acceptedId?: number
   specialWish?: String
   listId: Number
   refetch?
@@ -37,6 +39,7 @@ export default function OwnedList({
   itemsList,
   status,
   acceptedName,
+  acceptedId,
   specialWish,
   listId,
   refetch,
@@ -50,7 +53,8 @@ export default function OwnedList({
     statusBadge = <Badge colorScheme="yellow">archived</Badge>
   }
   const [renewListMutation] = useMutation(renewList)
-
+  const [chat] = useQuery(getChatByParticipants, { ownerId: acceptedId })
+  const router = useRouter()
   return (
     <Flex
       flexDirection="column"
@@ -81,10 +85,17 @@ export default function OwnedList({
             {status == 1 && (
               <ListItem>
                 <ListIcon as={InfoIcon} color="brandGreen.700" />
-                angenommen von <b>{acceptedName}</b>{" "}
-                <Link href="/">
-                  <ChatIcon />
-                </Link>
+                accepted by <b>{acceptedName}</b>{" "}
+                <IconButton
+                  aria-label="link chats"
+                  variant="brand-chat"
+                  size="xs"
+                  icon={<ChatIcon />}
+                  onClick={() => {
+                    console.log("accetor: " + acceptedId)
+                    router.push("/chats/[chatId]", "chats/" + chat!.id)
+                  }}
+                />
               </ListItem>
             )}
           </List>

@@ -60,7 +60,6 @@ export function ChangePassword({ isOpen, onClose }) {
               errors["newPassword"] = "You password should have more than 10 charakters."
             else if (values.newPassword !== values.newPasswordRepeat)
               errors["newPasswordRepeat"] = "The passwords doesn't match."
-            console.log(errors)
             return errors
           }}
           render={({ submitError, handleSubmit, form, submitting, pristine, values }) => (
