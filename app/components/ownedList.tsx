@@ -1,20 +1,13 @@
 import {
-  Container,
   Box,
   Flex,
   List,
   ListIcon,
   Heading,
   ListItem,
-  Text,
-  Badge,
   UnorderedList,
-  Link,
-  layout,
   Button,
-  useDisclosure,
   IconButton,
-  CloseButton,
   HStack,
 } from "@chakra-ui/react"
 import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
@@ -25,6 +18,7 @@ import RemoveList from "../components/removeListModal"
 import getChatByParticipants from "app/queries/getChatByParticipants"
 import { BsArchive } from "react-icons/bs"
 import archiveList from "../mutations/archiveList"
+import BrandBadge from "./BrandBadge"
 
 interface OwnedListProps {
   marketName: String
@@ -46,14 +40,6 @@ export default function OwnedList({
   listId,
   refetch,
 }: OwnedListProps) {
-  let statusBadge
-  if (status == 1) {
-    statusBadge = <Badge colorScheme="green">in progress</Badge>
-  } else if (status == 0) {
-    statusBadge = <Badge colorScheme="gray">pending</Badge>
-  } else {
-    statusBadge = <Badge colorScheme="yellow">archived</Badge>
-  }
   const [renewListMutation] = useMutation(renewList)
   const [chat] = useQuery(getChatByParticipants, { ownerId: acceptedId })
   const router = useRouter()
@@ -105,7 +91,7 @@ export default function OwnedList({
         </Box>
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
           <HStack>
-            {statusBadge}
+            <BrandBadge status={status} />
             {status == 2 && (
               <RemoveList
                 modalHeader="Confirmation"

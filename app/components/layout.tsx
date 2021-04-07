@@ -40,18 +40,14 @@ import { useMediaQuery } from "react-responsive"
 import { ChangePassword } from "./changePasswordModal"
 import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
-export default function Layout({ children }) {
+export default function Layout({ showFooter = true, children }) {
   const [logoutMutation] = useMutation(logout)
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
 
   const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
-  const menuLinks: { name: string; link: string }[] = [
-    { name: "Home", link: "/" },
-    { name: "Active lists", link: "/activeLists" },
-    { name: "Chats", link: "/chats" },
-  ]
+
   return (
     <>
       <Head>
@@ -59,7 +55,7 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ColorModeScript initialColorMode="light" />
-      <Flex direction="column" alignItems="center">
+      <Flex direction="column" alignItems="center" height="100vh">
         <Flex
           as="header"
           boxShadow="0 0 0 4px #ECECEC"
@@ -72,10 +68,10 @@ export default function Layout({ children }) {
             direction="row"
             justifyContent="space-between"
             alignItems="self-end"
-            marginTop="10px"
+            marginTop="5px"
           >
             <HStack>
-              <Image src="/logo.png" width="5.5rem" height="5.5rem" marginRight="0.4rem" />
+              <Image src="/logo_1.png" width="6rem" height="6rem" />
               <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
                 entel
               </Heading>
@@ -235,12 +231,32 @@ export default function Layout({ children }) {
             </Flex>
           </Flex>
         </Flex>
-        <Flex width={["100vw", "850px"]} grow={1} direction="column" justifyContent="space-between">
+        <Flex
+          paddingX="0.2rem"
+          width={["100vw", "850px"]}
+          flex="1 1 auto"
+          direction="column"
+          justifyContent="space-between"
+        >
           {children}
         </Flex>
+        {showFooter && (
+          <Flex
+            padding=".5rem"
+            as="footer"
+            direction="column"
+            backgroundColor="brandGreen.100"
+            width="full"
+            textAlign="center"
+            alignItems="center"
+          >
+            <Text fontFamily="Raleway" fontWeight="medium">
+              About, Impressum, Datenschutz und ganz viel Liebe
+            </Text>
+          </Flex>
+        )}
+        <ChangePassword isOpen={isOpen} onClose={onClose} />
       </Flex>
-
-      <ChangePassword isOpen={isOpen} onClose={onClose} />
     </>
   )
 }

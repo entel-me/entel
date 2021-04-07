@@ -53,3 +53,5 @@ export default function Chats() {
     </Layout>
   )
 }
+
+Chats.authenticate = { redirectTo: "/" }

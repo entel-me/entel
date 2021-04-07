@@ -27,7 +27,7 @@ import { RiMailSendLine } from "react-icons/ri"
 import { BiUserCircle } from "react-icons/bi"
 import markAdminMessagesAsRead from "app/mutations/markAdminAsRead"
 
-export default function ArchivedLists() {
+export default function Chat() {
   const chatId = useParam("chatId", "number")
   const currentUser = useCurrentUser()
   const [participants] = useQuery(getParticipantsByChatId, { id: chatId! })
@@ -53,7 +53,7 @@ export default function ArchivedLists() {
   })
 
   return (
-    <Layout>
+    <Layout showFooter={false}>
       <Flex textAlign="center" direction="column" width="full" maxWidth="600px" alignSelf="center">
         <Heading
           as="h2"
@@ -69,7 +69,12 @@ export default function ArchivedLists() {
             <Text>{oppositeName.name}</Text>
           </HStack>
         </Heading>
-        <Box borderRadius="5px" borderWidth="2px" borderColor="brandSilver.500">
+        <Box
+          borderRadius="5px"
+          borderWidth="2px"
+          borderColor="brandSilver.500"
+          flex={["1 1 auto", "unset"]}
+        >
           <Stack
             id="messages"
             width="full"
@@ -162,3 +167,5 @@ export default function ArchivedLists() {
     </Layout>
   )
 }
+
+Chat.authenticate = { redirectTo: "/" }

@@ -60,3 +60,5 @@ export default function ActiveLists() {
     </Layout>
   )
 }
+
+ActiveLists.authenticate = { redirectTo: "/" }
