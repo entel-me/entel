@@ -63,7 +63,7 @@ export default function OwnedList({
       justifyContent="space-between"
     >
       <Flex flexDirection="row" justifyContent="space-between">
-        <Box>
+        <Box overflow="hidden">
           <Heading color="brandGreen.900" fontSize="3xl">
             {marketName}
           </Heading>
