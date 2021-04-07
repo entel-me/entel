@@ -45,9 +45,12 @@ export default function ArchivedLists() {
   useEffect(() => {
     markMessagesAsReadMutation({ chatId })
     markAdminMessagesAsReadMutation({ chatId })
+  }, [])
+
+  useLayoutEffect(() => {
     const message = document.getElementById("messages")!
     message.scrollTop = message.scrollHeight
-  }, [])
+  })
 
   return (
     <Layout>

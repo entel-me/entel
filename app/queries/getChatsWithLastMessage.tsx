@@ -38,7 +38,7 @@ export default async function getChatsWithLastMessage(_ = null, context: Ctx) {
     })
 
     const unreadNormalMessagesCnt = await db.message.count({
-      where: { sentInId: id, wasRead: false },
+      where: { sentInId: id, sentToId: context.session.userId!, wasRead: false },
     })
     const unreadAdminMessagesCnt = await db.adminMessage.count({
       where: { sentInId: id, wasReadBy: { none: { id: context.session.userId! } } },
