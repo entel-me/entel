@@ -51,7 +51,6 @@ export default function PublicList({
   return (
     <Flex
       justifyContent="space-between"
-      overflow="hidden"
       flexDirection="column"
       borderWidth="2px"
       width="sm"
@@ -61,6 +60,7 @@ export default function PublicList({
       onClick={onToggle}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
+      overflow="visible"
     >
       <Flex paddingX="1rem" paddingY=".5rem" justifyContent="space-between" flexDirection="row">
         <Box>
@@ -72,7 +72,7 @@ export default function PublicList({
             <Text>{ownerName}</Text>
           </HStack>
         </Box>
-        <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
+        <Box wordBreak="break-word">
           <HStack>
             <Text>{itemsList.length} item(s)</Text>
             <BiShoppingBag />
@@ -81,7 +81,7 @@ export default function PublicList({
             <Text>{marketName}</Text>
             <BiStore />
           </HStack>
-        </Flex>
+        </Box>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
         <Flex padding="0.5rem" justifyContent="space-between" flexDirection="column">
