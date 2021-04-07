@@ -65,18 +65,23 @@ export default function AcceptedList({
           <HStack alignItems="baseline">
             <BiUserCircle />
             <Text>
-              Owner: <b>{ownerName}</b>
+              Owner: <b>{ownerName}</b>{" "}
+              <IconButton
+                aria-label="link-chats"
+                variant="brand-chat"
+                size="xs"
+                icon={<ChatIcon />}
+                onClick={() => router.push("/chats/[chatId]", "chats/" + chat!.id)}
+              />
             </Text>
-            <IconButton
-              aria-label="link-chats"
-              variant="brand-chat"
-              size="xs"
-              icon={<ChatIcon />}
-              onClick={() => router.push("/chats/[chatId]", "chats/" + chat!.id)}
-            />
           </HStack>
         </Box>
-        <Flex wordBreak="break-word" justifyContent="space-between" flexDirection="column" alignItems="flex-end">
+        <Flex
+          wordBreak="break-word"
+          justifyContent="space-between"
+          flexDirection="column"
+          alignItems="flex-end"
+        >
           <HStack>
             <Text>{itemsList.length} item(s)</Text>
             <BiShoppingBag />
