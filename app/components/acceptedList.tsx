@@ -56,10 +56,10 @@ export default function AcceptedList({
           </Heading>
           <Text>{ownerName}</Text>
         </Box>
-        <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
+        <Box wordBreak="break-word">
           <Text>{itemsList.length} items</Text>
           <Text>{marketName}</Text>
-        </Flex>
+        </Box>
       </Flex>
 
       <Flex justifyContent="space-between" flexDirection="column">
