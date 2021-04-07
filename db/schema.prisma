@@ -32,6 +32,7 @@ model User {
   receivedMessages Message[]      @relation("receivedMessage")
   participatesIn   Chat[]         @relation("participatesIn")
 
+  hasRead AdminMessage[] @relation("wasReadBy")
 }
 
 model Session {
@@ -93,6 +94,7 @@ model Message {
   id      Int      @id @default(autoincrement())
   sentAt  DateTime @default(now())
   content String
+  wasRead Boolean  @default(false)
 
   sentFrom   User @relation("sentMessage", fields: [sentFromId], references: [id])
   sentFromId Int
@@ -117,8 +119,9 @@ model AdminMessage {
   sentAt  DateTime @default(now())
   content String
 
-  sentIn   Chat @relation("adminMessageIn", fields: [sentInId], references: [id])
-  sentInId Int
+  sentIn    Chat   @relation("adminMessageIn", fields: [sentInId], references: [id])
+  sentInId  Int
+  wasReadBy User[] @relation("wasReadBy")
 }
 
 // NOTE: It's highly recommended to use an enum for the token type

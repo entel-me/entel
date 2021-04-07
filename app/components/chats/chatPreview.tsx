@@ -1,16 +1,21 @@
-import { Stack, HStack, Text } from "@chakra-ui/react"
+import { Stack, HStack, Text, Circle } from "@chakra-ui/react"
 import { useQuery } from "blitz"
 import { useRouter } from "blitz"
 import { InfoIcon } from "@chakra-ui/icons"
 import { Message } from "app/queries/getChatsWithLastMessage"
 
-
 interface ChatPreviewProps {
   chatId: number
   userName: string
   lastMessage: Message
+  unreadMessagesCnt: number
 }
-export default function ChatPreview({ chatId, userName, lastMessage }: ChatPreviewProps) {
+export default function ChatPreview({
+  chatId,
+  userName,
+  lastMessage,
+  unreadMessagesCnt,
+}: ChatPreviewProps) {
   const router = useRouter()
   let today = new Date()
   return (
@@ -25,9 +30,16 @@ export default function ChatPreview({ chatId, userName, lastMessage }: ChatPrevi
       onClick={() => router.push("/chats/[chatId]", "chats/" + chatId)}
       _hover={{ cursor: "pointer", borderColor: "brandSilver.500" }}
     >
-      <Text fontSize="2xl" fontWeight="semibold" textColor="brandChestnut.800">
-        {userName}
-      </Text>
+      <HStack>
+        <Text fontSize="2xl" fontWeight="semibold" textColor="brandChestnut.800">
+          {userName}
+        </Text>
+        {unreadMessagesCnt != 0 && (
+          <Circle size="1.5rem" fontSize="1rem" bg="brandGreen.500" color="white">
+            {unreadMessagesCnt}
+          </Circle>
+        )}
+      </HStack>
       {lastMessage && (
         <HStack>
           {lastMessage.sentFrom ? (
