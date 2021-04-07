@@ -16,6 +16,7 @@ import {
   Modal,
   FormLabel,
   useDisclosure,
+  createStandaloneToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
 import { useRouter, BlitzPage } from "blitz"
@@ -35,6 +36,8 @@ export default function EditLists({ getList }) {
 
   const [countItems, setCountItems] = useState(getList!.items.length)
   const [idList, setIdList] = useState(Array.from(Array(countItems).keys()))
+
+  const toast = createStandaloneToast()
 
   let defaultValues = { store: getList.store, specialWish: getList.comment }
   Array.from(Array(getList.items.length).keys()).forEach((id) => {
@@ -84,6 +87,14 @@ export default function EditLists({ getList }) {
                 }
 
                 onClose()
+
+                toast({
+                  title: "Successfully Edited List",
+                  description: "Your changes have been saved to your list",
+                  status: "success",
+                  duration: 5000,
+                  isClosable: true,
+                })
               } catch (error) {}
             }}
             validate={(values) => {

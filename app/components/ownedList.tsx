@@ -16,6 +16,7 @@ import {
   IconButton,
   CloseButton,
   HStack,
+  createStandaloneToast,
 } from "@chakra-ui/react"
 import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
 import { useMutation, useQuery, useRouter } from "blitz"
@@ -58,6 +59,7 @@ export default function OwnedList({
   const [chat] = useQuery(getChatByParticipants, { ownerId: acceptedId })
   const router = useRouter()
   const [archiveListMutation] = useMutation(archiveList)
+  const toast = createStandaloneToast()
   return (
     <Flex
       flexDirection="column"
@@ -122,8 +124,15 @@ export default function OwnedList({
                 icon={<BsArchive />}
                 backgroundColor="white"
                 _hover={{ backgroundColor: "brandGreen.500", color: "white" }}
-                onClick={() => {
-                  archiveListMutation(listId)
+                onClick={async () => {
+                  await archiveListMutation(listId)
+                  toast({
+                    title: "Successfully Archived List",
+                    description: "You will find your archived lists under 'Menu/Archived Lists'",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                  })
                 }}
               />
             )}
@@ -142,6 +151,13 @@ export default function OwnedList({
           onClick={async () => {
             await renewListMutation(listId)
             refetch()
+            toast({
+              title: "Successfully Renewed List",
+              description: "You will find your published lists under 'Home'",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            })
           }}
         >
           Renew
