@@ -1,22 +1,21 @@
 import { Stack, HStack, Text } from "@chakra-ui/react"
-import getLastMessage from "../../queries/getLastMessage"
 import { useQuery } from "blitz"
 import { useRouter } from "blitz"
 import { InfoIcon } from "@chakra-ui/icons"
+import { Message } from "app/queries/getChatsWithLastMessage"
 
 interface ChatPreviewProps {
   chatId: number
   userName: string
+  lastMessage: Message
 }
-export default function ChatPreview({ chatId, userName }: ChatPreviewProps) {
-  const [lastMessage] = useQuery(getLastMessage, { chatId })
+export default function ChatPreview({ chatId, userName, lastMessage }: ChatPreviewProps) {
   const router = useRouter()
   return (
     <Stack
       spacing="0.1rem"
       textAlign="left"
       margin="0.5rem"
-      marginRight="2rem"
       borderWidth="2px"
       borderRadius="5px"
       borderColor="brandSilver.200"

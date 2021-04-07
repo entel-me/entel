@@ -11,17 +11,22 @@ import {
   HStack,
   Button,
   List,
+  IconButton,
 } from "@chakra-ui/react"
-import { InfoIcon } from "@chakra-ui/icons"
-import { useMutation } from "blitz"
+import { ChatIcon, InfoIcon } from "@chakra-ui/icons"
+import { useMutation, useQuery, useRouter } from "blitz"
 import doneList from "../mutations/doneList"
 import renewList from "../mutations/renewList"
+import createAdminMessage from "app/mutations/createAdminMessage"
+import getChatByParticipants from "app/queries/getChatByParticipants"
+import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
 
 interface AcceptedListProps {
   distance: Number
   marketName: String
   itemsList: String[]
   ownerName: String
+  ownerId: Number
   specialWish?: String
   listId: Number
   refetch
@@ -31,13 +36,16 @@ export default function AcceptedList({
   marketName,
   itemsList,
   ownerName,
+  ownerId,
   specialWish,
   listId,
   refetch,
 }: AcceptedListProps) {
   const [doneListMutation] = useMutation(doneList)
   const [undoAcceptMutation] = useMutation(renewList)
-
+  const [createAdminMessageMutation] = useMutation(createAdminMessage)
+  const [chat] = useQuery(getChatByParticipants, { ownerId })
+  const router = useRouter()
   return (
     <Flex
       justifyContent="space-between"
@@ -54,11 +62,29 @@ export default function AcceptedList({
           <Heading color="brandGreen.900" fontSize="2xl">
             {Number.isNaN(distance) ? "∞" : distance == 0 ? "< 1" : distance} km
           </Heading>
-          <Text>{ownerName}</Text>
+          <HStack alignItems="baseline">
+            <BiUserCircle />
+            <Text>
+              Owner: <b>{ownerName}</b>
+            </Text>
+            <IconButton
+              aria-label="link-chats"
+              variant="brand-chat"
+              size="xs"
+              icon={<ChatIcon />}
+              onClick={() => router.push("/chats/[chatId]", "chats/" + chat!.id)}
+            />
+          </HStack>
         </Box>
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
-          <Text>{itemsList.length} items</Text>
-          <Text>{marketName}</Text>
+          <HStack>
+            <Text>{itemsList.length} item(s)</Text>
+            <BiShoppingBag />
+          </HStack>
+          <HStack>
+            <Text>{marketName}</Text>
+            <BiStore />
+          </HStack>
         </Flex>
       </Flex>
 
@@ -81,6 +107,10 @@ export default function AcceptedList({
             margin="0.2rem"
             onClick={async () => {
               await doneListMutation(listId)
+              await createAdminMessageMutation({
+                content: "The helper bought your item. Hurray!",
+                chatId: chat!.id,
+              })
               refetch()
             }}
           >
@@ -88,11 +118,15 @@ export default function AcceptedList({
             Done{" "}
           </Button>
           <Button
-            variant="brand"
+            variant="brand-close"
             flex={1}
             margin="0.2rem"
             onClick={async () => {
               await undoAcceptMutation(listId)
+              await createAdminMessageMutation({
+                content: "The list has unfortunately returned to the ' is pending' state",
+                chatId: chat!.id,
+              })
               refetch()
             }}
           >

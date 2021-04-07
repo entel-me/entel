@@ -10,7 +10,7 @@ export default async function getArchivedLists(_ = null, context: Ctx) {
       comment: true,
       store: true,
       items: { select: { name: true } },
-      acceptedBy: { select: { name: true } },
+      acceptedBy: { select: { name: true, id: true } },
     },
   })
   return lists

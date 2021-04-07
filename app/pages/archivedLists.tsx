@@ -33,6 +33,7 @@ export default function ArchivedLists() {
                     itemsList={list.items.map((item) => item.name)}
                     status={2}
                     acceptedName={list.acceptedBy!.name!}
+                    acceptedId={list.acceptedBy!.id!}
                     specialWish={list.comment}
                     listId={list.id}
                     refetch={archivedListsRefetch}
@@ -41,7 +42,7 @@ export default function ArchivedLists() {
               )
             })
           ) : (
-            <Text>Here, you can see archived lists.</Text>
+            <Text>Here, you will see your archived lists.</Text>
           )}
         </Wrap>
       </Flex>

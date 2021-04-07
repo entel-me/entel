@@ -44,6 +44,7 @@ export default function ActiveLists() {
                       )
                     )}
                     ownerName={YourList.createdBy!.name!}
+                    ownerId={YourList.createdBy!.id!}
                     specialWish={YourList.comment}
                     listId={YourList.id}
                     refetch={activeListsRefetch}
