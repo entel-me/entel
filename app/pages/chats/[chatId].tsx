@@ -21,9 +21,11 @@ import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import getParticipantsByChatId from "../../queries/getParticipantsByChatId"
 import sendMessage from "../../mutations/sendMessage"
-import { useLayoutEffect } from "react"
+import markMessagesAsRead from "../../mutations/markMessagesAsRead"
+import { useEffect, useLayoutEffect } from "react"
 import { RiMailSendLine } from "react-icons/ri"
 import { BiUserCircle } from "react-icons/bi"
+import markAdminMessagesAsRead from "app/mutations/markAdminAsRead"
 
 export default function ArchivedLists() {
   const chatId = useParam("chatId", "number")
@@ -38,10 +40,14 @@ export default function ArchivedLists() {
   const [messages, messagesExtra] = useQuery(getMessagesByChat, { chatId })
   const [sendMessageMutation] = useMutation(sendMessage)
 
-  useLayoutEffect(() => {
+  const [markMessagesAsReadMutation] = useMutation(markMessagesAsRead)
+  const [markAdminMessagesAsReadMutation] = useMutation(markAdminMessagesAsRead)
+  useEffect(() => {
+    markMessagesAsReadMutation({ chatId })
+    markAdminMessagesAsReadMutation({ chatId })
     const message = document.getElementById("messages")!
     message.scrollTop = message.scrollHeight
-  })
+  }, [])
 
   return (
     <Layout>

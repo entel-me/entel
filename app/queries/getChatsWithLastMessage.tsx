@@ -37,16 +37,37 @@ export default async function getChatsWithLastMessage(_ = null, context: Ctx) {
       },
     })
 
+    const unreadNormalMessagesCnt = await db.message.count({
+      where: { sentInId: id, wasRead: false },
+    })
+    const unreadAdminMessagesCnt = await db.adminMessage.count({
+      where: { sentInId: id, wasReadBy: { none: { id: context.session.userId! } } },
+    })
+    const unreadMessagesCnt = (
+      await Promise.all([unreadAdminMessagesCnt, unreadNormalMessagesCnt])
+    ).reduce((pre, curr) => pre + curr)
+
     if (lastAdminMessage && lastMessage) {
       return {
         lastMessage: lastAdminMessage.sentAt > lastMessage.sentAt ? lastAdminMessage : lastMessage,
+        unreadMessagesCnt: unreadMessagesCnt,
         id: id,
         participatingUsers: participatingUsers,
       }
     } else if (lastAdminMessage) {
-      return { lastMessage: lastAdminMessage, id: id, participatingUsers: participatingUsers }
+      return {
+        lastMessage: lastAdminMessage,
+        unreadMessagesCnt: unreadMessagesCnt,
+        id: id,
+        participatingUsers: participatingUsers,
+      }
     }
-    return { lastMessage: lastMessage, id: id, participatingUsers: participatingUsers }
+    return {
+      lastMessage: lastMessage,
+      unreadMessagesCnt: unreadMessagesCnt,
+      id: id,
+      participatingUsers: participatingUsers,
+    }
   })
   const result = await Promise.all(chatsAndMessage)
   return result

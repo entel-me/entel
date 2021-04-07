@@ -28,13 +28,16 @@ import {
   FormErrorMessage,
   Box,
   HStack,
+  Circle,
+  Text,
 } from "@chakra-ui/react"
 import { HamburgerIcon, SunIcon } from "@chakra-ui/icons"
-import { AuthenticationError, Head, useMutation } from "blitz"
+import { AuthenticationError, Head, useMutation, useQuery } from "blitz"
 import logout from "app/auth/mutations/logout"
 
 import { useMediaQuery } from "react-responsive"
 import { ChangePassword } from "./changePasswordModal"
+import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
 export default function Layout({ children }) {
   const [logoutMutation] = useMutation(logout)
@@ -42,6 +45,7 @@ export default function Layout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
 
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   const menuLinks: { name: string; link: string }[] = [
     { name: "Home", link: "/" },
     { name: "Active lists", link: "/activeLists" },
@@ -80,25 +84,64 @@ export default function Layout({ children }) {
             >
               {!isMobile && (
                 <HStack marginRight="1rem">
-                  {menuLinks.map(({ name, link }) => {
-                    return (
-                      <Link
-                        textTransform="uppercase"
-                        fontFamily="Raleway"
-                        fontWeight="semibold"
-                        paddingX="0.4rem"
-                        fontSize="lg"
-                        borderBottomWidth="0.3rem"
-                        borderBottomColor={
-                          window.location.pathname == link ? "brandGreen.500" : "brandSilver.200"
-                        }
-                        _hover={{ borderBottomColor: "brandSilver.500" }}
-                        href={link}
-                      >
-                        {name}
-                      </Link>
-                    )
-                  })}
+                  <Link
+                    textTransform="uppercase"
+                    fontFamily="Raleway"
+                    fontWeight="semibold"
+                    paddingX="0.4rem"
+                    fontSize="lg"
+                    borderBottomWidth="0.3rem"
+                    borderBottomColor={
+                      window.location.pathname == "/" ? "brandGreen.500" : "brandSilver.200"
+                    }
+                    _hover={{ borderBottomColor: "brandSilver.500" }}
+                    href="/"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    textTransform="uppercase"
+                    fontFamily="Raleway"
+                    fontWeight="semibold"
+                    paddingX="0.4rem"
+                    fontSize="lg"
+                    borderBottomWidth="0.3rem"
+                    borderBottomColor={
+                      window.location.pathname == "/activeLists"
+                        ? "brandGreen.500"
+                        : "brandSilver.200"
+                    }
+                    _hover={{ borderBottomColor: "brandSilver.500" }}
+                    href="/activeLists"
+                  >
+                    Active lists
+                  </Link>
+                  <Link
+                    textTransform="uppercase"
+                    fontFamily="Raleway"
+                    fontWeight="semibold"
+                    paddingX="0.3rem"
+                    fontSize="lg"
+                    borderBottomWidth="0.3rem"
+                    paddingRight={hasUnreadMessage ? "0" : "0.3rem"}
+                    borderBottomColor={
+                      window.location.pathname == "/chats" ? "brandGreen.500" : "brandSilver.200"
+                    }
+                    _hover={{ borderBottomColor: "brandSilver.500" }}
+                    href="/chats"
+                  >
+                    <HStack>
+                      <Text>Chats</Text>
+                      {hasUnreadMessage && (
+                        <Circle
+                          style={{ marginInlineStart: "0" }}
+                          alignSelf="start"
+                          size=".3rem"
+                          bg="brandChestnut.500"
+                        />
+                      )}
+                    </HStack>
+                  </Link>
                 </HStack>
               )}
               <Menu placement="bottom-end" closeOnBlur={true}>

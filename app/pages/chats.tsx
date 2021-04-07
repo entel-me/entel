@@ -6,7 +6,7 @@ import getChatsWithLastMessage from "../queries/getChatsWithLastMessage"
 
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
-export default function ArchivedLists() {
+export default function Chats() {
   const [chats] = useQuery(getChatsWithLastMessage, null)
   const currentUser = useCurrentUser()
 
@@ -28,7 +28,7 @@ export default function ArchivedLists() {
           <Stack textAlign="left">
             {chats
               .sort((chatA, chatB) => {
-                return -chatA.lastMessage!.sentAt.getTime() + chatB.lastMessage!.sentAt.getTime()
+                return chatB.lastMessage!.sentAt.getTime() - chatA.lastMessage!.sentAt.getTime()
               })
               .map((chat) => {
                 return (
@@ -38,6 +38,7 @@ export default function ArchivedLists() {
                       chat.participatingUsers.filter((u) => u.id != currentUser?.id)[0].name!
                     }
                     lastMessage={chat.lastMessage!}
+                    unreadMessagesCnt={chat.unreadMessagesCnt}
                   />
                 )
               })}
