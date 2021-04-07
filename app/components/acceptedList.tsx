@@ -12,6 +12,7 @@ import {
   Button,
   List,
   IconButton,
+  createStandaloneToast,
 } from "@chakra-ui/react"
 import { ChatIcon, InfoIcon } from "@chakra-ui/icons"
 import { useMutation, useQuery, useRouter } from "blitz"
@@ -46,6 +47,7 @@ export default function AcceptedList({
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
   const [chat] = useQuery(getChatByParticipants, { ownerId })
   const router = useRouter()
+  const toast = createStandaloneToast()
   return (
     <Flex
       justifyContent="space-between"
@@ -117,6 +119,13 @@ export default function AcceptedList({
                 chatId: chat!.id,
               })
               refetch()
+              toast({
+                title: "Successfully Finished List",
+                description: "You have successfully finished your task",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
             }}
           >
             {" "}
@@ -133,6 +142,14 @@ export default function AcceptedList({
                 chatId: chat!.id,
               })
               refetch()
+              toast({
+                title: "Successfully Cancelled List",
+                description:
+                  "You will not need to finish this task. Please be sure to finish your accepted tasks the next time you accept a list. ",
+                status: "success",
+                duration: 7000,
+                isClosable: true,
+              })
             }}
           >
             {" "}

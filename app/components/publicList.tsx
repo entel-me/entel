@@ -11,6 +11,7 @@ import {
   Button,
   List,
   HStack,
+  createStandaloneToast,
 } from "@chakra-ui/react"
 import { InfoIcon } from "@chakra-ui/icons"
 import { useMutation, useQuery } from "blitz"
@@ -47,7 +48,7 @@ export default function PublicList({
   const [createChatMutation] = useMutation(createChat)
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
   const [chat] = useQuery(getChatByParticipants, { ownerId })
-
+  const toast = createStandaloneToast()
   return (
     <Flex
       justifyContent="space-between"
@@ -116,6 +117,14 @@ export default function PublicList({
                   chatId: chatId.id,
                 })
               }
+
+              toast({
+                title: "Successfully Accepted List",
+                description: "You will find your accepted lists under 'Active Lists'",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
             }}
           >
             {" "}

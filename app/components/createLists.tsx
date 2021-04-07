@@ -16,6 +16,7 @@ import {
   Modal,
   FormLabel,
   useDisclosure,
+  createStandaloneToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
 import createList from "../mutations/createList"
@@ -32,6 +33,7 @@ export default function CreateLists() {
   const [countItems, setCountItems] = useState(1)
   const [idList, setIdList] = useState([0])
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = createStandaloneToast()
 
   return (
     <>
@@ -81,6 +83,13 @@ export default function CreateLists() {
                 setIdList([0])
                 setCountItems(1)
                 onClose()
+                toast({
+                  title: "Successfully Created List",
+                  description: "You will find your created lists under 'Home'",
+                  status: "success",
+                  duration: 5000,
+                  isClosable: true,
+                })
               } catch (error) {}
             }}
             validate={(values) => {
