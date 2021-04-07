@@ -3,6 +3,7 @@ import getLastMessage from "../../queries/getLastMessage"
 import { useQuery } from "blitz"
 import { useRouter } from "blitz"
 import { InfoIcon } from "@chakra-ui/icons"
+import { convertTransitionToAnimationOptions } from "framer-motion/types/animation/utils/transitions"
 
 interface ChatPreviewProps {
   chatId: number
@@ -11,6 +12,7 @@ interface ChatPreviewProps {
 export default function ChatPreview({ chatId, userName }: ChatPreviewProps) {
   const [lastMessage] = useQuery(getLastMessage, { chatId })
   const router = useRouter()
+  let today = new Date()
   return (
     <Stack
       spacing="0.1rem"
@@ -39,7 +41,13 @@ export default function ChatPreview({ chatId, userName }: ChatPreviewProps) {
           </Text>
         </HStack>
       )}
-      <Text fontSize="sm">{lastMessage && lastMessage.sentAt.toDateString()}</Text>
+      {lastMessage!.sentAt.toDateString() == today.toDateString() ? (
+        <Text fontSize="sm">
+          {lastMessage && lastMessage.sentAt.toLocaleTimeString([], { timeStyle: "short" })}
+        </Text>
+      ) : (
+        <Text fontSize="sm">{lastMessage && lastMessage.sentAt.toLocaleDateString()}</Text>
+      )}
     </Stack>
   )
 }
