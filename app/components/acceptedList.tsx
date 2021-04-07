@@ -76,7 +76,7 @@ export default function AcceptedList({
             />
           </HStack>
         </Box>
-        <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
+        <Flex wordBreak="break-word" justifyContent="space-between" flexDirection="column" alignItems="flex-end">
           <HStack>
             <Text>{itemsList.length} item(s)</Text>
             <BiShoppingBag />

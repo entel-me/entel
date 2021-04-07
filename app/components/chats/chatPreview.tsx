@@ -4,6 +4,7 @@ import { useRouter } from "blitz"
 import { InfoIcon } from "@chakra-ui/icons"
 import { Message } from "app/queries/getChatsWithLastMessage"
 
+
 interface ChatPreviewProps {
   chatId: number
   userName: string
@@ -11,6 +12,7 @@ interface ChatPreviewProps {
 }
 export default function ChatPreview({ chatId, userName, lastMessage }: ChatPreviewProps) {
   const router = useRouter()
+  let today = new Date()
   return (
     <Stack
       spacing="0.1rem"
@@ -38,7 +40,13 @@ export default function ChatPreview({ chatId, userName, lastMessage }: ChatPrevi
           </Text>
         </HStack>
       )}
-      <Text fontSize="sm">{lastMessage && lastMessage.sentAt.toDateString()}</Text>
+      {lastMessage!.sentAt.toDateString() == today.toDateString() ? (
+        <Text fontSize="sm">
+          {lastMessage && lastMessage.sentAt.toLocaleTimeString([], { timeStyle: "short" })}
+        </Text>
+      ) : (
+        <Text fontSize="sm">{lastMessage && lastMessage.sentAt.toLocaleDateString()}</Text>
+      )}
     </Stack>
   )
 }
