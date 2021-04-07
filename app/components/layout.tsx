@@ -165,17 +165,37 @@ export default function Layout({ children }) {
                 >
                   {isMobile && (
                     <>
-                      {menuLinks.map(({ name, link }) => {
-                        return (
-                          <MenuItem
-                            _focus={{ backgroundColor: "brandSilver.200" }}
-                            _hover={{ backgroundColor: "brandSilver.200" }}
-                            onClick={() => (window.location.href = link)}
-                          >
-                            {name}
-                          </MenuItem>
-                        )
-                      })}
+                      <MenuItem
+                        _focus={{ backgroundColor: "brandSilver.200" }}
+                        _hover={{ backgroundColor: "brandSilver.200" }}
+                        onClick={() => (window.location.href = "/")}
+                      >
+                        Home
+                      </MenuItem>
+                      <MenuItem
+                        _focus={{ backgroundColor: "brandSilver.200" }}
+                        _hover={{ backgroundColor: "brandSilver.200" }}
+                        onClick={() => (window.location.href = "/activeLists")}
+                      >
+                        Active lists
+                      </MenuItem>
+                      <MenuItem
+                        _focus={{ backgroundColor: "brandSilver.200" }}
+                        _hover={{ backgroundColor: "brandSilver.200" }}
+                        onClick={() => (window.location.href = "/chats")}
+                      >
+                        <HStack>
+                          <Text>Chats</Text>
+                          {hasUnreadMessage && (
+                            <Circle
+                              style={{ marginInlineStart: "0" }}
+                              alignSelf="start"
+                              size=".3rem"
+                              bg="brandChestnut.500"
+                            />
+                          )}
+                        </HStack>
+                      </MenuItem>
                     </>
                   )}
                   <MenuItem
