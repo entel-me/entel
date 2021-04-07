@@ -32,8 +32,8 @@ export default function ArchivedLists() {
                     marketName={list.store}
                     itemsList={list.items.map((item) => item.name)}
                     status={2}
-                    acceptedName={list.acceptedBy!.name!}
-                    acceptedId={list.acceptedBy!.id!}
+                    acceptedName={list.acceptedBy != null ? list.acceptedBy.name : undefined}
+                    acceptedId={list.acceptedBy != null ? list.acceptedBy.id : undefined}
                     specialWish={list.comment}
                     listId={list.id}
                     refetch={archivedListsRefetch}

@@ -23,12 +23,14 @@ import renewList from "../mutations/renewList"
 import EditLists from "../components/editList"
 import RemoveList from "../components/removeListModal"
 import getChatByParticipants from "app/queries/getChatByParticipants"
+import { BsArchive } from "react-icons/bs"
+import archiveList from "../mutations/archiveList"
 
 interface OwnedListProps {
   marketName: String
   itemsList: String[]
   status: Number
-  acceptedName?: String
+  acceptedName?: string
   acceptedId?: number
   specialWish?: String
   listId: Number
@@ -55,6 +57,7 @@ export default function OwnedList({
   const [renewListMutation] = useMutation(renewList)
   const [chat] = useQuery(getChatByParticipants, { ownerId: acceptedId })
   const router = useRouter()
+  const [archiveListMutation] = useMutation(archiveList)
   return (
     <Flex
       flexDirection="column"
@@ -103,7 +106,7 @@ export default function OwnedList({
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
           <HStack>
             {statusBadge}
-            {status == 0 && (
+            {status == 2 && (
               <RemoveList
                 modalHeader="Confirmation"
                 modalBody="Are you sure you want to delete this Shoppinglist permanently?"
@@ -111,11 +114,25 @@ export default function OwnedList({
               />
             )}
           </HStack>
-          {status == 0 && (
-            <EditLists
-              getList={{ id: listId, store: marketName, comment: specialWish, items: itemsList }}
-            />
-          )}
+          <HStack>
+            {status == 0 && (
+              <IconButton
+                size="xs"
+                aria-label="archive button"
+                icon={<BsArchive />}
+                backgroundColor="white"
+                _hover={{ backgroundColor: "brandGreen.500", color: "white" }}
+                onClick={() => {
+                  archiveListMutation(listId)
+                }}
+              />
+            )}
+            {status == 0 && (
+              <EditLists
+                getList={{ id: listId, store: marketName, comment: specialWish, items: itemsList }}
+              />
+            )}
+          </HStack>
         </Flex>
       </Flex>
       {status == 2 && (

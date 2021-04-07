@@ -5,6 +5,6 @@ export default async function doneList(listId, context: Ctx) {
   context.session.$authorize()
   await db.shoppinglist.update({
     where: { id: listId },
-    data: { status: 2 },
+    data: { status: 2, acceptedBy: { disconnect: true } },
   })
 }
