@@ -30,6 +30,7 @@ import {
   HStack,
   Circle,
   Text,
+  Image,
 } from "@chakra-ui/react"
 import { HamburgerIcon, SunIcon } from "@chakra-ui/icons"
 import { AuthenticationError, Head, useMutation, useQuery } from "blitz"
@@ -71,10 +72,14 @@ export default function Layout({ children }) {
             direction="row"
             justifyContent="space-between"
             alignItems="self-end"
+            marginTop="10px"
           >
-            <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
-              entel
-            </Heading>
+            <HStack>
+              <Image src="/logo.png" width="5.5rem" height="5.5rem" marginRight="0.4rem" />
+              <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
+                entel
+              </Heading>
+            </HStack>
             <Flex
               direction="row"
               justifyContent="space-between"
