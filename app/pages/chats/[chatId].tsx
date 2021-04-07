@@ -72,7 +72,7 @@ export default function ArchivedLists() {
           >
             {messages.map((m) => {
               if (!m.sentFrom) {
-                return <AdminMessage content={m.content} />
+                return <AdminMessage content={m.content} timeStamp={m.sentAt} />
               } else if (m.sentFrom.id == currentUser!.id) {
                 return (
                   <OwnMessage

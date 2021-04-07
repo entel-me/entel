@@ -6,6 +6,7 @@ interface StrangeMessageProps {
   userName: string
 }
 export default function StrangeMessage({ content, timeStamp, userName }: StrangeMessageProps) {
+  let today = new Date()
   return (
     <Stack spacing="0.1rem" textAlign="left" margin="0.5rem">
       <Box
@@ -17,7 +18,19 @@ export default function StrangeMessage({ content, timeStamp, userName }: Strange
       >
         <Text color="white">{content}</Text>
       </Box>
-      <Text fontSize="sm">{timeStamp.toDateString()}</Text>
+      {timeStamp.toDateString() == today.toDateString() ? (
+        <Text fontSize="sm">{timeStamp.toLocaleTimeString([], { timeStyle: "short" })}</Text>
+      ) : (
+        <Text fontSize="sm">
+          {timeStamp.toLocaleString([], {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </Text>
+      )}
     </Stack>
   )
 }
