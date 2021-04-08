@@ -16,7 +16,7 @@ import { useRouter } from "blitz"
 import { getDistanceByHaversine, useCurrentPosition } from "../lib/position"
 import CreateLists from "../components/createLists"
 import FrontPage from "../components/LandingPage/frontPage"
-import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"r
+import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
@@ -167,12 +167,12 @@ const Welcome: BlitzPage = () => {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>entel | Home</title>
-    </Head>
-    <Layout user={false}>
-      <FrontPage />
-    </Layout>
+      </Head>
+      <Layout user={false}>
+        <FrontPage />
+      </Layout>
     </>
   )
 }

@@ -27,25 +27,26 @@ import {
   HStack,
   Circle,
   Text,
-  Image,
   VStack,
   UnorderedList,
   ListItem,
 } from "@chakra-ui/react"
+import { useMediaQuery } from "react-responsive"
 import OwnedList from "../LandingPage/frontPageOwnedList"
 import PublicList from "../LandingPage/frontPagePublicList"
 import Chat from "../LandingPage/frontPageChat"
-
+import { Image } from "blitz"
 export default function FrontPage() {
+  const isMobile = useMediaQuery({ query: `(max-width: 850px)` })
   return (
     <>
       <VStack>
         <Flex direction="column" alignItems="center" width="100vw" backgroundColor="brandGreen.800">
-          <Image src="/logo_1.png" width={["15", "20rem"]} height={["15rem", "20rem"]} />
+          <Image src="/logo_1.png" width={isMobile ? 300 : 500} height={isMobile ? 300 : 500} />
           <Heading
             fontSize={["8rem", "12rem"]}
+            lineHeight={["8rem", "10rem"]}
             margin-block-end="0rem"
-            lineHeight="10rem"
             fontWeight="extrabold"
             fontFamily="Raleway"
             color="white"
@@ -54,7 +55,7 @@ export default function FrontPage() {
           </Heading>
           <Text
             fontSize={["1.75rem", "2.75rem"]}
-            lineHeight="6rem"
+            lineHeight={["4rem", "6rem"]}
             fontWeight="extrabold"
             fontFamily="Raleway"
             color="white"

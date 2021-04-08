@@ -60,7 +60,12 @@ export default function PublicList({
             <Text>{ownerName}</Text>
           </HStack>
         </Box>
-        <Box wordBreak="break-word">
+        <Flex
+          direction="column"
+          justifyContent="space-between"
+          alignItems="end"
+          wordBreak="break-word"
+        >
           <HStack>
             <Text>{itemsList.length} item(s)</Text>
             <BiShoppingBag />
@@ -69,7 +74,7 @@ export default function PublicList({
             <Text>{marketName}</Text>
             <BiStore />
           </HStack>
-        </Box>
+        </Flex>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
         <Divider height="0.25rem" color="black" />
