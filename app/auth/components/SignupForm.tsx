@@ -3,7 +3,7 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
-import { Heading, Flex } from "@chakra-ui/react"
+import { Heading, Flex, Button, useDisclosure } from "@chakra-ui/react"
 
 type SignupFormProps = {
   onSuccess?: () => void
@@ -11,17 +11,20 @@ type SignupFormProps = {
 
 export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
-      <Heading size="2xl" margin="1rem">
-        Create an Account
-      </Heading>
-
+      <Button onClick={onOpen} padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
+        Signup
+      </Button>
       <Form
         submitText="Create Account"
         schema={Signup}
         initialValues={{ name: "", email: "", password: "" }}
+        modalHeader="Create an Account"
+        onClose={onClose}
+        isOpen={isOpen}
         onSubmit={async (values) => {
           try {
             await signupMutation(values)

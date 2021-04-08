@@ -1,5 +1,6 @@
 import { forwardRef, PropsWithoutRef } from "react"
 import { useField } from "react-final-form"
+import { FormControl, Input, FormLabel } from "@chakra-ui/react"
 
 export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElements["input"]> {
   /** Field name. */
@@ -24,10 +25,10 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
 
     return (
       <div {...outerProps}>
-        <label>
-          {label}
-          <input {...input} disabled={submitting} {...props} ref={ref} />
-        </label>
+        <FormControl isRequired isInvalid={(error && touched) || submitError}>
+          <FormLabel>{label}</FormLabel>
+          <Input {...input} disabled={submitting} {...props} ref={ref} />
+        </FormControl>
 
         {touched && normalizedError && (
           <div role="alert" style={{ color: "red" }}>

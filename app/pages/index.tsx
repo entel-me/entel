@@ -40,31 +40,6 @@ import CreateLists from "../components/createLists"
  * You can delete everything in here and start from scratch if you like.
  */
 
-const CustomModal = ({ showModalButtonText, modalHeader, modalBody }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  return (
-    <>
-      <Button onClick={onOpen} padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
-        {showModalButtonText}
-      </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{modalHeader}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>{modalBody}</ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  )
-}
-
 function App() {
   const [acceptedLists] = useQuery(getOwnListByStatus, 1, { refetchInterval: 2000 })
   const [pendingLists] = useQuery(getOwnListByStatus, 0, { refetchInterval: 2000 })
@@ -214,25 +189,13 @@ const Welcome: BlitzPage = () => {
       <Heading fontSize="5xl">Farmers' Market</Heading>
       <Text margin="1rem">bla bla bla</Text>
       <HStack align="center">
-        <CustomModal
-          showModalButtonText="Sign Up"
-          modalHeader=""
-          modalBody={<SignupForm onSuccess={() => router.push("/")} />}
-        />
+        <SignupForm onSuccess={() => router.push("/")} />
         <Text>{" - "}</Text>
-        <CustomModal
-          showModalButtonText="Login"
-          modalHeader=""
-          modalBody={
-            <LoginForm
-              onSuccess={() => {
-                const next = router.query.next
-                  ? decodeURIComponent(router.query.next as string)
-                  : "/"
-                router.push(next)
-              }}
-            />
-          }
+        <LoginForm
+          onSuccess={() => {
+            const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
+            router.push(next)
+          }}
         />
       </HStack>
     </Flex>
