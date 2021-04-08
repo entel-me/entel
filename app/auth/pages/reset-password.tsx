@@ -1,9 +1,12 @@
 import { BlitzPage, useRouterQuery, Link, useMutation } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "app/core/components/Form"
+import { ResetPasswordForm, FORM_ERROR } from "app/core/components/resetPasswordForm"
 import { ResetPassword } from "app/auth/validations"
 import resetPassword from "app/auth/mutations/resetPassword"
+import { ReactNode, PropsWithoutRef } from "react"
+import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
+import * as z from "zod"
 
 const ResetPasswordPage: BlitzPage = () => {
   const query = useRouterQuery()
@@ -21,7 +24,7 @@ const ResetPasswordPage: BlitzPage = () => {
           </p>
         </div>
       ) : (
-        <Form
+        <ResetPasswordForm
           submitText="Reset Password"
           schema={ResetPassword.omit({ token: true })}
           initialValues={{ password: "", passwordConfirmation: "" }}
@@ -47,7 +50,7 @@ const ResetPasswordPage: BlitzPage = () => {
             label="Confirm New Password"
             type="password"
           />
-        </Form>
+        </ResetPasswordForm>
       )}
     </div>
   )

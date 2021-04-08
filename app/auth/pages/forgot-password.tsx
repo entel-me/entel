@@ -4,14 +4,14 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import { ForgotPassword } from "app/auth/validations"
 import forgotPassword from "app/auth/mutations/forgotPassword"
+import { Flex, Button, useDisclosure } from "@chakra-ui/react"
 
 const ForgotPasswordPage: BlitzPage = () => {
   const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword)
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <div>
-      <h1>Forgot your password?</h1>
-
       {isSuccess ? (
         <div>
           <h2>Request Submitted</h2>
@@ -21,22 +21,36 @@ const ForgotPasswordPage: BlitzPage = () => {
           </p>
         </div>
       ) : (
-        <Form
-          submitText="Send Reset Password Instructions"
-          schema={ForgotPassword}
-          initialValues={{ email: "" }}
-          onSubmit={async (values) => {
-            try {
-              await forgotPasswordMutation(values)
-            } catch (error) {
-              return {
-                [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
-              }
-            }
-          }}
+        <Flex
+          direction="column"
+          alignItems="left"
+          justifyContent="center"
+          alignContent="center"
+          margin="1rem"
         >
-          <LabeledTextField name="email" label="Email" placeholder="Email" />
-        </Form>
+          <Button onClick={onOpen} borderWidth="0.1rem" borderRadius="md" align="left">
+            Forgot Password
+          </Button>
+          <Form
+            submitText="Send Reset Password Instructions"
+            schema={ForgotPassword}
+            onClose={onClose}
+            isOpen={isOpen}
+            modalHeader="Forgot your password?"
+            initialValues={{ email: "" }}
+            onSubmit={async (values) => {
+              try {
+                await forgotPasswordMutation(values)
+              } catch (error) {
+                return {
+                  [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+                }
+              }
+            }}
+          >
+            <LabeledTextField name="email" label="Email" placeholder="Email" />
+          </Form>
+        </Flex>
       )}
     </div>
   )
