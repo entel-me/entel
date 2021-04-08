@@ -18,7 +18,9 @@ export default function AdminMessage({ content, timeStamp }: AdminMessageProps) 
         <Text color="white">{content}</Text>
       </Box>
       {timeStamp.toDateString() == today.toDateString() ? (
-        <Text fontSize="sm">{timeStamp.toLocaleTimeString([], { timeStyle: "short" })}</Text>
+        <Text fontSize="sm">
+          {timeStamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+        </Text>
       ) : (
         <Text fontSize="sm">
           {timeStamp.toLocaleString([], {

@@ -21,6 +21,9 @@ import renewList from "../mutations/renewList"
 import createAdminMessage from "app/mutations/createAdminMessage"
 import getChatByParticipants from "app/queries/getChatByParticipants"
 import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
+import { Link as BlitzLink } from "blitz"
+import { getDistanceString, useCurrentPosition } from "app/lib/position"
+import { useEffect } from "react"
 
 interface AcceptedListProps {
   distance: Number
@@ -48,6 +51,8 @@ export default function AcceptedList({
   const [chat] = useQuery(getChatByParticipants, { ownerId })
   const router = useRouter()
   const toast = createStandaloneToast()
+  useCurrentPosition()
+
   return (
     <Flex
       justifyContent="space-between"
@@ -62,19 +67,20 @@ export default function AcceptedList({
       <Flex justifyContent="space-between" flexDirection="row">
         <Box>
           <Heading color="brandGreen.900" fontSize="2xl">
-            {Number.isNaN(distance) ? "∞" : distance == 0 ? "< 1" : distance} km
+            {getDistanceString(distance)}
           </Heading>
           <HStack alignItems="baseline">
             <BiUserCircle />
             <Text>
               Owner: <b>{ownerName}</b>{" "}
-              <IconButton
-                aria-label="link-chats"
-                variant="brand-chat"
-                size="xs"
-                icon={<ChatIcon />}
-                onClick={() => router.push("/chats/[chatId]", "chats/" + chat!.id)}
-              />
+              <BlitzLink href={"/chats/" + chat!.id}>
+                <IconButton
+                  aria-label="link-chats"
+                  variant="brand-chat"
+                  size="xs"
+                  icon={<ChatIcon />}
+                />
+              </BlitzLink>
             </Text>
           </HStack>
         </Box>

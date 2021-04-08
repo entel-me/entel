@@ -2,7 +2,7 @@ import { Flex, Heading, Text, Wrap, WrapItem } from "@chakra-ui/react"
 import Layout from "../components/layout"
 import OwnedList from "../components/ownedList"
 import getArchivedLists from "../queries/getArchivedLists"
-import { useQuery } from "blitz"
+import { Head, useQuery } from "blitz"
 import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
 export default function ArchivedLists() {
@@ -12,43 +12,48 @@ export default function ArchivedLists() {
   const archivedListsRefetch = archivedListsExtras.refetch
   const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
-    <Layout hasUnreadMessage={hasUnreadMessage}>
-      <Flex textAlign="left" direction="column" width="full">
-        <Heading
-          as="h2"
-          fontFamily="Raleway"
-          fontWeight="bolder"
-          fontSize="4xl"
-          textAlign="center"
-          alignSelf="center"
-          marginY="1rem"
-        >
-          My archived lists
-        </Heading>
-        <Wrap justify="center">
-          {archivedLists.length != 0 ? (
-            archivedLists.map((list) => {
-              return (
-                <WrapItem>
-                  <OwnedList
-                    marketName={list.store}
-                    itemsList={list.items.map((item) => item.name)}
-                    status={2}
-                    acceptedName={list.acceptedBy != null ? list.acceptedBy.name! : undefined}
-                    acceptedId={list.acceptedBy != null ? list.acceptedBy.id : undefined}
-                    specialWish={list.comment}
-                    listId={list.id}
-                    refetch={archivedListsRefetch}
-                  />
-                </WrapItem>
-              )
-            })
-          ) : (
-            <Text>Here, you will see your archived lists.</Text>
-          )}
-        </Wrap>
-      </Flex>
-    </Layout>
+    <>
+      <Head>
+        <title>entel | Chat</title>
+      </Head>
+      <Layout hasUnreadMessage={hasUnreadMessage}>
+        <Flex textAlign="left" direction="column" width="full">
+          <Heading
+            as="h2"
+            fontFamily="Raleway"
+            fontWeight="bolder"
+            fontSize="4xl"
+            textAlign="center"
+            alignSelf="center"
+            marginY="1rem"
+          >
+            My archived lists
+          </Heading>
+          <Wrap justify="center">
+            {archivedLists.length != 0 ? (
+              archivedLists.map((list) => {
+                return (
+                  <WrapItem>
+                    <OwnedList
+                      marketName={list.store}
+                      itemsList={list.items.map((item) => item.name)}
+                      status={2}
+                      acceptedName={list.acceptedBy != null ? list.acceptedBy.name! : undefined}
+                      acceptedId={list.acceptedBy != null ? list.acceptedBy.id : undefined}
+                      specialWish={list.comment}
+                      listId={list.id}
+                      refetch={archivedListsRefetch}
+                    />
+                  </WrapItem>
+                )
+              })
+            ) : (
+              <Text>Here, you will see your archived lists.</Text>
+            )}
+          </Wrap>
+        </Flex>
+      </Layout>
+    </>
   )
 }
 

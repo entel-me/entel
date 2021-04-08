@@ -12,6 +12,7 @@ import {
   List,
   HStack,
   createStandaloneToast,
+  Stack,
 } from "@chakra-ui/react"
 import { InfoIcon } from "@chakra-ui/icons"
 import { useMutation, useQuery } from "blitz"
@@ -21,6 +22,7 @@ import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
 import createChat from "../mutations/createChat"
 import createAdminMessage from "../mutations/createAdminMessage"
 import getChatByParticipants from "../queries/getChatByParticipants"
+import { getDistanceString } from "app/lib/position"
 
 interface PublicListProps {
   distance: Number
@@ -66,14 +68,19 @@ export default function PublicList({
       <Flex paddingX="1rem" paddingY=".5rem" justifyContent="space-between" flexDirection="row">
         <Box>
           <Heading color="brandGreen.900" fontSize="2xl">
-            {Number.isNaN(distance) ? "∞" : distance == 0 ? "<1" : distance} km
+            {getDistanceString(distance)}
           </Heading>
           <HStack>
             <BiUserCircle />
             <Text>{ownerName}</Text>
           </HStack>
         </Box>
-        <Box wordBreak="break-word">
+        <Flex
+          direction="column"
+          justifyContent="space-between"
+          alignItems="flex-end"
+          wordBreak="break-word"
+        >
           <HStack>
             <Text>{itemsList.length} item(s)</Text>
             <BiShoppingBag />
@@ -82,7 +89,7 @@ export default function PublicList({
             <Text>{marketName}</Text>
             <BiStore />
           </HStack>
-        </Box>
+        </Flex>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
         <Divider height="0.25rem" color="black" />
