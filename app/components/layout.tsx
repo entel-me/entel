@@ -71,7 +71,7 @@ export default function Layout({
             width={["100vw", "850px"]}
             direction="row"
             justifyContent="space-between"
-            alignItems="self-end"
+            alignItems="flex-end"
             marginTop="5px"
           >
             <HStack as="a" href="/">
