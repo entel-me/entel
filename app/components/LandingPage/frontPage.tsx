@@ -1,0 +1,148 @@
+import {
+  Flex,
+  Link,
+  Heading,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuButton,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  IconButton,
+  ColorModeScript,
+  Modal,
+  ModalOverlay,
+  Button,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  Input,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Box,
+  HStack,
+  Circle,
+  Text,
+  Image,
+  VStack,
+  UnorderedList,
+  ListItem,
+} from "@chakra-ui/react"
+import OwnedList from "../LandingPage/frontPageOwnedList"
+import PublicList from "../LandingPage/frontPagePublicList"
+import Chat from "../LandingPage/frontPageChat"
+
+export default function FrontPage() {
+  return (
+    <>
+      <VStack>
+        <Flex direction="column" alignItems="center" width="100vw" backgroundColor="brandGreen.800">
+          <Image src="/logo_1.png" width={["15", "20rem"]} height={["15rem", "20rem"]} />
+          <Heading
+            fontSize={["8rem", "12rem"]}
+            margin-block-end="0rem"
+            lineHeight="10rem"
+            fontWeight="extrabold"
+            fontFamily="Raleway"
+            color="white"
+          >
+            entel
+          </Heading>
+          <Text
+            fontSize={["1.75rem", "2.75rem"]}
+            lineHeight="6rem"
+            fontWeight="extrabold"
+            fontFamily="Raleway"
+            color="white"
+          >
+            Share Your Needs!
+          </Text>
+        </Flex>
+        <Flex direction="column" alignItems="center">
+          <Flex
+            marginBlockStart="3.5rem"
+            marginBlockEnd="3.5rem"
+            flexWrap="wrap"
+            alignItems="Start"
+            justifyContent="center"
+          >
+            <Box width="sm" alignSelf="baseline" marginBottom="2rem">
+              <Heading lineHeight="3rem" marginRight="2rem">
+                Share your needs
+              </Heading>
+              <Text marginRight="2rem">
+                Replace the unnecessary walk to the next supermarket by a new shoppinglist in{" "}
+                <b>entel</b>.
+              </Text>
+              <Text marginBlockStart="1rem" marginBlockEnd="0.4rem">
+                You can specify:
+              </Text>
+              <UnorderedList lineHeight="1.15rem">
+                <ListItem>Products</ListItem>
+                <ListItem>Stores</ListItem>
+                <ListItem>Special Wishes</ListItem>
+              </UnorderedList>
+            </Box>
+            <OwnedList
+              marketName="Lidl"
+              status={1}
+              acceptedName="Antony"
+              specialWish="as a 'Thank You' you will get a beer on the house"
+              itemsList={["wine (sub $5 Pinot Gris)", "condoms", "whip"]}
+            />
+          </Flex>
+          <Flex
+            marginBlockStart="3.5rem"
+            marginBlockEnd="3.5rem"
+            flexWrap="wrap-reverse"
+            alignItems="Start"
+            justifyContent="center"
+          >
+            <PublicList
+              marketName="Edeka"
+              ownerName="Till"
+              distance={750}
+              specialWish="Buy only Bio and vegan products please :)"
+              itemsList={["Bread", "Jam (Strawberry)", "Agave sirup (from Alnatura)"]}
+            />
+            <Box width="sm" alignSelf="unset" marginBottom="2rem">
+              <Heading textAlign="right" lineHeight="3rem" marginLeft="2rem">
+                Help others!
+              </Heading>
+              <Text textAlign="right" marginLeft="2rem">
+                If you are going to the store, help others close to you by accepting their shopping
+                list and bring them the products they need!
+              </Text>
+              <Text textAlign="right" marginLeft="2rem" marginBlockStart="0.4rem">
+                Try expanding the list, to see which products Till needs from Edeka.
+              </Text>
+            </Box>
+          </Flex>
+          <Flex
+            marginBlockStart="3.5rem"
+            marginBlockEnd="3.5rem"
+            flexWrap="wrap"
+            alignItems="Start"
+            justifyContent="center"
+          >
+            <Box width="sm" alignSelf="baseline" marginBottom="2rem" marginTop="0.5rem">
+              <Heading lineHeight="3rem" marginRight="2rem">
+                Chat to connect
+              </Heading>
+              <Text marginRight="2rem">
+                Use our integrated text messaging system to connect to your helper. You can specify
+                your needs or organize your shopping trip and who knows, maybe you will find new
+                friends.{" "}
+              </Text>
+            </Box>
+            <Chat />
+          </Flex>
+        </Flex>
+      </VStack>
+    </>
+  )
+}
