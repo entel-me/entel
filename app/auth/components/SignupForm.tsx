@@ -3,7 +3,7 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
-import { Heading, Flex, Button, useDisclosure } from "@chakra-ui/react"
+import { Heading, Flex, Button, useDisclosure, Box } from "@chakra-ui/react"
 
 type SignupFormProps = {
   onSuccess?: () => void
@@ -15,9 +15,20 @@ export const SignupForm = (props: SignupFormProps) => {
 
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
-      <Button onClick={onOpen} padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
+      <Box
+        as="button"
+        textTransform="uppercase"
+        fontFamily="Raleway"
+        fontWeight="semibold"
+        paddingX="0.4rem"
+        fontSize="lg"
+        borderBottomWidth="0.3rem"
+        borderBottomColor="brandSilver.200"
+        _hover={{ borderBottomColor: "brandSilver.500" }}
+        onClick={onOpen}
+      >
         Signup
-      </Button>
+      </Box>
       <Form
         submitText="Create Account"
         schema={Signup}

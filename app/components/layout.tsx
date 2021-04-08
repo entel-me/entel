@@ -38,8 +38,8 @@ import logout from "app/auth/mutations/logout"
 import { AiFillGithub } from "react-icons/ai"
 import { useMediaQuery } from "react-responsive"
 import { ChangePassword } from "./changePasswordModal"
-import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { LoginForm } from "app/auth/components/LoginForm"
+import { SignupForm } from "app/auth/components/SignupForm"
 
 export default function Layout({
   showFooter = true,
@@ -152,38 +152,8 @@ export default function Layout({
                 )}
                 {!user && (
                   <>
-                    <Box
-                      as="button"
-                      textTransform="uppercase"
-                      fontFamily="Raleway"
-                      fontWeight="semibold"
-                      paddingX="0.4rem"
-                      fontSize="lg"
-                      borderBottomWidth="0.3rem"
-                      borderBottomColor="brandSilver.200"
-                      _hover={{ borderBottomColor: "brandSilver.500" }}
-                      onClick={() => {
-                        /*TODO*/
-                      }}
-                    >
-                      Sign up
-                    </Box>
-                    <Box
-                      as="button"
-                      textTransform="uppercase"
-                      fontFamily="Raleway"
-                      fontWeight="semibold"
-                      paddingX="0.4rem"
-                      fontSize="lg"
-                      borderBottomWidth="0.3rem"
-                      borderBottomColor="brandSilver.200"
-                      _hover={{ borderBottomColor: "brandSilver.500" }}
-                      onClick={() => {
-                        /*TODO*/
-                      }}
-                    >
-                      Login
-                    </Box>
+                    <SignupForm />
+                    <LoginForm />
                   </>
                 )}
               </HStack>
