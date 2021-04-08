@@ -2,7 +2,7 @@ import { Flex, Heading, Link, Text, Wrap, WrapItem } from "@chakra-ui/react"
 import Layout from "../components/layout"
 import OwnedList from "../components/ownedList"
 import getArchivedLists from "../queries/getArchivedLists"
-import { useQuery } from "blitz"
+import { Head, useQuery } from "blitz"
 import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
@@ -53,8 +53,15 @@ function ImpressumContent() {
     </Flex>
   )
 }
+
 export default function Impressum() {
   const user = useCurrentUser()
-  if (user) return <ImpressumLoggedIn />
-  else return <ImpressumLoggedOut />
+  return (
+    <>
+      <Head>
+        <title>entel | Impressum</title>
+      </Head>
+      {user ? <ImpressumLoggedIn /> : <ImpressumLoggedOut />}
+    </>
+  )
 }

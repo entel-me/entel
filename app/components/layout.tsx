@@ -30,16 +30,17 @@ import {
   HStack,
   Circle,
   Text,
-  Image,
 } from "@chakra-ui/react"
 import { HamburgerIcon, SunIcon } from "@chakra-ui/icons"
-import { AuthenticationError, Head, useMutation, useQuery, useRouter } from "blitz"
+import { AuthenticationError, Head, useMutation, useQuery, useRouter, Image } from "blitz"
 import logout from "app/auth/mutations/logout"
 import { AiFillGithub } from "react-icons/ai"
 import { useMediaQuery } from "react-responsive"
 import { ChangePassword } from "./changePasswordModal"
 import { LoginForm } from "app/auth/components/LoginForm"
 import { SignupForm } from "app/auth/components/SignupForm"
+import { Link as BlitzLink } from "blitz"
+import style from "./layout.module.css"
 
 export default function Layout({
   showFooter = true,
@@ -56,8 +57,7 @@ export default function Layout({
   return (
     <>
       <Head>
-        <title>{"Farmers' Market"}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo_1.png" />
       </Head>
       <ColorModeScript initialColorMode="light" />
       <Flex direction="column" alignItems="center" height="100vh">
@@ -72,11 +72,11 @@ export default function Layout({
             width={["100vw", "850px"]}
             direction="row"
             justifyContent="space-between"
-            alignItems="self-end"
+            alignItems="flex-end"
             marginTop="5px"
           >
             <HStack as="a" href="/">
-              <Image src="/logo_1.png" width="6rem" height="6rem" />
+              <Image src="/logo_1.png" width="90" alt="entel logo" height="90" />
               <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
                 entel
               </Heading>
@@ -91,64 +91,69 @@ export default function Layout({
               <HStack marginRight="1rem">
                 {user && !isMobile && (
                   <>
-                    <Link
-                      textTransform="uppercase"
-                      fontFamily="Raleway"
-                      fontWeight="semibold"
-                      paddingX="0.4rem"
-                      fontSize="lg"
-                      borderBottomWidth="0.3rem"
-                      borderBottomColor={
-                        window.location.pathname == "/" ? "brandGreen.500" : "brandSilver.200"
-                      }
-                      _hover={{ borderBottomColor: "brandSilver.500" }}
-                      href="/"
-                    >
-                      Home
-                    </Link>
-                    <Link
-                      textTransform="uppercase"
-                      fontFamily="Raleway"
-                      fontWeight="semibold"
-                      paddingX="0.4rem"
-                      fontSize="lg"
-                      borderBottomWidth="0.3rem"
-                      borderBottomColor={
-                        window.location.pathname == "/activeLists"
-                          ? "brandGreen.500"
-                          : "brandSilver.200"
-                      }
-                      _hover={{ borderBottomColor: "brandSilver.500" }}
-                      href="/activeLists"
-                    >
-                      Active lists
-                    </Link>
-                    <Link
-                      textTransform="uppercase"
-                      fontFamily="Raleway"
-                      fontWeight="semibold"
-                      paddingX="0.3rem"
-                      fontSize="lg"
-                      borderBottomWidth="0.3rem"
-                      paddingRight={hasUnreadMessage ? "0" : "0.3rem"}
-                      borderBottomColor={
-                        window.location.pathname == "/chats" ? "brandGreen.500" : "brandSilver.200"
-                      }
-                      _hover={{ borderBottomColor: "brandSilver.500" }}
-                      href="/chats"
-                    >
-                      <HStack>
-                        <Text>Chats</Text>
-                        {hasUnreadMessage && (
-                          <Circle
-                            style={{ marginInlineStart: "0" }}
-                            alignSelf="start"
-                            size=".3rem"
-                            bg="brandChestnut.500"
-                          />
-                        )}
-                      </HStack>
-                    </Link>
+                    <BlitzLink href="/">
+                      <Link
+                        textTransform="uppercase"
+                        fontFamily="Raleway"
+                        fontWeight="semibold"
+                        paddingX="0.4rem"
+                        fontSize="lg"
+                        borderBottomWidth="0.3rem"
+                        borderBottomColor={
+                          window.location.pathname == "/" ? "brandGreen.500" : "brandSilver.200"
+                        }
+                        _hover={{ borderBottomColor: "brandSilver.500" }}
+                      >
+                        Home
+                      </Link>
+                    </BlitzLink>
+                    <BlitzLink href="/activeLists">
+                      <Link
+                        textTransform="uppercase"
+                        fontFamily="Raleway"
+                        fontWeight="semibold"
+                        paddingX="0.4rem"
+                        fontSize="lg"
+                        borderBottomWidth="0.3rem"
+                        borderBottomColor={
+                          window.location.pathname == "/activeLists"
+                            ? "brandGreen.500"
+                            : "brandSilver.200"
+                        }
+                        _hover={{ borderBottomColor: "brandSilver.500" }}
+                      >
+                        Active lists
+                      </Link>
+                    </BlitzLink>
+                    <BlitzLink href="/chats">
+                      <Link
+                        textTransform="uppercase"
+                        fontFamily="Raleway"
+                        fontWeight="semibold"
+                        paddingX="0.3rem"
+                        fontSize="lg"
+                        borderBottomWidth="0.3rem"
+                        paddingRight={hasUnreadMessage ? "0" : "0.3rem"}
+                        borderBottomColor={
+                          window.location.pathname == "/chats"
+                            ? "brandGreen.500"
+                            : "brandSilver.200"
+                        }
+                        _hover={{ borderBottomColor: "brandSilver.500" }}
+                      >
+                        <HStack>
+                          <Text>Chats</Text>
+                          {hasUnreadMessage && (
+                            <Circle
+                              style={{ marginInlineStart: "0" }}
+                              alignSelf="start"
+                              size=".3rem"
+                              bg="brandChestnut.500"
+                            />
+                          )}
+                        </HStack>
+                      </Link>
+                    </BlitzLink>
                   </>
                 )}
                 {!user && (
@@ -187,37 +192,40 @@ export default function Layout({
                   >
                     {isMobile && (
                       <>
-                        <MenuItem
-                          _focus={{ backgroundColor: "brandSilver.200" }}
-                          _hover={{ backgroundColor: "brandSilver.200" }}
-                          onClick={() => (window.location.href = "/")}
-                        >
-                          Home
-                        </MenuItem>
-                        <MenuItem
-                          _focus={{ backgroundColor: "brandSilver.200" }}
-                          _hover={{ backgroundColor: "brandSilver.200" }}
-                          onClick={() => (window.location.href = "/activeLists")}
-                        >
-                          Active lists
-                        </MenuItem>
-                        <MenuItem
-                          _focus={{ backgroundColor: "brandSilver.200" }}
-                          _hover={{ backgroundColor: "brandSilver.200" }}
-                          onClick={() => (window.location.href = "/chats")}
-                        >
-                          <HStack>
-                            <Text>Chats</Text>
-                            {hasUnreadMessage && (
-                              <Circle
-                                style={{ marginInlineStart: "0" }}
-                                alignSelf="start"
-                                size=".3rem"
-                                bg="brandChestnut.500"
-                              />
-                            )}
-                          </HStack>
-                        </MenuItem>
+                        <BlitzLink href="/">
+                          <MenuItem
+                            _focus={{ backgroundColor: "brandSilver.200" }}
+                            _hover={{ backgroundColor: "brandSilver.200" }}
+                          >
+                            Home
+                          </MenuItem>
+                        </BlitzLink>
+                        <BlitzLink href="/activeLists">
+                          <MenuItem
+                            _focus={{ backgroundColor: "brandSilver.200" }}
+                            _hover={{ backgroundColor: "brandSilver.200" }}
+                          >
+                            Active lists
+                          </MenuItem>
+                        </BlitzLink>
+                        <BlitzLink href="/chats">
+                          <MenuItem
+                            _focus={{ backgroundColor: "brandSilver.200" }}
+                            _hover={{ backgroundColor: "brandSilver.200" }}
+                          >
+                            <HStack>
+                              <Text>Chats</Text>
+                              {hasUnreadMessage && (
+                                <Circle
+                                  style={{ marginInlineStart: "0" }}
+                                  alignSelf="start"
+                                  size=".3rem"
+                                  bg="brandChestnut.500"
+                                />
+                              )}
+                            </HStack>
+                          </MenuItem>
+                        </BlitzLink>
                       </>
                     )}
                     <MenuItem
@@ -230,15 +238,16 @@ export default function Layout({
                     <MenuItem _hover={{ backgroundColor: "brandSilver.200" }} onClick={onOpen}>
                       Change Password
                     </MenuItem>
-                    <MenuItem
-                      _hover={{ backgroundColor: "brandSilver.200" }}
-                      onClick={async () => {
-                        window.location.href = "/"
-                        await logoutMutation()
-                      }}
-                    >
-                      Logout{" "}
-                    </MenuItem>
+                    <BlitzLink href="/">
+                      <MenuItem
+                        _hover={{ backgroundColor: "brandSilver.200" }}
+                        onClick={async () => {
+                          await logoutMutation()
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
+                    </BlitzLink>
                     {/*<MenuItem>
                   {" "}
                   <IconButton
@@ -255,7 +264,7 @@ export default function Layout({
         </Flex>
         <Flex
           paddingX="0.2rem"
-          width={["100vw", "850px"]}
+          className={style.body}
           flex="1 1 auto"
           direction="column"
           justifyContent="space-between"
@@ -272,16 +281,23 @@ export default function Layout({
             textAlign="center"
             alignItems="center"
           >
-            <Link href="https://github.com/till-B/entel">
-              <HStack>
-                <AiFillGithub size={24} />
-                <Text>This project is open source. Feel free reach out.</Text>
-              </HStack>
-            </Link>
+            <BlitzLink href="https://github.com/till-B/entel">
+              <Link>
+                <HStack>
+                  <AiFillGithub size={24} />
+                  <Text>This project is open source. Feel free reach out.</Text>
+                </HStack>
+              </Link>
+            </BlitzLink>
             <Text fontFamily="Raleway" fontWeight="medium">
-              <Link href="/impressum">Impressum</Link>
+              <BlitzLink href="/impressum">
+                <Link>Impressum</Link>
+              </BlitzLink>
               {", "}
-              <Link href="/datenschutz">Datenschutz</Link> und ganz viel Liebe
+              <BlitzLink href="/datenschutz">
+                <Link>Datenschutz</Link>
+              </BlitzLink>{" "}
+              und ganz viel Liebe
             </Text>
           </Flex>
         )}

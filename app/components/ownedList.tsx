@@ -20,6 +20,7 @@ import getChatByParticipants from "app/queries/getChatByParticipants"
 import { BsArchive } from "react-icons/bs"
 import archiveList from "../mutations/archiveList"
 import BrandBadge from "./BrandBadge"
+import { Link as BlitzLink } from "blitz"
 
 interface OwnedListProps {
   marketName: String
@@ -77,16 +78,14 @@ export default function OwnedList({
               <ListItem>
                 <ListIcon as={InfoIcon} color="brandGreen.700" />
                 accepted by <b>{acceptedName}</b>{" "}
-                <IconButton
-                  aria-label="link chats"
-                  variant="brand-chat"
-                  size="xs"
-                  icon={<ChatIcon />}
-                  onClick={() => {
-                    console.log("accetor: " + acceptedId)
-                    router.push("/chats/[chatId]", "chats/" + chat!.id)
-                  }}
-                />
+                <BlitzLink href={"/chats/" + chat!.id}>
+                  <IconButton
+                    aria-label="link chats"
+                    variant="brand-chat"
+                    size="xs"
+                    icon={<ChatIcon />}
+                  />
+                </BlitzLink>
               </ListItem>
             )}
           </List>

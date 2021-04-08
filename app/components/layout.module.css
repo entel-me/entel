@@ -1,0 +1,3 @@
+.body {
+  max-width: min(100vw, 850px);
+}

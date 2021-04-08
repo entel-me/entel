@@ -9,11 +9,11 @@ import {
   WrapItem,
 } from "@chakra-ui/react"
 import Layout from "../components/layout"
-import { useQuery } from "blitz"
+import { Head, useQuery } from "blitz"
 import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
-function ImpressumLoggedIn() {
+function DatenschutzLoggedOut() {
   const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
     <Layout hasUnreadMessage={hasUnreadMessage}>
@@ -22,7 +22,7 @@ function ImpressumLoggedIn() {
   )
 }
 
-function ImpressumLoggedOut() {
+function DatenschutzLoggedIn() {
   return (
     <Layout user={false}>
       <ImpressumContent />
@@ -738,8 +738,14 @@ function ImpressumContent() {
     </Flex>
   )
 }
-export default function Impressum() {
+export default function Datenschutz() {
   const user = useCurrentUser()
-  if (user) return <ImpressumLoggedIn />
-  else return <ImpressumLoggedOut />
+  return (
+    <>
+      <Head>
+        <title>entel | Datenschutz</title>
+      </Head>
+      {user ? <DatenschutzLoggedIn /> : <DatenschutzLoggedOut />}
+    </>
+  )
 }
