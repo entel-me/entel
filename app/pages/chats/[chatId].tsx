@@ -38,7 +38,11 @@ export default function Chat() {
   }
 
   const oppositeName = participants.filter((part) => part.id != currentUser?.id)[0]
-  const [messages, messagesExtra] = useQuery(getMessagesByChat, { chatId })
+  const [messages, messagesExtra] = useQuery(
+    getMessagesByChat,
+    { chatId },
+    { refetchInterval: 1000 }
+  )
   const [sendMessageMutation] = useMutation(sendMessage)
 
   const [markMessagesAsReadMutation] = useMutation(markMessagesAsRead)
@@ -46,7 +50,7 @@ export default function Chat() {
   useEffect(() => {
     markMessagesAsReadMutation({ chatId })
     markAdminMessagesAsReadMutation({ chatId })
-  }, [])
+  }, [messages])
 
   useLayoutEffect(() => {
     const message = document.getElementById("messages")!

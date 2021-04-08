@@ -35,6 +35,7 @@ import { SignupForm } from "app/auth/components/SignupForm"
 import { useRouter } from "blitz"
 import { getDistanceByHaversine, useCurrentPosition } from "../lib/position"
 import CreateLists from "../components/createLists"
+import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
@@ -53,8 +54,9 @@ function App() {
 
   const [numLists, setNumLists] = useState(10)
 
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
-    <Layout>
+    <Layout hasUnreadMessage={hasUnreadMessage}>
       <Flex direction="column" width="full" textAlign="center">
         <Heading
           as="h2"
