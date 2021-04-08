@@ -1,6 +1,21 @@
 import { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
+import {
+  useToast,
+  Modal,
+  ModalOverlay,
+  Button,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  Input,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+} from "@chakra-ui/react"
 export { FORM_ERROR } from "final-form"
 
 export interface FormProps<S extends z.ZodType<any, any>>
@@ -12,6 +27,9 @@ export interface FormProps<S extends z.ZodType<any, any>>
   schema?: S
   onSubmit: FinalFormProps<z.infer<S>>["onSubmit"]
   initialValues?: FinalFormProps<z.infer<S>>["initialValues"]
+  modalHeader: string
+  isOpen: boolean
+  onClose: () => void
 }
 
 export function Form<S extends z.ZodType<any, any>>({
@@ -19,50 +37,62 @@ export function Form<S extends z.ZodType<any, any>>({
   submitText,
   schema,
   initialValues,
+  modalHeader,
+  isOpen,
+  onClose,
   onSubmit,
   ...props
 }: FormProps<S>) {
   return (
-    <FinalForm
-      initialValues={initialValues}
-      validate={(values) => {
-        if (!schema) return
-        try {
-          schema.parse(values)
-        } catch (error) {
-          return error.formErrors.fieldErrors
-        }
-      }}
-      onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, submitError }) => (
-        <form onSubmit={handleSubmit} className="form" {...props}>
-          {/* Form fields supplied as children are rendered here */}
-          {children}
-
-          {submitError && (
-            <div role="alert" style={{ color: "red" }}>
-              {submitError}
-            </div>
-          )}
-
-          {submitText && (
-            <button
-              style={{ borderWidth: "0.1rem", padding: "0.3rem", borderRadius: "10px" }}
-              type="submit"
-              disabled={submitting}
-            >
-              {submitText}
-            </button>
-          )}
-
-          <style global jsx>{`
-            .form > * + * {
-              margin-top: 1rem;
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{modalHeader}</ModalHeader>
+        <ModalCloseButton />
+        <FinalForm
+          initialValues={initialValues}
+          validate={(values) => {
+            if (!schema) return
+            try {
+              schema.parse(values)
+            } catch (error) {
+              return error.formErrors.fieldErrors
             }
-          `}</style>
-        </form>
-      )}
-    />
+          }}
+          onSubmit={onSubmit}
+          render={({ handleSubmit, submitting, submitError }) => (
+            <form onSubmit={handleSubmit} className="form" {...props}>
+              {/* Form fields supplied as children are rendered here */}
+              <ModalBody>
+                {children}
+                {submitError && (
+                  <div role="alert" style={{ color: "red" }}>
+                    {submitError}
+                  </div>
+                )}
+              </ModalBody>
+
+              <ModalFooter>
+                {submitText && (
+                  <Button type="submit" variant="brand" disabled={submitting}>
+                    {submitText}
+                  </Button>
+                )}
+                <Button marginLeft="0.2rem" variant="brand-close" mr={3} onClick={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+
+              <style global jsx>{`
+                .form > * + * {
+                  margin-top: 1rem;
+                }
+              `}</style>
+            </form>
+          )}
+        />
+      </ModalContent>
+    </Modal>
   )
 }
 

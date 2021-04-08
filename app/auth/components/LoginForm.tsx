@@ -3,7 +3,7 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
-import { Flex, Heading } from "@chakra-ui/react"
+import { Flex, Heading, Button, useDisclosure } from "@chakra-ui/react"
 
 type LoginFormProps = {
   onSuccess?: () => void
@@ -11,17 +11,20 @@ type LoginFormProps = {
 
 export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
-      <Heading size="2xl" margin="1rem">
+      <Button onClick={onOpen} padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
         Login
-      </Heading>
-
+      </Button>
       <Form
         submitText="Login"
         schema={Login}
         initialValues={{ email: "", password: "" }}
+        modalHeader="Login to your Account"
+        onClose={onClose}
+        isOpen={isOpen}
         onSubmit={async (values) => {
           try {
             await loginMutation(values)
