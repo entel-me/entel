@@ -5,14 +5,15 @@ import getPosition from "../queries/getPositionOfUser"
 import getActiveLists from "../queries/getActiveLists"
 import AcceptedList from "../components/acceptedList"
 import { getDistanceByHaversine } from "../lib/position"
+import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
 export default function ActiveLists() {
   const [activeList, activeListsExtras] = useQuery(getActiveLists, null, { refetchInterval: 2000 })
   const activeListsRefetch = activeListsExtras.refetch
   const [{ user_latitude, user_longitude }] = useQuery(getPosition, null)
-
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
-    <Layout>
+    <Layout hasUnreadMessage={hasUnreadMessage}>
       <Flex textAlign="left" direction="column" width="full">
         <Heading
           as="h2"

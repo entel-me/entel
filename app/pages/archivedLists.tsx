@@ -3,14 +3,16 @@ import Layout from "../components/layout"
 import OwnedList from "../components/ownedList"
 import getArchivedLists from "../queries/getArchivedLists"
 import { useQuery } from "blitz"
+import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
 export default function ArchivedLists() {
   const [archivedLists, archivedListsExtras] = useQuery(getArchivedLists, null, {
     refetchInterval: 2000,
   })
   const archivedListsRefetch = archivedListsExtras.refetch
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
-    <Layout>
+    <Layout hasUnreadMessage={hasUnreadMessage}>
       <Flex textAlign="left" direction="column" width="full">
         <Heading
           as="h2"
