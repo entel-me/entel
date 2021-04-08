@@ -44,6 +44,12 @@ export default function EditLists({ getList }) {
     defaultValues["item" + id] = getList.items[id]
   })
 
+  useEffect(() => {
+    try {
+      document.getElementById("item" + (countItems - 1))!.focus()
+    } catch {}
+  }, [countItems])
+
   return (
     <>
       <IconButton
@@ -128,7 +134,13 @@ export default function EditLists({ getList }) {
                       {({ input, meta }) => (
                         <FormControl isInvalid={meta.error && meta.touched}>
                           <HStack justifyContent="space-between">
-                            <Input margin="0.2rem" {...input} type="text" placeholder="Item" />
+                            <Input
+                              id={"item" + id}
+                              margin="0.2rem"
+                              {...input}
+                              type="text"
+                              placeholder="Item"
+                            />
                             {idList.length != 1 && (
                               <IconButton
                                 variant="brand"

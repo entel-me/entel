@@ -50,10 +50,23 @@ const theme = extendTheme({
     },
   },
   components: {
+    Input: {
+      baseStyle: {
+        field: {
+          _hover: {
+            borderColor: "#D9DBC2",
+            boxShadow: "0 0 0 1px #d9dbc2",
+          },
+        },
+      },
+      defaultProps: {
+        focusBorderColor: "#535633",
+      },
+    },
     Button: {
       baseStyle: {
         _focus: {
-          boxShadow: "0 0 0 1px #D9DBC2",
+          boxShadow: "0 0 0 2px #D9DBC2",
         },
       },
       variants: {

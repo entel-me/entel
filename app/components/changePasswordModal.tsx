@@ -36,6 +36,7 @@ export function ChangePassword({ isOpen, onClose }) {
                 currentPassword: values.currentPassword,
                 newPassword: values.newPassword,
               })
+              onClose()
             } catch (error) {
               if (error instanceof AuthenticationError) {
                 return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
