@@ -77,7 +77,7 @@ export default function CreateLists() {
                 })
 
                 const promises = idList.map(async (value) => {
-                  addItemMutation({
+                  await addItemMutation({
                     listId: shoppinglistId.id,
                     itemName: values["item" + value],
                   })

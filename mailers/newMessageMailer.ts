@@ -6,15 +6,17 @@
  */
 import previewEmail from "preview-email"
 import nodemailer from "nodemailer"
-type ResetPasswordMailer = {
+type NewMessageMailerProps = {
   to: string
-  token: string
+  from: string
+  chatid: string
+  messageContent: string
 }
 
-export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
+export function newMessageMailer({ to, chatid, from, messageContent }: NewMessageMailerProps) {
   // In production, set APP_ORIGIN to your production server origin
   const origin = process.env.APP_ORIGIN || process.env.BLITZ_DEV_SERVER_ORIGIN
-  const resetUrl = `${origin}/reset-password?token=${token}`
+  const chatUrl = `${origin}/chats/${chatid}`
 
   var smtp = nodemailer.createTransport({
     host: "mail.privateemail.com",
@@ -28,14 +30,14 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   const msg = {
     from: "info@antonykamp.de",
     to: to,
-    subject: "Reset the password of your entel account",
+    subject: "You have a new message on entel",
     html: `
-      <h1>Reset Your Password</h1>
-      <a href="${resetUrl}">
-        Click here
-      </a>
-      <p>or use the following link to set a new password:</p>
-      <p>${resetUrl}</p>
+      <h1>You have a message on entel</h1>
+      <p>"${messageContent}"<p>
+      <p>from ${from}<p>
+      <p> To answer ${from} directly, <a href=${chatUrl}>click here<a></p>
+      <p>or use the following link:</p>
+      <p>${chatUrl}</p>
     `,
   }
 
