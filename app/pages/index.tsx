@@ -35,6 +35,7 @@ import { SignupForm } from "app/auth/components/SignupForm"
 import { useRouter } from "blitz"
 import { getDistanceByHaversine, useCurrentPosition } from "../lib/position"
 import CreateLists from "../components/createLists"
+import FrontPage from "../components/LandingPage/frontPage"
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
@@ -180,18 +181,7 @@ const Welcome: BlitzPage = () => {
 
   return (
     <Layout user={false}>
-      <Heading fontSize="5xl">Farmers' Market</Heading>
-      <Text margin="1rem">bla bla bla</Text>
-      <HStack align="center">
-        <SignupForm onSuccess={() => router.push("/")} />
-        <Text>{" - "}</Text>
-        <LoginForm
-          onSuccess={() => {
-            const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
-            router.push(next)
-          }}
-        />
-      </HStack>
+      <FrontPage />
     </Layout>
   )
 }
