@@ -77,14 +77,13 @@ export default function CreateLists() {
                 })
 
                 const promises = idList.map(async (value) => {
-                  await addItemMutation({
+                  addItemMutation({
                     listId: shoppinglistId.id,
                     itemName: values["item" + value],
                   })
                 })
 
-                for await (let _ of promises) {
-                }
+                await Promise.all(promises)
 
                 setIdList([0])
                 setCountItems(1)
@@ -207,34 +206,3 @@ export default function CreateLists() {
     </>
   )
 }
-
-/*
-<Form
-          submitText="CreateList"
-          initialValues={{ store: "", specialWish: "" }}
-          onSubmit={async (values) => {
-            if (values.store == "" && values.specialWish == "") {
-              await createListMutation({
-                store: "Unspecified",
-                specialWish: "No special wishes given",
-              })
-              router.push("/")
-            } else if (values.store == "") {
-              await createListMutation({ store: "Unspecified", specialWish: values.specialWish })
-              router.push("/")
-            } else if (values.specialWish == "") {
-              await createListMutation({
-                store: values.store,
-                specialWish: "No special wishes given",
-              })
-              router.push("/")
-            } else {
-              await createListMutation(values)
-              router.push("/")
-            }
-          }}
-        >
-          <LabeledTextField name="store" label="Store" placeholder="required" />
-          <LabeledTextField name="specialWish" label="Special Wishes" placeholder="optional" />
-        </Form>
-*/

@@ -8,7 +8,7 @@ export default async function markAdminMessagesAsRead({ chatId }, context: Ctx) 
     select: { id: true },
   })
   const promisses = admins.map(async (mes) => {
-    await db.adminMessage.update({
+    db.adminMessage.update({
       where: { id: mes.id },
       data: { wasReadBy: { connect: { id: context.session.userId! } } },
     })

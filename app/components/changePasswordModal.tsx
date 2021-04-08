@@ -36,6 +36,12 @@ export function ChangePassword({ isOpen, onClose }) {
                 currentPassword: values.currentPassword,
                 newPassword: values.newPassword,
               })
+              toast({
+                title: "Password successfully changed",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              })
               onClose()
             } catch (error) {
               if (error instanceof AuthenticationError) {
@@ -45,7 +51,7 @@ export function ChangePassword({ isOpen, onClose }) {
                   title: "Sorry",
                   description: "Something went wrong. Please try again.",
                   status: "error",
-                  duration: 8000,
+                  duration: 5000,
                   isClosable: true,
                 })
                 return {

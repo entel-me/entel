@@ -35,16 +35,3 @@ export default function OwnMessage({ content, timeStamp, userName }: StrangeMess
     </Stack>
   )
 }
-
-/*
-    
-        <Stack>
-            <StackItem>
-                
-                <Avatar name={userName} />
-                <Box textAlign="left" borderTopRadius="10px" borderRightRadius="10px">
-                    {content}
-                </Box>
-            </StackItem>
-        </Stack>
-        */

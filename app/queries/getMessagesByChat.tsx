@@ -9,7 +9,7 @@ interface Message {
 
 export default async function getMessagesByChat({ chatId }, context: Ctx) {
   context.session.$authorize()
-  const messages: Message[] = await db.message.findMany({
+  const messages: Promise<Message[]> = db.message.findMany({
     where: { sentInId: chatId },
     select: {
       content: true,
@@ -18,7 +18,7 @@ export default async function getMessagesByChat({ chatId }, context: Ctx) {
     },
   })
 
-  const adminMessages: Message[] = await db.adminMessage.findMany({
+  const adminMessages: Promise<Message[]> = db.adminMessage.findMany({
     where: { sentInId: chatId },
     orderBy: { sentAt: "desc" },
     select: {
@@ -26,6 +26,8 @@ export default async function getMessagesByChat({ chatId }, context: Ctx) {
       sentAt: true,
     },
   })
-
-  return messages.concat(adminMessages).sort((mA, mB) => mA.sentAt.getTime() - mB.sentAt.getTime())
+  const messageList = await Promise.all([messages, adminMessages])
+  return messageList[0]
+    .concat(messageList[1])
+    .sort((mA, mB) => mA.sentAt.getTime() - mB.sentAt.getTime())
 }

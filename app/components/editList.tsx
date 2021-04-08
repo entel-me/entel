@@ -72,25 +72,26 @@ export default function EditLists({ getList }) {
             initialValues={defaultValues}
             onSubmit={async (values) => {
               try {
-                await updateStoreCommentMutation({
-                  id: getList.id,
-                  store: !values.store ? "Unspecified" : values.store,
-                  comment: values.specialWish ? values.specialWish : "",
-                })
+                const promisesClean = [
+                  updateStoreCommentMutation({
+                    id: getList.id,
+                    store: !values.store ? "Unspecified" : values.store,
+                    comment: values.specialWish ? values.specialWish : "",
+                  }),
 
-                await removeAllItemsMutation({
-                  id: getList.id,
-                })
+                  removeAllItemsMutation({
+                    id: getList.id,
+                  }),
+                ]
+                await Promise.all(promisesClean)
 
-                const promises = idList.map(async (value) => {
-                  await addItemMutation({
+                const promisesAdd = idList.map(async (value) => {
+                  addItemMutation({
                     listId: getList.id,
                     itemName: values["item" + value],
                   })
                 })
-
-                for await (let _ of promises) {
-                }
+                await Promise.all(promisesAdd)
 
                 onClose()
 

@@ -9,7 +9,7 @@ export interface Message {
 
 export default async function getChatsWithLastMessage(_ = null, context: Ctx) {
   context.session.$authorize()
-  const lists = await db.chat.findMany({
+  const chats = await db.chat.findMany({
     where: { participatingUsers: { some: { id: context.session.userId } } },
     select: {
       id: true,
@@ -17,7 +17,7 @@ export default async function getChatsWithLastMessage(_ = null, context: Ctx) {
     },
   })
 
-  const chatsAndMessage = lists.map(async ({ id, participatingUsers }) => {
+  const chatsAndMessage = chats.map(async ({ id, participatingUsers }) => {
     const lastMessage: Message | null = await db.message.findFirst({
       where: { sentInId: id },
       orderBy: { sentAt: "desc" },
@@ -37,10 +37,10 @@ export default async function getChatsWithLastMessage(_ = null, context: Ctx) {
       },
     })
 
-    const unreadNormalMessagesCnt = await db.message.count({
+    const unreadNormalMessagesCnt = db.message.count({
       where: { sentInId: id, sentToId: context.session.userId!, wasRead: false },
     })
-    const unreadAdminMessagesCnt = await db.adminMessage.count({
+    const unreadAdminMessagesCnt = db.adminMessage.count({
       where: { sentInId: id, wasReadBy: { none: { id: context.session.userId! } } },
     })
     const unreadMessagesCnt = (
