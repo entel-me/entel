@@ -26,6 +26,7 @@ import { useEffect, useLayoutEffect } from "react"
 import { RiMailSendLine } from "react-icons/ri"
 import { BiUserCircle } from "react-icons/bi"
 import markAdminMessagesAsRead from "app/mutations/markAdminAsRead"
+import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
 export default function Chat() {
   const chatId = useParam("chatId", "number")
@@ -52,8 +53,10 @@ export default function Chat() {
     message.scrollTop = message.scrollHeight
   })
 
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
+
   return (
-    <Layout showFooter={false}>
+    <Layout showFooter={false} hasUnreadMessage={hasUnreadMessage}>
       <Flex textAlign="center" direction="column" width="full" maxWidth="600px" alignSelf="center">
         <Heading
           as="h2"

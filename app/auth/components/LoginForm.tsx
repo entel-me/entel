@@ -3,8 +3,9 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
-import { Flex, Heading, Button, useDisclosure } from "@chakra-ui/react"
+import { Flex, Heading, Button, useDisclosure, Box } from "@chakra-ui/react"
 import ForgotPasswordPage from "app/auth/pages/forgot-password"
+
 type LoginFormProps = {
   onSuccess?: () => void
 }
@@ -15,9 +16,20 @@ export const LoginForm = (props: LoginFormProps) => {
 
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
-      <Button onClick={onOpen} padding="1rem" borderWidth="0.1rem" borderRadius="md" width="6rem">
+      <Box
+        as="button"
+        textTransform="uppercase"
+        fontFamily="Raleway"
+        fontWeight="semibold"
+        paddingX="0.4rem"
+        fontSize="lg"
+        borderBottomWidth="0.3rem"
+        borderBottomColor="brandSilver.200"
+        _hover={{ borderBottomColor: "brandSilver.500" }}
+        onClick={onOpen}
+      >
         Login
-      </Button>
+      </Box>
       <Form
         submitText="Login"
         schema={Login}
