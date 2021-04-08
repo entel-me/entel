@@ -5,7 +5,7 @@
  * and use it straight away.
  */
 import previewEmail from "preview-email"
-
+import nodemailer from "nodemailer"
 type ResetPasswordMailer = {
   to: string
   token: string
@@ -16,9 +16,19 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   const origin = process.env.APP_ORIGIN || process.env.BLITZ_DEV_SERVER_ORIGIN
   const resetUrl = `${origin}/reset-password?token=${token}`
 
+  /*
+  var smtp = nodemailer.createTransport({
+    host: 'mail.privateemail.com',
+    port: 465,
+    auth: {
+        user: 'info@antonykamp.de',
+        pass: ''
+    }
+  });
+  */
   const msg = {
-    from: "TODO@example.com",
-    to,
+    from: "info@antonykamp.de",
+    to: to,
     subject: "Your Password Reset Instructions",
     html: `
       <h1>Reset Your Password</h1>
@@ -32,14 +42,8 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
 
   return {
     async send() {
-      if (process.env.NODE_ENV === "production") {
-        // TODO - send the production email, like this:
-        // await postmark.sendEmail(msg)
-        throw new Error("No production email implementation in mailers/forgotPasswordMailer")
-      } else {
-        // Preview email in the browser
-        await previewEmail(msg)
-      }
+      previewEmail(msg).then(console.log).catch(console.error)
+      // await smtp.sendMail(msg)
     },
   }
 }

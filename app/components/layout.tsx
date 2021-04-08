@@ -33,7 +33,7 @@ import {
   Image,
 } from "@chakra-ui/react"
 import { HamburgerIcon, SunIcon } from "@chakra-ui/icons"
-import { AuthenticationError, Head, useMutation, useQuery } from "blitz"
+import { AuthenticationError, Head, useMutation, useQuery, useRouter } from "blitz"
 import logout from "app/auth/mutations/logout"
 import { AiFillGithub } from "react-icons/ai"
 import { useMediaQuery } from "react-responsive"
@@ -47,6 +47,7 @@ export default function Layout({
   hasUnreadMessage = false,
   children,
 }) {
+  const router = useRouter()
   const [logoutMutation] = useMutation(logout)
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -152,8 +153,15 @@ export default function Layout({
                 )}
                 {!user && (
                   <>
-                    <SignupForm />
-                    <LoginForm />
+                    <SignupForm onSuccess={() => router.push("/")} />
+                    <LoginForm
+                      onSuccess={() => {
+                        const next = router.query.next
+                          ? decodeURIComponent(router.query.next as string)
+                          : "/"
+                        router.push(next)
+                      }}
+                    />
                   </>
                 )}
               </HStack>
