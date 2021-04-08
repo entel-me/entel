@@ -28,7 +28,14 @@ const ForgotPasswordPage: BlitzPage = () => {
           alignContent="center"
           margin="1rem"
         >
-          <Button onClick={onOpen} borderWidth="0.1rem" borderRadius="md" align="left">
+          <Button
+            onClick={onOpen}
+            borderWidth="0rem"
+            borderRadius="md"
+            align="left"
+            backgroundColor="white"
+            _hover={{ backgroundColor: "white" }}
+          >
             Forgot Password
           </Button>
           <Form
