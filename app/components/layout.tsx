@@ -40,6 +40,7 @@ import { ChangePassword } from "./changePasswordModal"
 import { LoginForm } from "app/auth/components/LoginForm"
 import { SignupForm } from "app/auth/components/SignupForm"
 import { Link as BlitzLink } from "blitz"
+import style from "./layout.module.css"
 
 export default function Layout({
   showFooter = true,
@@ -263,7 +264,7 @@ export default function Layout({
         </Flex>
         <Flex
           paddingX="0.2rem"
-          width={["100vw", "850px"]}
+          className={style.body}
           flex="1 1 auto"
           direction="column"
           justifyContent="space-between"
