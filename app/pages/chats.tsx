@@ -5,13 +5,15 @@ import { useQuery } from "blitz"
 import getChatsWithLastMessage from "../queries/getChatsWithLastMessage"
 
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
 export default function Chats() {
   const [chats] = useQuery(getChatsWithLastMessage, null)
   const currentUser = useCurrentUser()
 
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
-    <Layout>
+    <Layout hasUnreadMessage={hasUnreadMessage}>
       <Flex alignSelf="center" textAlign="center" direction="column" width="full">
         <Heading
           as="h2"

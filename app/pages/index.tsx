@@ -179,13 +179,7 @@ const Welcome: BlitzPage = () => {
   if (currentUser) return <App />
 
   return (
-    <Flex
-      minHeight="100vh"
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      alignContent="center"
-    >
+    <Layout user={false}>
       <Heading fontSize="5xl">Farmers' Market</Heading>
       <Text margin="1rem">bla bla bla</Text>
       <HStack align="center">
@@ -198,7 +192,7 @@ const Welcome: BlitzPage = () => {
           }}
         />
       </HStack>
-    </Flex>
+    </Layout>
   )
 }
 
