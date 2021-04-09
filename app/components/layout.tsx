@@ -158,13 +158,17 @@ export default function Layout({
                 )}
                 {!user && (
                   <>
-                    <SignupForm onSuccess={() => router.push("/")} />
+                    <SignupForm
+                      onSuccess={async () => {
+                        await router.push("/")
+                      }}
+                    />
                     <LoginForm
-                      onSuccess={() => {
+                      onSuccess={async () => {
                         const next = router.query.next
                           ? decodeURIComponent(router.query.next as string)
                           : "/"
-                        router.push(next)
+                        await router.push(next)
                       }}
                     />
                   </>
@@ -243,6 +247,7 @@ export default function Layout({
                         _hover={{ backgroundColor: "brandSilver.200" }}
                         onClick={async () => {
                           await logoutMutation()
+                          window.location.reload()
                         }}
                       >
                         Logout

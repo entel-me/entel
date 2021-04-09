@@ -91,7 +91,7 @@ export default function Chat() {
           <Stack flex="1" width="full">
             <Textarea
               resize="none"
-              isFullWidth
+              isfullwidth="true"
               _focus={{ boxShadow: "0 0 0 2px #787878" }}
               _hover={{ boxShadow: "0 0 0 2px #787878" }}
               borderWidth="1px"

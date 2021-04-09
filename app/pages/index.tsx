@@ -30,7 +30,6 @@ function App() {
   const [availableLists, availableListsExtras] = useQuery(getAvailableLists, null, {
     refetchInterval: 2000,
   })
-  const availableListsRefetch = availableListsExtras.refetch
 
   const [numLists, setNumLists] = useState(10)
 
@@ -129,7 +128,7 @@ function App() {
                           return itemsList.name
                         })}
                         listId={Shoppinglist.id}
-                        refetch={availableListsRefetch}
+                        refetch={availableListsExtras.refetch}
                         ownerId={Shoppinglist.createdBy.id!}
                       />
                     </WrapItem>
@@ -162,9 +161,7 @@ function App() {
 
 const Welcome: BlitzPage = () => {
   const currentUser = useCurrentUser()
-  const router = useRouter()
   if (currentUser) return <App />
-
   return (
     <>
       <Head>
