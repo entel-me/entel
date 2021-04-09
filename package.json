@@ -1,6 +1,6 @@
 {
-  "name": "farmers-market",
-  "version": "1.0.0",
+  "name": "entel",
+  "version": "0.1.0",
   "scripts": {
     "dev": "blitz dev",
     "build": "blitz build",

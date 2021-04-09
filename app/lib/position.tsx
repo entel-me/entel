@@ -16,8 +16,7 @@ export function useCurrentPosition() {
       .catch((error) => {
         toast({
           title: "Couldn't access your position",
-          description:
-            "Farmers' Market couldn't access your position. Some features will be limited.",
+          description: "entel couldn't access your position. Some features will be limited.",
           status: "error",
           duration: 8000,
           isClosable: true,
