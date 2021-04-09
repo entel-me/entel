@@ -2,6 +2,7 @@
   "name": "entel",
   "version": "0.1.0",
   "scripts": {
+    "predev": "docker-compose up -d",
     "dev": "blitz dev",
     "build": "blitz build",
     "start": "blitz start",

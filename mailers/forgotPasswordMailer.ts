@@ -17,16 +17,16 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   const resetUrl = `${origin}/reset-password?token=${token}`
 
   var smtp = nodemailer.createTransport({
-    host: "mail.privateemail.com",
-    port: 465,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     auth: {
-      user: "info@antonykamp.de",
-      pass: "",
+      user: process.env.MAIL_MAIL,
+      pass: process.env.MAIL_PASSWORD,
     },
   })
 
   const msg = {
-    from: "info@antonykamp.de",
+    from: process.env.MAIL_MAIL,
     to: to,
     subject: "Reset the password of your entel account",
     html: `
