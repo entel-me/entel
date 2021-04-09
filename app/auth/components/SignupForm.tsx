@@ -6,7 +6,7 @@ import { Signup } from "app/auth/validations"
 import { Heading, Flex, Button, useDisclosure, Box } from "@chakra-ui/react"
 
 type SignupFormProps = {
-  onSuccess?: () => void
+  onSuccess?: () => Promise<void>
 }
 
 export const SignupForm = (props: SignupFormProps) => {
@@ -39,7 +39,7 @@ export const SignupForm = (props: SignupFormProps) => {
         onSubmit={async (values) => {
           try {
             await signupMutation(values)
-            props.onSuccess?.()
+            await props.onSuccess?.()
           } catch (error) {
             if (error.code === "P2002" && error.meta?.target?.includes("email")) {
               // This error comes from Prisma

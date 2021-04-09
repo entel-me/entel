@@ -7,7 +7,7 @@ import { Flex, Heading, Button, useDisclosure, Box } from "@chakra-ui/react"
 import ForgotPasswordPage from "app/auth/pages/forgot-password"
 
 type LoginFormProps = {
-  onSuccess?: () => void
+  onSuccess?: () => Promise<void>
 }
 
 export const LoginForm = (props: LoginFormProps) => {
@@ -40,7 +40,7 @@ export const LoginForm = (props: LoginFormProps) => {
         onSubmit={async (values) => {
           try {
             await loginMutation(values)
-            props.onSuccess?.()
+            await props.onSuccess?.()
           } catch (error) {
             if (error instanceof AuthenticationError) {
               return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
