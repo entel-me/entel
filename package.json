@@ -9,7 +9,8 @@
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "start:production": "blitz start --port $PORT"
   },
   "prisma": {
     "schema": "db/schema.prisma"
