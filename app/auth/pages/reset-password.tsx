@@ -44,11 +44,17 @@ const ResetPasswordPage: BlitzPage = () => {
             }
           }}
         >
-          <LabeledTextField name="password" label="New Password" type="password" />
+          <LabeledTextField
+            name="password"
+            label="New Password"
+            type="password"
+            placeholder="New Password"
+          />
           <LabeledTextField
             name="passwordConfirmation"
             label="Confirm New Password"
             type="password"
+            placeholder="New Password"
           />
         </ResetPasswordForm>
       )}

@@ -7,7 +7,7 @@ import { Flex, Heading, Button, useDisclosure, Box } from "@chakra-ui/react"
 import ForgotPasswordPage from "app/auth/pages/forgot-password"
 
 type LoginFormProps = {
-  onSuccess?: () => Promise<void>
+  onSuccess?: () => Promise<void> | void
 }
 
 export const LoginForm = (props: LoginFormProps) => {
