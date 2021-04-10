@@ -57,7 +57,7 @@ export default function Chat() {
     message.scrollTop = message.scrollHeight
   })
 
-  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 2000 })
 
   return (
     <>

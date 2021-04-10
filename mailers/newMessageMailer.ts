@@ -20,7 +20,6 @@ export function newMessageMailer({ to, chatid, from, messageContent }: NewMessag
 
   var smtp = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
-    port: process.env.MAIL_PORT,
     auth: {
       user: process.env.MAIL_MAIL,
       pass: process.env.MAIL_PASSWORD,
@@ -47,7 +46,7 @@ export function newMessageMailer({ to, chatid, from, messageContent }: NewMessag
         await smtp.sendMail(msg)
       } else {
         // Preview email in the browser
-        await previewEmail(msg).then(console.log).catch(console.error)
+        await previewEmail(msg)
       }
     },
   }

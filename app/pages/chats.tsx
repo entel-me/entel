@@ -9,9 +9,9 @@ import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 import { useLayoutEffect } from "react"
 
 export default function Chats() {
-  const [chats] = useQuery(getChatsWithLastMessage, null)
+  const [chats] = useQuery(getChatsWithLastMessage, null, { refetchInterval: 2000 })
   const currentUser = useCurrentUser()
-  const [hasUnreadMessage, hasUnreadMessageExtra] = useQuery(checkIfUnreadMessage, null, {
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, {
     refetchInterval: 5000,
   })
 

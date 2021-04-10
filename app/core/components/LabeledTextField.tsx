@@ -7,18 +7,20 @@ export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElem
   name: string
   /** Field label. */
   label: string
+  /** Field placeholder */
+  placeholder: string
   /** Field type. Doesn't include radio buttons and checkboxes */
   type?: "text" | "password" | "email" | "number"
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>
 }
 
 export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
-  ({ name, label, outerProps, ...props }, ref) => {
+  ({ name, label, placeholder, outerProps, type }, ref) => {
     const {
       input,
       meta: { touched, error, submitError, submitting },
     } = useField(name, {
-      parse: props.type === "number" ? Number : undefined,
+      parse: type === "number" ? Number : undefined,
     })
 
     const normalizedError = Array.isArray(error) ? error.join(", ") : error || submitError
@@ -27,7 +29,7 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
       <div {...outerProps}>
         <FormControl isRequired isInvalid={(error && touched) || submitError}>
           <FormLabel>{label}</FormLabel>
-          <Input {...input} disabled={submitting} {...props} ref={ref} />
+          <Input {...input} type={type} placeholer={placeholder} disabled={submitting} ref={ref} />
         </FormControl>
 
         {touched && normalizedError && (

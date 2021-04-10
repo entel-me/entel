@@ -45,7 +45,6 @@ export default function PublicList({
   refetch,
 }: PublicListProps) {
   const { isOpen, onToggle } = useDisclosure()
-  const [isHovered, onHover] = useState(false)
   const [acceptListMutation] = useMutation(acceptList)
   const [createChatMutation] = useMutation(createChat)
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
@@ -61,8 +60,6 @@ export default function PublicList({
       borderRadius="lg"
       borderColor="brandGreen.800"
       onClick={onToggle}
-      onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
       overflow="visible"
     >
       <Flex paddingX="1rem" paddingY=".5rem" justifyContent="space-between" flexDirection="row">
@@ -139,21 +136,19 @@ export default function PublicList({
           </Button>
         </Flex>
       </Collapse>
-      <Collapse in={isHovered && !isOpen} animateOpacity>
-        <Flex
-          textAlign="center"
-          justifyContent="center"
-          _hover={{ background: "brandGreen.600", cursor: "pointer" }}
-          backgroundColor="brandGreen.500"
-          textColor="white"
-          flexDirection="column"
-          height="1.5rem"
-        >
-          <Text fontSize="1rem" fontWeight="semibold">
-            show more
-          </Text>
-        </Flex>
-      </Collapse>
+      <Flex
+        textAlign="center"
+        justifyContent="center"
+        _hover={{ background: "brandGreen.600", cursor: "pointer" }}
+        backgroundColor="brandGreen.500"
+        textColor="white"
+        flexDirection="column"
+        height="1.5rem"
+      >
+        <Text fontSize="1rem" fontWeight="semibold">
+          {isOpen ? "show less" : "show more"}
+        </Text>
+      </Flex>
     </Flex>
   )
 }

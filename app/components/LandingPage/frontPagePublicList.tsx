@@ -32,8 +32,7 @@ export default function PublicList({
   ownerName,
   specialWish,
 }: PublicListProps) {
-  const { isOpen, onToggle } = useDisclosure()
-  const [isHovered, onHover] = useState(false)
+  const { isOpen, onToggle } = useDisclosure({ defaultIsOpen: true })
   const toast = createStandaloneToast()
   return (
     <Flex
@@ -44,8 +43,6 @@ export default function PublicList({
       borderRadius="lg"
       borderColor="brandGreen.800"
       onClick={onToggle}
-      onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
       overflow="visible"
       margin="0rem"
       height="min-content"
@@ -107,21 +104,19 @@ export default function PublicList({
           </Button>
         </Flex>
       </Collapse>
-      <Collapse in={isHovered && !isOpen} animateOpacity>
-        <Flex
-          textAlign="center"
-          justifyContent="center"
-          _hover={{ background: "brandGreen.600", cursor: "pointer" }}
-          backgroundColor="brandGreen.500"
-          textColor="white"
-          flexDirection="column"
-          height="1.5rem"
-        >
-          <Text fontSize="1rem" fontWeight="semibold">
-            show more
-          </Text>
-        </Flex>
-      </Collapse>
+      <Flex
+        textAlign="center"
+        justifyContent="center"
+        _hover={{ background: "brandGreen.600", cursor: "pointer" }}
+        backgroundColor="brandGreen.500"
+        textColor="white"
+        flexDirection="column"
+        height="1.5rem"
+      >
+        <Text fontSize="1rem" fontWeight="semibold">
+          {isOpen ? "show less" : "show more"}
+        </Text>
+      </Flex>
     </Flex>
   )
 }
