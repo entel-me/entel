@@ -50,12 +50,9 @@ export default function Chat() {
   useEffect(() => {
     markMessagesAsReadMutation({ chatId })
     markAdminMessagesAsReadMutation({ chatId })
-  }, [messages])
-
-  useLayoutEffect(() => {
     const message = document.getElementById("messages")!
     message.scrollTop = message.scrollHeight
-  })
+  }, [messages])
 
   const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 2000 })
 
@@ -71,6 +68,7 @@ export default function Chat() {
           width="full"
           maxWidth="600px"
           alignSelf="center"
+          style={{ maxHeight: "calc(100vh - 100px" }}
         >
           <Heading
             as="h2"
@@ -87,6 +85,9 @@ export default function Chat() {
             </HStack>
           </Heading>
           <Box
+            display="flex"
+            flexDirection="column"
+            overflowY="auto"
             borderRadius="5px"
             borderWidth="2px"
             borderColor="brandSilver.500"
@@ -96,7 +97,6 @@ export default function Chat() {
               id="messages"
               width="full"
               overflowY="auto"
-              maxHeight="800px"
               padding="0.5rem"
               borderColor="brandSilver.300"
               borderBottomWidth="2px"
