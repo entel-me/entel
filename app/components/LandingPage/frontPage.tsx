@@ -119,7 +119,7 @@ export default function FrontPage() {
                 list and bring them the products they need!
               </Text>
               <Text textAlign="right" marginLeft="2rem" marginBlockStart="0.4rem">
-                Try expanding the list, to see which products Till needs from Edeka.
+                Try to close the list, to see how list are represented in our App.
               </Text>
             </Box>
           </Flex>

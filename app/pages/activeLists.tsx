@@ -9,7 +9,6 @@ import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
 
 export default function ActiveLists() {
   const [activeList, activeListsExtras] = useQuery(getActiveLists, null, { refetchInterval: 2000 })
-  const activeListsRefetch = activeListsExtras.refetch
   const [{ user_latitude, user_longitude }] = useQuery(getPosition, null)
   const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
@@ -52,7 +51,7 @@ export default function ActiveLists() {
                       ownerId={YourList.createdBy!.id!}
                       specialWish={YourList.comment}
                       listId={YourList.id}
-                      refetch={activeListsRefetch}
+                      refetch={activeListsExtras.refetch}
                     />
                   </WrapItem>
                 )
