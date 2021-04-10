@@ -52,4 +52,5 @@ A hosted version can be found at [**entel.me**](https://www.entel.me/)
   </tbody>
 </table>
 Many thanks to Roman for creating the cute logo 💖
+
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

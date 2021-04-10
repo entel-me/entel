@@ -41,7 +41,7 @@
     "framer-motion": "4.0.3",
     "nodemailer": "6.5.0",
     "prisma": "~2.19",
-    "react": "0.0.0-experimental-6a589ad71",
+    "react": ">=0.14.0",
     "react-dom": "0.0.0-experimental-6a589ad71",
     "react-error-boundary": "3.1.1",
     "react-final-form": "6.5.3",
@@ -51,6 +51,7 @@
     "zod": "1.11.13"
   },
   "devDependencies": {
+    "react": ">=0.14.0",
     "@types/react": "17.0.3",
     "@types/preview-email": "2.0.0",
     "eslint": "7.23.0",

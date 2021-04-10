@@ -48,7 +48,7 @@ export default function AcceptedList({
   const [doneListMutation] = useMutation(doneList)
   const [undoAcceptMutation] = useMutation(renewList)
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
-  const [chat] = useQuery(getChatByParticipants, { ownerId })
+  const [chat] = useQuery(getChatByParticipants, { ownerId }, { retry: 2 })
   const router = useRouter()
   const toast = createStandaloneToast()
   useCurrentPosition()
