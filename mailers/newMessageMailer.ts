@@ -46,7 +46,7 @@ export function newMessageMailer({ to, chatid, from, messageContent }: NewMessag
         await smtp.sendMail(msg)
       } else {
         // Preview email in the browser
-        await previewEmail(msg).then(console.log).catch(console.error)
+        await previewEmail(msg)
       }
     },
   }
