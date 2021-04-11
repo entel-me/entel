@@ -1,11 +1,11 @@
 import { Flex, Heading, Text, Wrap, WrapItem } from "@chakra-ui/react"
 import { Head, useQuery } from "blitz"
-import Layout from "../components/layout"
-import getPosition from "../queries/getPositionOfUser"
+import Layout from "../../core/layouts/layout"
+import getPosition from "../../core/queries/getPositionOfUser"
 import getActiveLists from "../queries/getActiveLists"
 import AcceptedList from "../components/acceptedList"
-import { getDistanceByHaversine } from "../lib/position"
-import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
+import { getDistanceByHaversine } from "../../lib/position"
+import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
 
 export default function ActiveLists() {
   const [activeList, activeListsExtras] = useQuery(getActiveLists, null, { refetchInterval: 2000 })

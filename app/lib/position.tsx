@@ -1,5 +1,5 @@
 import { useToast } from "@chakra-ui/react"
-import updatePosition from "app/mutations/updatePoisition"
+import updatePosition from "app/core/mutations/updatePoisition"
 import { useMutation, useQuery } from "blitz"
 import { useEffect, useState } from "react"
 

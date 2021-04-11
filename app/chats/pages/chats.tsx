@@ -1,11 +1,11 @@
 import { Flex, Heading, Stack, Text, WrapItem } from "@chakra-ui/react"
-import Layout from "../components/layout"
-import ChatPreview from "../components/chats/chatPreview"
+import Layout from "../../core/layouts/layout"
+import ChatPreview from "../components/chatPreview"
 import { Head, useQuery } from "blitz"
 import getChatsWithLastMessage from "../queries/getChatsWithLastMessage"
 
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
+import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
 import { useLayoutEffect } from "react"
 
 export default function Chats() {

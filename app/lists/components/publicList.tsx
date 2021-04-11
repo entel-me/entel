@@ -19,9 +19,9 @@ import { useMutation, useQuery } from "blitz"
 import acceptList from "../mutations/acceptList"
 import { useState } from "react"
 import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
-import createChat from "../mutations/createChat"
-import createAdminMessage from "../mutations/createAdminMessage"
-import getChatByParticipants from "../queries/getChatByParticipants"
+import createChat from "../../chats/mutations/createChat"
+import createAdminMessage from "../../chats/mutations/createAdminMessage"
+import getChatByParticipants from "../../chats/queries/getChatByParticipants"
 import { getDistanceString } from "app/lib/position"
 
 interface PublicListProps {

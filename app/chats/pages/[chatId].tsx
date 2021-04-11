@@ -10,23 +10,23 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react"
-import AdminMessage from "app/components/chats/adminMessage"
-import OwnMessage from "app/components/chats/ownMessage"
-import StrangeMessage from "app/components/chats/strangeMessage"
-import Layout from "app/components/layout"
+import AdminMessage from "app/chats/components/adminMessage"
+import OwnMessage from "app/chats/components/ownMessage"
+import StrangeMessage from "app/chats/components/strangeMessage"
+import Layout from "app/core/layouts/layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import getMessagesByChat from "app/queries/getMessagesByChat"
+import getMessagesByChat from "app/chats/queries/getMessagesByChat"
 import { useQuery, useParam, useMutation, Head } from "blitz"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
-import getParticipantsByChatId from "../../queries/getParticipantsByChatId"
-import sendMessage from "../../mutations/sendMessage"
-import markMessagesAsRead from "../../mutations/markMessagesAsRead"
+import getParticipantsByChatId from "../queries/getParticipantsByChatId"
+import sendMessage from "../mutations/sendMessage"
+import markMessagesAsRead from "../mutations/markMessagesAsRead"
 import { useEffect, useLayoutEffect } from "react"
 import { RiMailSendLine } from "react-icons/ri"
 import { BiUserCircle } from "react-icons/bi"
-import markAdminMessagesAsRead from "app/mutations/markAdminAsRead"
-import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
+import markAdminMessagesAsRead from "app/chats/mutations/markAdminAsRead"
+import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
 
 export default function Chat() {
   const chatId = useParam("chatId", "number")

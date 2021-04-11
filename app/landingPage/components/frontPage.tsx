@@ -32,9 +32,9 @@ import {
   ListItem,
 } from "@chakra-ui/react"
 import { useMediaQuery } from "react-responsive"
-import OwnedList from "../LandingPage/frontPageOwnedList"
-import PublicList from "../LandingPage/frontPagePublicList"
-import Chat from "../LandingPage/frontPageChat"
+import OwnedList from "./frontPageOwnedList"
+import PublicList from "./frontPagePublicList"
+import Chat from "./frontPageChat"
 import { Image } from "blitz"
 export default function FrontPage() {
   const isMobile = useMediaQuery({ query: `(max-width: 850px)` })

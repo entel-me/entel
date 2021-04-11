@@ -1,6 +1,6 @@
 import { Stack, HStack, Text, Circle } from "@chakra-ui/react"
 import { InfoIcon } from "@chakra-ui/icons"
-import { Message } from "app/queries/getChatsWithLastMessage"
+import { Message } from "app/chats/queries/getChatsWithLastMessage"
 import { Link as BlitzLink } from "blitz"
 
 interface ChatPreviewProps {

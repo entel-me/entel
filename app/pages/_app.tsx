@@ -11,7 +11,7 @@ import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
 import { ChakraProvider, extendTheme, shadow } from "@chakra-ui/react"
-import Loading from "../components/loading"
+import Loading from "../core/components/loading"
 
 const theme = extendTheme({
   colors: {

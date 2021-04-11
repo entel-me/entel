@@ -36,7 +36,7 @@ import { AuthenticationError, Head, useMutation, useQuery, useRouter, Image } fr
 import logout from "app/auth/mutations/logout"
 import { AiFillGithub } from "react-icons/ai"
 import { useMediaQuery } from "react-responsive"
-import { ChangePassword } from "./changePasswordModal"
+import { ChangePassword } from "../../auth/components/changePasswordModal"
 import { LoginForm } from "app/auth/components/LoginForm"
 import { SignupForm } from "app/auth/components/SignupForm"
 import { Link as BlitzLink } from "blitz"
