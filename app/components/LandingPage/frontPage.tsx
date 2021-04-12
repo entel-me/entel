@@ -93,7 +93,7 @@ export default function FrontPage() {
               status={1}
               acceptedName="Antony"
               specialWish="as a 'Thank You' you will get a beer on the house"
-              itemsList={["wine (sub $5 Pinot Gris)", "condoms", "whip"]}
+              itemsList={["wine (sub $5 Pinot Gris)", "sausages", "coffee"]}
             />
           </Flex>
           <Flex
