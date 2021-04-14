@@ -55,7 +55,7 @@ export default function PublicList({
       justifyContent="space-between"
       flexDirection="column"
       borderWidth="2px"
-      width="sm"
+      style={{ width: "min(24rem,95vw" }}
       margin="0.5rem"
       borderRadius="lg"
       borderColor="brandGreen.800"
