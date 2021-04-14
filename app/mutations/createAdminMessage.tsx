@@ -1,7 +1,7 @@
 import db from "db"
 import { Ctx } from "blitz"
 import { newMessageMailer } from "mailers/newMessageMailer"
-import { Logger } from "tslog"
+import { dbLogger as log } from "app/lib/logger"
 
 export default async function createAdminMessage({ content, chatId }, context: Ctx) {
   context.session.$authorize()
@@ -10,7 +10,6 @@ export default async function createAdminMessage({ content, chatId }, context: C
   })
   await sentMail(chatId, content)
 
-  const log: Logger = new Logger()
   log.info("AdminMessage was sent")
 }
 

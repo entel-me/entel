@@ -6,7 +6,8 @@
  */
 import previewEmail from "preview-email"
 import nodemailer from "nodemailer"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
+
 type NewMessageMailerProps = {
   to: string
   from: string
@@ -40,7 +41,6 @@ export function newMessageMailer({ to, chatid, from, messageContent }: NewMessag
       <p>${chatUrl}</p>
     `,
   }
-  const log: Logger = new Logger({ name: "mailer" })
 
   return {
     async send() {

@@ -23,7 +23,7 @@ import getChatByParticipants from "app/queries/getChatByParticipants"
 import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
 import { Link as BlitzLink } from "blitz"
 import { getDistanceString, useCurrentPosition } from "app/lib/position"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 interface AcceptedListProps {
   distance: Number
@@ -52,7 +52,6 @@ export default function AcceptedList({
   const router = useRouter()
   const toast = createStandaloneToast()
   useCurrentPosition()
-  const log: Logger = new Logger()
 
   return (
     <Flex

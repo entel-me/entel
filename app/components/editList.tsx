@@ -26,7 +26,7 @@ import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
 import updateStoreComment from "../mutations/updateStoreComment"
 import removeAllItems from "../mutations/removeAllItems"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 export default function EditLists({ getList }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -50,8 +50,6 @@ export default function EditLists({ getList }) {
       document.getElementById("item" + (countItems - 1))!.focus()
     } catch {}
   }, [countItems])
-
-  const log: Logger = new Logger()
 
   return (
     <>

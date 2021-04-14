@@ -5,7 +5,7 @@ import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
 import { Flex, Heading, Button, useDisclosure, Box } from "@chakra-ui/react"
 import ForgotPasswordPage from "app/auth/pages/forgot-password"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 type LoginFormProps = {
   onSuccess?: () => Promise<void> | void
@@ -14,7 +14,6 @@ type LoginFormProps = {
 export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const log: Logger = new Logger()
 
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">

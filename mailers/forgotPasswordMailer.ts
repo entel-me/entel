@@ -6,7 +6,8 @@
  */
 import previewEmail from "preview-email"
 import nodemailer from "nodemailer"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
+
 type ResetPasswordMailer = {
   to: string
   token: string
@@ -38,8 +39,6 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
       <p>${resetUrl}</p>
     `,
   }
-
-  const log: Logger = new Logger({ name: "mailer" })
 
   return {
     async send() {

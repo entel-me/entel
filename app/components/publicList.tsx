@@ -23,7 +23,7 @@ import createChat from "../mutations/createChat"
 import createAdminMessage from "../mutations/createAdminMessage"
 import getChatByParticipants from "../queries/getChatByParticipants"
 import { getDistanceString } from "app/lib/position"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 interface PublicListProps {
   distance: Number
@@ -51,7 +51,6 @@ export default function PublicList({
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
   const [chat] = useQuery(getChatByParticipants, { ownerId })
   const toast = createStandaloneToast()
-  const log: Logger = new Logger()
 
   return (
     <Flex

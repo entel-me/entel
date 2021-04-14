@@ -19,12 +19,11 @@ import changePassword from "app/auth/mutations/changePassword"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import * as z from "zod"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 export function ChangePassword({ isOpen, onClose }) {
   const [changePasswordMutation] = useMutation(changePassword)
   const toast = useToast()
-  const log: Logger = new Logger()
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

@@ -4,7 +4,7 @@ import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
 import { Heading, Flex, Button, useDisclosure, Box } from "@chakra-ui/react"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 type SignupFormProps = {
   onSuccess?: () => Promise<void>
 }
@@ -12,7 +12,6 @@ type SignupFormProps = {
 export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const log: Logger = new Logger()
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
       <Box

@@ -1,6 +1,6 @@
 import db from "db"
 import { Ctx } from "blitz"
-import { Logger } from "tslog"
+import { dbLogger as log } from "app/lib/logger"
 
 export default async function markMessagesAsRead({ chatId }, context: Ctx) {
   context.session.$authorize()
@@ -8,6 +8,5 @@ export default async function markMessagesAsRead({ chatId }, context: Ctx) {
     where: { sentInId: chatId, sentToId: context.session.userId },
     data: { wasRead: true },
   })
-  const log: Logger = new Logger({ name: "db" })
   log.debug("Messages marked as read.")
 }

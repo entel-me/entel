@@ -27,7 +27,7 @@ import { RiMailSendLine } from "react-icons/ri"
 import { BiUserCircle } from "react-icons/bi"
 import markAdminMessagesAsRead from "app/mutations/markAdminAsRead"
 import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 export default function Chat() {
   const chatId = useParam("chatId", "number")
@@ -56,8 +56,6 @@ export default function Chat() {
   }, [messages])
 
   const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 2000 })
-
-  const log: Logger = new Logger()
 
   return (
     <>

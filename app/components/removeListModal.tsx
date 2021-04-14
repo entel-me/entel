@@ -14,14 +14,14 @@ import {
   createStandaloneToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
+
 import removeShoppinglist from "../mutations/removeShoppinglist"
 
 const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [removeShoppinglistMutation] = useMutation(removeShoppinglist)
   const toast = createStandaloneToast()
-  const log: Logger = new Logger()
   return (
     <>
       <CloseButton

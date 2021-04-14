@@ -25,7 +25,7 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 export default function CreateLists() {
   const [createListMutation] = useMutation(createList)
@@ -35,7 +35,6 @@ export default function CreateLists() {
   const [idList, setIdList] = useState([0])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = createStandaloneToast()
-  const log: Logger = new Logger()
 
   useEffect(() => {
     try {

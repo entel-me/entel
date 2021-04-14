@@ -1,6 +1,6 @@
 import db from "db"
 import { Ctx } from "blitz"
-import { Logger } from "tslog"
+import { dbLogger as log } from "app/lib/logger"
 
 export default async function doneList(listId, context: Ctx) {
   context.session.$authorize()
@@ -8,6 +8,5 @@ export default async function doneList(listId, context: Ctx) {
     where: { id: listId },
     data: { status: 2, acceptedBy: { disconnect: true } },
   })
-  const log: Logger = new Logger({ name: "db" })
   log.debug("List changed status to '2'.")
 }

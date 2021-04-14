@@ -21,7 +21,7 @@ import { BsArchive } from "react-icons/bs"
 import archiveList from "../mutations/archiveList"
 import BrandBadge from "./BrandBadge"
 import { Link as BlitzLink } from "blitz"
-import { Logger } from "tslog"
+import { appLogger as log } from "app/lib/logger"
 
 interface OwnedListProps {
   marketName: String
@@ -48,7 +48,6 @@ export default function OwnedList({
   const router = useRouter()
   const [archiveListMutation] = useMutation(archiveList)
   const toast = createStandaloneToast()
-  const log: Logger = new Logger()
 
   return (
     <Flex
