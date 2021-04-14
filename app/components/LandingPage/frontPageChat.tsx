@@ -32,7 +32,13 @@ export default function Chat() {
   let date8 = new Date()
 
   return (
-    <Flex textAlign="center" direction="column" width="sm" maxWidth="600px" alignSelf="center">
+    <Flex
+      textAlign="center"
+      direction="column"
+      style={{ width: "min(24rem,95vw)" }}
+      maxWidth="600px"
+      alignSelf="center"
+    >
       <Heading
         as="h2"
         fontFamily="Raleway"
