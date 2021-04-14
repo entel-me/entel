@@ -139,7 +139,9 @@ function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
     return (
       <ErrorComponent
         statusCode={error.statusCode}
-        title={"Sorry, please login or sign up to see this."}
+        title={
+          "Sorry, please login or sign up to see this. If you logged in already, try to reload the page."
+        }
       />
     )
   } else if (error instanceof AuthorizationError) {
