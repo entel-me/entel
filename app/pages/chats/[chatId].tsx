@@ -16,7 +16,7 @@ import StrangeMessage from "app/components/chats/strangeMessage"
 import Layout from "app/components/layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import getMessagesByChat from "app/queries/getMessagesByChat"
-import { useQuery, useParam, useMutation, Head } from "blitz"
+import { useQuery, useParam, useMutation, Head, AuthorizationError } from "blitz"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import getParticipantsByChatId from "../../queries/getParticipantsByChatId"
@@ -34,7 +34,7 @@ export default function Chat() {
   const [participants] = useQuery(getParticipantsByChatId, { id: chatId! })
 
   if (!participants.map((part) => part.id).includes(currentUser!.id)) {
-    window.location.href = "/"
+    throw new AuthorizationError("You're not part of this chat.")
   }
 
   const oppositeName = participants.filter((part) => part.id != currentUser?.id)[0]
