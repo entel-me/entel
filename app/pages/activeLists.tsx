@@ -1,10 +1,10 @@
 import { Flex, Heading, Text, Wrap, WrapItem } from "@chakra-ui/react"
 import { Head, useQuery } from "blitz"
-import Layout from "../../core/layouts/layout"
-import getPosition from "../../core/queries/getPositionOfUser"
-import getActiveLists from "../queries/getActiveLists"
-import AcceptedList from "../components/acceptedList"
-import { getDistanceByHaversine } from "../../lib/position"
+import Layout from "../core/layouts/layout"
+import getPosition from "../core/queries/getPositionOfUser"
+import getActiveLists from "../lists/queries/getActiveLists"
+import AcceptedList from "../lists/components/acceptedList"
+import { getDistanceByHaversine } from "../lib/position"
 import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
 
 export default function ActiveLists() {

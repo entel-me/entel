@@ -1,8 +1,8 @@
 import { Flex, Heading, Stack, Text, WrapItem } from "@chakra-ui/react"
-import Layout from "../../core/layouts/layout"
-import ChatPreview from "../components/chatPreview"
+import Layout from "../core/layouts/layout"
+import ChatPreview from "../chats/components/chatPreview"
 import { Head, useQuery } from "blitz"
-import getChatsWithLastMessage from "../queries/getChatsWithLastMessage"
+import getChatsWithLastMessage from "../chats/queries/getChatsWithLastMessage"
 
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"

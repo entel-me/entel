@@ -1,7 +1,7 @@
 import { Flex, Heading, Text, Wrap, WrapItem } from "@chakra-ui/react"
-import Layout from "../../core/layouts/layout"
-import OwnedList from "../components/ownedList"
-import getArchivedLists from "../queries/getArchivedLists"
+import Layout from "../core/layouts/layout"
+import OwnedList from "../lists/components/ownedList"
+import getArchivedLists from "../lists/queries/getArchivedLists"
 import { Head, useQuery } from "blitz"
 import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
 
