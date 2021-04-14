@@ -71,7 +71,7 @@ export default function FrontPage() {
             alignItems="Start"
             justifyContent="center"
           >
-            <Box style={{ width: "min(24rem,95vw" }} alignSelf="baseline" marginBottom="2rem">
+            <Box style={{ width: "min(24rem,95vw)" }} alignSelf="baseline" marginBottom="2rem">
               <Heading lineHeight="3rem" marginRight="2rem">
                 Share your needs
               </Heading>
@@ -110,7 +110,7 @@ export default function FrontPage() {
               specialWish="Buy only Bio and vegan products please :)"
               itemsList={["Bread", "Jam (Strawberry)", "Agave sirup (from Alnatura)"]}
             />
-            <Box style={{ width: "min(24rem,95vw" }} alignSelf="unset" marginBottom="2rem">
+            <Box style={{ width: "min(24rem,95vw)" }} alignSelf="unset" marginBottom="2rem">
               <Heading textAlign="right" lineHeight="3rem" marginLeft="2rem">
                 Help others!
               </Heading>
@@ -131,7 +131,7 @@ export default function FrontPage() {
             justifyContent="center"
           >
             <Box
-              style={{ width: "min(24rem,95vw" }}
+              style={{ width: "min(24rem,95vw)" }}
               alignSelf="baseline"
               marginBottom="2rem"
               marginTop="0.5rem"

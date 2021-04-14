@@ -35,7 +35,7 @@ export default function Chat() {
     <Flex
       textAlign="center"
       direction="column"
-      style={{ width: "min(24rem,95vw" }}
+      style={{ width: "min(24rem,95vw)" }}
       maxWidth="600px"
       alignSelf="center"
     >
