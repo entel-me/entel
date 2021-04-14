@@ -6,6 +6,7 @@
  */
 import previewEmail from "preview-email"
 import nodemailer from "nodemailer"
+import { Logger } from "tslog"
 type ResetPasswordMailer = {
   to: string
   token: string
@@ -38,13 +39,17 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
     `,
   }
 
+  const log: Logger = new Logger({ name: "mailer" })
+
   return {
     async send() {
       if (process.env.NODE_ENV === "production") {
         await smtp.sendMail(msg)
+        log.info("An email was sent.")
       } else {
         // Preview email in the browser
         await previewEmail(msg)
+        log.info("An preview mail was created.")
       }
     },
   }
