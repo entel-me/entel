@@ -46,11 +46,11 @@ export function newMessageMailer({ to, chatid, from, messageContent }: NewMessag
     async send() {
       if (process.env.NODE_ENV === "production") {
         await smtp.sendMail(msg)
-        log.info("An email was sent.")
+        log.info("An email was sent by newMessageMailer.")
       } else {
         // Preview email in the browser
         await previewEmail(msg)
-        log.info("An preview mail was created.")
+        log.info("An preview mail was created by newMessageMailer.")
       }
     },
   }

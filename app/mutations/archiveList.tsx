@@ -9,5 +9,5 @@ export default async function archiveList(listId, context: Ctx) {
     data: { status: 2 },
   })
   const log: Logger = new Logger({ name: "db" })
-  log.info("List changed status to '2'.")
+  log.info("List changed status to 'archived'.")
 }

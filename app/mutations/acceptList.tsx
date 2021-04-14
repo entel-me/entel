@@ -9,5 +9,5 @@ export default async function acceptList(listId, context: Ctx) {
     data: { status: 1, acceptedBy: { connect: { id: context.session.userId } } },
   })
   const log: Logger = new Logger({ name: "db" })
-  log.info("List changed status to '2'.")
+  log.info("List changed status to 'in progress'.")
 }

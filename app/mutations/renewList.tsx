@@ -9,5 +9,5 @@ export default async function renewList(listId, context: Ctx) {
     data: { status: 0 },
   })
   const log: Logger = new Logger({ name: "db" })
-  log.debug("List changed status to '0'.")
+  log.debug("List changed status to 'in progress'.")
 }
