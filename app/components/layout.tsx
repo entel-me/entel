@@ -75,12 +75,16 @@ export default function Layout({
             alignItems="flex-end"
             marginTop="5px"
           >
-            <HStack as="a" href="/">
-              <Image src="/logo_1.png" width="90" alt="entel logo" height="90" />
-              <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
-                entel
-              </Heading>
-            </HStack>
+            <Link href="/">
+              <HStack>
+                {(user || !isMobile) && (
+                  <Image src="/logo_1.png" width="90" alt="entel logo" height="90" />
+                )}
+                <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
+                  entel
+                </Heading>
+              </HStack>
+            </Link>
             <Flex
               direction="row"
               justifyContent="space-between"
