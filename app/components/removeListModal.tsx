@@ -14,12 +14,14 @@ import {
   createStandaloneToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
+import { Logger } from "tslog"
 import removeShoppinglist from "../mutations/removeShoppinglist"
 
 const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [removeShoppinglistMutation] = useMutation(removeShoppinglist)
   const toast = createStandaloneToast()
+  const log: Logger = new Logger()
   return (
     <>
       <CloseButton
@@ -43,6 +45,8 @@ const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
                 onClick={async () => {
                   onClose()
                   await removeShoppinglistMutation({ id: modalFooter })
+                  log.info("A shoppinglist was deleted permanently.")
+
                   toast({
                     title: "Successfully Deleted List",
                     description: "This list is permanently deleted from your records",

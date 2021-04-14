@@ -4,7 +4,7 @@ import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
 import { Heading, Flex, Button, useDisclosure, Box } from "@chakra-ui/react"
-
+import { Logger } from "tslog"
 type SignupFormProps = {
   onSuccess?: () => Promise<void>
 }
@@ -12,7 +12,7 @@ type SignupFormProps = {
 export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
   const { isOpen, onOpen, onClose } = useDisclosure()
-
+  const log: Logger = new Logger()
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
       <Box
@@ -40,11 +40,13 @@ export const SignupForm = (props: SignupFormProps) => {
           try {
             await signupMutation(values)
             await props.onSuccess?.()
+            log.info("Sign up was successfull.")
           } catch (error) {
             if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-              // This error comes from Prisma
+              log.warn("Login failed, because the email is already being used.")
               return { email: "This email is already being used" }
             } else {
+              log.error("Login failed, because of an unexpected error.", { error: error })
               return { [FORM_ERROR]: error.toString() }
             }
           }

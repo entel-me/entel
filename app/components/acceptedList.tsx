@@ -23,7 +23,7 @@ import getChatByParticipants from "app/queries/getChatByParticipants"
 import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
 import { Link as BlitzLink } from "blitz"
 import { getDistanceString, useCurrentPosition } from "app/lib/position"
-import { useEffect } from "react"
+import { Logger } from "tslog"
 
 interface AcceptedListProps {
   distance: Number
@@ -52,6 +52,7 @@ export default function AcceptedList({
   const router = useRouter()
   const toast = createStandaloneToast()
   useCurrentPosition()
+  const log: Logger = new Logger()
 
   return (
     <Flex
@@ -132,6 +133,7 @@ export default function AcceptedList({
                 duration: 5000,
                 isClosable: true,
               })
+              log.info("The status of a shoppinglist changed from 'in progress' to 'archived'")
             }}
           >
             {" "}
@@ -156,6 +158,7 @@ export default function AcceptedList({
                 duration: 7000,
                 isClosable: true,
               })
+              log.info("The status of a shoppinglist changed from 'in progress' to 'pending'")
             }}
           >
             {" "}

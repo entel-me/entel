@@ -5,6 +5,7 @@ import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
 import { Flex, Heading, Button, useDisclosure, Box } from "@chakra-ui/react"
 import ForgotPasswordPage from "app/auth/pages/forgot-password"
+import { Logger } from "tslog"
 
 type LoginFormProps = {
   onSuccess?: () => Promise<void> | void
@@ -13,6 +14,7 @@ type LoginFormProps = {
 export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const log: Logger = new Logger()
 
   return (
     <Flex direction="column" alignItems="center" justifyContent="center" alignContent="center">
@@ -41,10 +43,13 @@ export const LoginForm = (props: LoginFormProps) => {
           try {
             await loginMutation(values)
             await props.onSuccess?.()
+            log.info("Login was successfull.")
           } catch (error) {
             if (error instanceof AuthenticationError) {
+              log.warn("Login failed, because of invalid credentials.")
               return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
             } else {
+              log.error("Login failed, because of an unexpected error.", { error: error })
               return {
                 [FORM_ERROR]:
                   "Sorry, we had an unexpected error. Please try again. - " + error.toString(),

@@ -25,6 +25,7 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
+import { Logger } from "tslog"
 
 export default function CreateLists() {
   const [createListMutation] = useMutation(createList)
@@ -34,6 +35,7 @@ export default function CreateLists() {
   const [idList, setIdList] = useState([0])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = createStandaloneToast()
+  const log: Logger = new Logger()
 
   useEffect(() => {
     try {
@@ -88,6 +90,8 @@ export default function CreateLists() {
                 setIdList([0])
                 setCountItems(1)
                 onClose()
+                log.info("A new shoppinglist was created successfully.")
+
                 toast({
                   title: "Successfully Created List",
                   description: "You will find your created lists under 'Home'",
@@ -95,7 +99,11 @@ export default function CreateLists() {
                   duration: 5000,
                   isClosable: true,
                 })
-              } catch (error) {}
+              } catch (error) {
+                log.error("Creating a new shoppinglist failed, because of an unexpected error.", {
+                  error: error,
+                })
+              }
             }}
             validate={(values) => {
               const errors = {}
