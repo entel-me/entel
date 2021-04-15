@@ -21,6 +21,7 @@ import { BsArchive } from "react-icons/bs"
 import archiveList from "../mutations/archiveList"
 import BrandBadge from "./BrandBadge"
 import { Link as BlitzLink } from "blitz"
+import { appLogger as log } from "app/lib/logger"
 
 interface OwnedListProps {
   marketName: String
@@ -47,6 +48,7 @@ export default function OwnedList({
   const router = useRouter()
   const [archiveListMutation] = useMutation(archiveList)
   const toast = createStandaloneToast()
+
   return (
     <Flex
       flexDirection="column"
@@ -111,6 +113,8 @@ export default function OwnedList({
                 _hover={{ backgroundColor: "brandGreen.500", color: "white" }}
                 onClick={async () => {
                   await archiveListMutation(listId)
+                  log.info("The status of a shoppinglist changed from 'pending' to 'archived'")
+
                   toast({
                     title: "Successfully Archived List",
                     description: "You will find your archived lists under 'Menu/Archived Lists'",
@@ -136,6 +140,8 @@ export default function OwnedList({
           onClick={async () => {
             await renewListMutation(listId)
             refetch()
+            log.info("The status of a shoppinglist changed from 'archived' to 'pending'")
+
             toast({
               title: "Successfully Renewed List",
               description: "You will find your published lists under 'Home'",

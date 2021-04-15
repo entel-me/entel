@@ -1,5 +1,6 @@
 import db from "db"
 import { Ctx } from "blitz"
+import { dbLogger as log } from "app/lib/logger"
 
 export default async function createList({ store, specialWish }, context: Ctx) {
   context.session.$authorize()
@@ -12,5 +13,6 @@ export default async function createList({ store, specialWish }, context: Ctx) {
     },
     select: { id: true },
   })
+  log.debug("Created new shoppinglist.")
   return lists
 }

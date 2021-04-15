@@ -6,6 +6,8 @@
  */
 import previewEmail from "preview-email"
 import nodemailer from "nodemailer"
+import { appLogger as log } from "app/lib/logger"
+
 type NewMessageMailerProps = {
   to: string
   from: string
@@ -44,9 +46,11 @@ export function newMessageMailer({ to, chatid, from, messageContent }: NewMessag
     async send() {
       if (process.env.NODE_ENV === "production") {
         await smtp.sendMail(msg)
+        log.info("An email was sent by newMessageMailer.")
       } else {
         // Preview email in the browser
         await previewEmail(msg)
+        log.info("An preview mail was created by newMessageMailer.")
       }
     },
   }
