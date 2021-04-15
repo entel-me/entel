@@ -10,10 +10,10 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react"
-import AdminMessage from "app/components/chats/adminMessage"
-import OwnMessage from "app/components/chats/ownMessage"
-import StrangeMessage from "app/components/chats/strangeMessage"
-import Layout from "app/components/layout"
+import AdminMessage from "app/chats/components/adminMessage"
+import OwnMessage from "app/chats/components/ownMessage"
+import StrangeMessage from "app/chats/components/strangeMessage"
+import Layout from "app/core/layouts/layout"
 import { useQuery, useParam, useMutation } from "blitz"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"

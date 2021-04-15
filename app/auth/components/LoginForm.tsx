@@ -4,7 +4,7 @@ import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
 import { Flex, Heading, Button, useDisclosure, Box } from "@chakra-ui/react"
-import ForgotPasswordPage from "app/auth/pages/forgot-password"
+import ForgotPasswordPage from "app/auth/components/forgot-password"
 import { appLogger as log } from "app/lib/logger"
 
 type LoginFormProps = {
