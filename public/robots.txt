@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://entel.me
+
+# Sitemaps
+Sitemap: https://entel.me/sitemap.xml

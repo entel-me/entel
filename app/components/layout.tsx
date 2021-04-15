@@ -58,6 +58,17 @@ export default function Layout({
     <>
       <Head>
         <link rel="icon" href="/logo_1.png" />
+        <meta charSet="utf-8" />
+        <meta
+          name="keywords"
+          content="entel, share, shopping, shoppinglist, tool, chat, community"
+        />
+        <meta name="author" content="Till Bergmann, Antony Kamp" />
+        <meta name="copyright" content="Till Bergmann, Antony Kamp" />
+        <meta
+          name="description"
+          content="Share your needs! Replace the unnecessary walk to the next supermarket by a new shoppinglist in entel."
+        />
       </Head>
       <ColorModeScript initialColorMode="light" />
       <Flex direction="column" alignItems="center" height="100vh">
