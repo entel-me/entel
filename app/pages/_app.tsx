@@ -5,6 +5,7 @@ import {
   AuthenticationError,
   AuthorizationError,
   ErrorFallbackProps,
+  Router,
 } from "blitz"
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
@@ -135,12 +136,19 @@ export default function App({ Component, pageProps }: AppProps) {
 
 function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
-    return <LoginForm onSuccess={resetErrorBoundary} />
+    return (
+      <ErrorComponent
+        statusCode={error.statusCode}
+        title={
+          "Sorry, please login or sign up to see this. If you logged in already, try to reload the page."
+        }
+      />
+    )
   } else if (error instanceof AuthorizationError) {
     return (
       <ErrorComponent
         statusCode={error.statusCode}
-        title="Sorry, you are not authorized to access this"
+        title={error.message || "Sorry, you are not authorized to access this."}
       />
     )
   } else {
