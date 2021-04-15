@@ -19,6 +19,7 @@ import changePassword from "app/auth/mutations/changePassword"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import * as z from "zod"
+import { appLogger as log } from "app/lib/logger"
 
 export function ChangePassword({ isOpen, onClose }) {
   const [changePasswordMutation] = useMutation(changePassword)
@@ -43,10 +44,15 @@ export function ChangePassword({ isOpen, onClose }) {
                 isClosable: true,
               })
               onClose()
+              log.info("A user changed her/his password successfully.")
             } catch (error) {
               if (error instanceof AuthenticationError) {
+                log.warn("Password change failed, because of invalid credentials.")
                 return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
               } else {
+                log.error("Password change failed, because of an unexpected error.", {
+                  error: error,
+                })
                 toast({
                   title: "Sorry",
                   description: "Something went wrong. Please try again.",

@@ -1,5 +1,6 @@
 import db from "db"
 import { Ctx } from "blitz"
+import { dbLogger as log } from "app/lib/logger"
 
 export default async function markAdminMessagesAsRead({ chatId }, context: Ctx) {
   context.session.$authorize()
@@ -14,4 +15,5 @@ export default async function markAdminMessagesAsRead({ chatId }, context: Ctx) 
     })
   })
   await Promise.all(promisses)
+  log.debug("AdminMessages marked as read.")
 }

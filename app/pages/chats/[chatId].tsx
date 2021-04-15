@@ -16,7 +16,7 @@ import StrangeMessage from "app/chats/components/strangeMessage"
 import Layout from "app/core/layouts/layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import getMessagesByChat from "app/chats/queries/getMessagesByChat"
-import { useQuery, useParam, useMutation, Head } from "blitz"
+import { useQuery, useParam, useMutation, Head, AuthorizationError } from "blitz"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import getParticipantsByChatId from "../../chats/queries/getParticipantsByChatId"
@@ -27,6 +27,7 @@ import { RiMailSendLine } from "react-icons/ri"
 import { BiUserCircle } from "react-icons/bi"
 import markAdminMessagesAsRead from "app/chats/mutations/markAdminAsRead"
 import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
+import { appLogger as log } from "app/lib/logger"
 
 export default function Chat() {
   const chatId = useParam("chatId", "number")
@@ -34,7 +35,7 @@ export default function Chat() {
   const [participants] = useQuery(getParticipantsByChatId, { id: chatId! })
 
   if (!participants.map((part) => part.id).includes(currentUser!.id)) {
-    window.location.href = "/"
+    throw new AuthorizationError("You're not part of this chat.")
   }
 
   const oppositeName = participants.filter((part) => part.id != currentUser?.id)[0]
@@ -50,12 +51,9 @@ export default function Chat() {
   useEffect(() => {
     markMessagesAsReadMutation({ chatId })
     markAdminMessagesAsReadMutation({ chatId })
-  }, [messages])
-
-  useLayoutEffect(() => {
     const message = document.getElementById("messages")!
     message.scrollTop = message.scrollHeight
-  })
+  }, [messages])
 
   const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 2000 })
 
@@ -71,6 +69,7 @@ export default function Chat() {
           width="full"
           maxWidth="600px"
           alignSelf="center"
+          style={{ maxHeight: "calc(100vh - 100px" }}
         >
           <Heading
             as="h2"
@@ -87,6 +86,9 @@ export default function Chat() {
             </HStack>
           </Heading>
           <Box
+            display="flex"
+            flexDirection="column"
+            overflowY="auto"
             borderRadius="5px"
             borderWidth="2px"
             borderColor="brandSilver.500"
@@ -96,7 +98,6 @@ export default function Chat() {
               id="messages"
               width="full"
               overflowY="auto"
-              maxHeight="800px"
               padding="0.5rem"
               borderColor="brandSilver.300"
               borderBottomWidth="2px"
@@ -133,6 +134,8 @@ export default function Chat() {
                   chatId: chatId,
                   partId: oppositeName.id,
                 })
+                log.warn("A message was sent successfully.")
+
                 messagesExtra.refetch()
               }}
               initialValues={{ content: "" }}

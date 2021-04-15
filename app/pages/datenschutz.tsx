@@ -14,17 +14,17 @@ import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 function DatenschutzLoggedOut() {
-  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
-    <Layout hasUnreadMessage={hasUnreadMessage}>
+    <Layout user={false}>
       <ImpressumContent />
     </Layout>
   )
 }
 
 function DatenschutzLoggedIn() {
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
   return (
-    <Layout user={false}>
+    <Layout user={true} hasUnreadMessage={hasUnreadMessage}>
       <ImpressumContent />
     </Layout>
   )

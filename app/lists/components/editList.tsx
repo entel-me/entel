@@ -26,6 +26,7 @@ import { Form, Field } from "react-final-form"
 import addItem from "../mutations/addItem"
 import updateStoreComment from "../mutations/updateStoreComment"
 import removeAllItems from "../mutations/removeAllItems"
+import { appLogger as log } from "app/lib/logger"
 
 export default function EditLists({ getList }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -94,6 +95,7 @@ export default function EditLists({ getList }) {
                 await Promise.all(promisesAdd)
 
                 onClose()
+                log.info("A shoppinglist was edited successfully.")
 
                 toast({
                   title: "Successfully Edited List",
@@ -102,7 +104,11 @@ export default function EditLists({ getList }) {
                   duration: 5000,
                   isClosable: true,
                 })
-              } catch (error) {}
+              } catch (error) {
+                log.error("Editing a shoppinglist failed, because of an unexpected error.", {
+                  error: error,
+                })
+              }
             }}
             validate={(values) => {
               const errors = {}

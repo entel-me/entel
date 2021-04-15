@@ -14,6 +14,8 @@ import {
   createStandaloneToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
+import { appLogger as log } from "app/lib/logger"
+
 import removeShoppinglist from "../mutations/removeShoppinglist"
 
 const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
@@ -43,6 +45,8 @@ const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
                 onClick={async () => {
                   onClose()
                   await removeShoppinglistMutation({ id: modalFooter })
+                  log.info("A shoppinglist was deleted permanently.")
+
                   toast({
                     title: "Successfully Deleted List",
                     description: "This list is permanently deleted from your records",

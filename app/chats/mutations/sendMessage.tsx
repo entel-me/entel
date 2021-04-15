@@ -1,6 +1,7 @@
 import db from "db"
 import { Ctx } from "blitz"
 import { newMessageMailer } from "mailers/newMessageMailer"
+import { dbLogger as log } from "app/lib/logger"
 
 export default async function sendMessage({ content, chatId, partId }, context: Ctx) {
   context.session.$authorize()
@@ -14,6 +15,7 @@ export default async function sendMessage({ content, chatId, partId }, context: 
   })
 
   sentMail(chatId, partId, content, context)
+  log.info("A Message was sent.")
 }
 
 async function sentMail(chatId, partId, content, context: Ctx) {

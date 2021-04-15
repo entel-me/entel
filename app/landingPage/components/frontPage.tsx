@@ -71,7 +71,7 @@ export default function FrontPage() {
             alignItems="Start"
             justifyContent="center"
           >
-            <Box width="sm" alignSelf="baseline" marginBottom="2rem">
+            <Box style={{ width: "min(24rem,95vw)" }} alignSelf="baseline" marginBottom="2rem">
               <Heading lineHeight="3rem" marginRight="2rem">
                 Share your needs
               </Heading>
@@ -93,7 +93,7 @@ export default function FrontPage() {
               status={1}
               acceptedName="Antony"
               specialWish="as a 'Thank You' you will get a beer on the house"
-              itemsList={["wine (sub $5 Pinot Gris)", "condoms", "whip"]}
+              itemsList={["wine (sub $5 Pinot Gris)", "sausages", "coffee"]}
             />
           </Flex>
           <Flex
@@ -110,7 +110,7 @@ export default function FrontPage() {
               specialWish="Buy only Bio and vegan products please :)"
               itemsList={["Bread", "Jam (Strawberry)", "Agave sirup (from Alnatura)"]}
             />
-            <Box width="sm" alignSelf="unset" marginBottom="2rem">
+            <Box style={{ width: "min(24rem,95vw)" }} alignSelf="unset" marginBottom="2rem">
               <Heading textAlign="right" lineHeight="3rem" marginLeft="2rem">
                 Help others!
               </Heading>
@@ -130,7 +130,12 @@ export default function FrontPage() {
             alignItems="Start"
             justifyContent="center"
           >
-            <Box width="sm" alignSelf="baseline" marginBottom="2rem" marginTop="0.5rem">
+            <Box
+              style={{ width: "min(24rem,95vw)" }}
+              alignSelf="baseline"
+              marginBottom="2rem"
+              marginTop="0.5rem"
+            >
               <Heading lineHeight="3rem" marginRight="2rem">
                 Chat to connect
               </Heading>

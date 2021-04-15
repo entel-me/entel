@@ -58,6 +58,17 @@ export default function Layout({
     <>
       <Head>
         <link rel="icon" href="/logo_1.png" />
+        <meta charSet="utf-8" />
+        <meta
+          name="keywords"
+          content="entel, share, shopping, shoppinglist, tool, chat, community"
+        />
+        <meta name="author" content="Till Bergmann, Antony Kamp" />
+        <meta name="copyright" content="Till Bergmann, Antony Kamp" />
+        <meta
+          name="description"
+          content="Share your needs! Replace the unnecessary walk to the next supermarket by a new shoppinglist in entel."
+        />
       </Head>
       <ColorModeScript initialColorMode="light" />
       <Flex direction="column" alignItems="center" height="100vh">
@@ -75,12 +86,16 @@ export default function Layout({
             alignItems="flex-end"
             marginTop="5px"
           >
-            <HStack as="a" href="/">
-              <Image src="/logo_1.png" width="90" alt="entel logo" height="90" />
-              <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
-                entel
-              </Heading>
-            </HStack>
+            <Link href="/">
+              <HStack>
+                {(user || !isMobile) && (
+                  <Image src="/logo_1.png" width="90" alt="entel logo" height="90" />
+                )}
+                <Heading fontSize="6xl" fontWeight="extrabold" fontFamily="Raleway">
+                  entel
+                </Heading>
+              </HStack>
+            </Link>
             <Flex
               direction="row"
               justifyContent="space-between"
@@ -286,14 +301,12 @@ export default function Layout({
             textAlign="center"
             alignItems="center"
           >
-            <BlitzLink href="https://github.com/till-B/entel">
-              <Link>
-                <HStack>
-                  <AiFillGithub size={24} />
-                  <Text>This project is open source. Feel free reach out.</Text>
-                </HStack>
-              </Link>
-            </BlitzLink>
+            <Link href="https://github.com/entel-me/entel">
+              <HStack>
+                <AiFillGithub size={24} />
+                <Text>This project is open source. Feel free reach out.</Text>
+              </HStack>
+            </Link>
             <Text fontFamily="Raleway" fontWeight="medium">
               <BlitzLink href="/impressum">
                 <Link>Impressum</Link>

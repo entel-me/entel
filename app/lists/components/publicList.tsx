@@ -23,6 +23,7 @@ import createChat from "../../chats/mutations/createChat"
 import createAdminMessage from "../../chats/mutations/createAdminMessage"
 import getChatByParticipants from "../../chats/queries/getChatByParticipants"
 import { getDistanceString } from "app/lib/position"
+import { appLogger as log } from "app/lib/logger"
 
 interface PublicListProps {
   distance: Number
@@ -50,12 +51,13 @@ export default function PublicList({
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
   const [chat] = useQuery(getChatByParticipants, { ownerId })
   const toast = createStandaloneToast()
+
   return (
     <Flex
       justifyContent="space-between"
       flexDirection="column"
       borderWidth="2px"
-      width="sm"
+      style={{ width: "min(24rem,95vw)" }}
       margin="0.5rem"
       borderRadius="lg"
       borderColor="brandGreen.800"
@@ -121,6 +123,7 @@ export default function PublicList({
                   chatId: chatId.id,
                 })
               }
+              log.info("The status of a shoppinglist changed from 'pending' to 'in progress'")
 
               toast({
                 title: "Successfully Accepted List",
