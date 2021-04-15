@@ -10,23 +10,24 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react"
-import AdminMessage from "app/components/chats/adminMessage"
-import OwnMessage from "app/components/chats/ownMessage"
-import StrangeMessage from "app/components/chats/strangeMessage"
-import Layout from "app/components/layout"
+import AdminMessage from "app/chats/components/adminMessage"
+import OwnMessage from "app/chats/components/ownMessage"
+import StrangeMessage from "app/chats/components/strangeMessage"
+import Layout from "app/core/layouts/layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import getMessagesByChat from "app/queries/getMessagesByChat"
-import { useQuery, useParam, useMutation, Head } from "blitz"
+import getMessagesByChat from "app/chats/queries/getMessagesByChat"
+import { useQuery, useParam, useMutation, Head, AuthorizationError } from "blitz"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
-import getParticipantsByChatId from "../../queries/getParticipantsByChatId"
-import sendMessage from "../../mutations/sendMessage"
-import markMessagesAsRead from "../../mutations/markMessagesAsRead"
+import getParticipantsByChatId from "../../chats/queries/getParticipantsByChatId"
+import sendMessage from "../../chats/mutations/sendMessage"
+import markMessagesAsRead from "../../chats/mutations/markMessagesAsRead"
 import { useEffect, useLayoutEffect } from "react"
 import { RiMailSendLine } from "react-icons/ri"
 import { BiUserCircle } from "react-icons/bi"
-import markAdminMessagesAsRead from "app/mutations/markAdminAsRead"
-import checkIfUnreadMessage from "app/queries/checkIfUnreadMessages"
+import markAdminMessagesAsRead from "app/chats/mutations/markAdminAsRead"
+import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
+import { appLogger as log } from "app/lib/logger"
 
 export default function Chat() {
   const chatId = useParam("chatId", "number")
@@ -34,7 +35,7 @@ export default function Chat() {
   const [participants] = useQuery(getParticipantsByChatId, { id: chatId! })
 
   if (!participants.map((part) => part.id).includes(currentUser!.id)) {
-    window.location.href = "/"
+    throw new AuthorizationError("You're not part of this chat.")
   }
 
   const oppositeName = participants.filter((part) => part.id != currentUser?.id)[0]
@@ -133,6 +134,8 @@ export default function Chat() {
                   chatId: chatId,
                   partId: oppositeName.id,
                 })
+                log.warn("A message was sent successfully.")
+
                 messagesExtra.refetch()
               }}
               initialValues={{ content: "" }}
