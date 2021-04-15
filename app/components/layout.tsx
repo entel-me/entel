@@ -301,14 +301,12 @@ export default function Layout({
             textAlign="center"
             alignItems="center"
           >
-            <BlitzLink href="https://github.com/till-B/entel">
-              <Link>
-                <HStack>
-                  <AiFillGithub size={24} />
-                  <Text>This project is open source. Feel free reach out.</Text>
-                </HStack>
-              </Link>
-            </BlitzLink>
+            <Link href="https://github.com/entel-me/entel">
+              <HStack>
+                <AiFillGithub size={24} />
+                <Text>This project is open source. Feel free reach out.</Text>
+              </HStack>
+            </Link>
             <Text fontFamily="Raleway" fontWeight="medium">
               <BlitzLink href="/impressum">
                 <Link>Impressum</Link>
