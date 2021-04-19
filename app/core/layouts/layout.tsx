@@ -274,7 +274,7 @@ function Footer() {
   )
 }
 
-export default function Layout({ showFooter = true, children }) {
+export default function Layout({ children }) {
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
   const user = useCurrentUser()
   return (
@@ -304,7 +304,7 @@ export default function Layout({ showFooter = true, children }) {
         >
           {children}
         </Flex>
-        {showFooter && <Footer />}
+        {!(isMobile && window.location.pathname.startsWith("/chats/")) && <Footer />}
       </Flex>
     </>
   )
