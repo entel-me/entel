@@ -5,14 +5,14 @@ import {
   AuthenticationError,
   AuthorizationError,
   ErrorFallbackProps,
-  Router,
 } from "blitz"
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
-import LoginForm from "app/auth/components/LoginForm"
 import { ChakraProvider, extendTheme, shadow } from "@chakra-ui/react"
 import Loading from "../core/components/loading"
+import LoadingPage from "app/core/components/loadingPage"
+import Layout from "app/core/layouts/layout"
 
 const theme = extendTheme({
   colors: {
@@ -128,7 +128,13 @@ export default function App({ Component, pageProps }: AppProps) {
           queryCache.resetErrorBoundaries()
         }}
       >
-        <Suspense fallback={<Loading />}>{getLayout(<Component {...pageProps} />)}</Suspense>
+        <Suspense fallback={<Loading />}>
+          <Layout>
+            <Suspense fallback={<LoadingPage />}>
+              {getLayout(<Component {...pageProps} />)}
+            </Suspense>
+          </Layout>
+        </Suspense>
       </ErrorBoundary>
     </ChakraProvider>
   )
