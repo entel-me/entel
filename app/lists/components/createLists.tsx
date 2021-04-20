@@ -16,11 +16,10 @@ import {
   Modal,
   FormLabel,
   useDisclosure,
-  createStandaloneToast,
+  useToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
 import createList from "../mutations/createList"
-import { useRouter, BlitzPage } from "blitz"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
@@ -30,11 +29,10 @@ import { appLogger as log } from "app/lib/logger"
 export default function CreateLists() {
   const [createListMutation] = useMutation(createList)
   const [addItemMutation] = useMutation(addItem)
-  const router = useRouter()
   const [countItems, setCountItems] = useState(1)
   const [idList, setIdList] = useState([0])
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const toast = createStandaloneToast()
+  const toast = useToast()
 
   useEffect(() => {
     try {
@@ -89,8 +87,8 @@ export default function CreateLists() {
                 setIdList([0])
                 setCountItems(1)
                 onClose()
-                log.info("A new shoppinglist was created successfully.")
 
+                log.info("A new shoppinglist was created successfully.")
                 toast({
                   title: "Successfully Created List",
                   description: "You will find your created lists under 'Home'",

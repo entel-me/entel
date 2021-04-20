@@ -6,19 +6,12 @@ import {
   Heading,
   ListItem,
   UnorderedList,
-  Button,
   IconButton,
   HStack,
-  createStandaloneToast,
 } from "@chakra-ui/react"
 import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
-import { useMutation, useQuery, useRouter } from "blitz"
-import renewList from "../../lists/mutations/renewList"
-import EditLists from "../../lists/components/editList"
-import RemoveList from "../../lists/components/removeListModal"
 import { BsArchive } from "react-icons/bs"
-import archiveList from "../../lists/mutations/archiveList"
-import BrandBadge from "../../lists/components/BrandBadge"
+import BrandBadge from "../../lists/components/brandBadge"
 
 interface OwnedListProps {
   marketName: String

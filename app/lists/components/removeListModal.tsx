@@ -1,7 +1,6 @@
 import {
   Button,
   useDisclosure,
-  IconButton,
   CloseButton,
   HStack,
   Modal,
@@ -11,17 +10,17 @@ import {
   ModalFooter,
   ModalContent,
   ModalOverlay,
-  createStandaloneToast,
+  useToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
 import { appLogger as log } from "app/lib/logger"
 
 import removeShoppinglist from "../mutations/removeShoppinglist"
 
-const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
+const RemoveList = ({ listId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [removeShoppinglistMutation] = useMutation(removeShoppinglist)
-  const toast = createStandaloneToast()
+  const toast = useToast()
   return (
     <>
       <CloseButton
@@ -33,9 +32,9 @@ const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{modalHeader}</ModalHeader>
+          <ModalHeader>"Confirmation"</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{modalBody}</ModalBody>
+          <ModalBody>"Are you sure you want to delete this Shoppinglist permanently?"</ModalBody>
 
           <ModalFooter>
             <HStack>
@@ -44,7 +43,7 @@ const RemoveList = ({ modalHeader, modalBody, modalFooter }) => {
                 mr={3}
                 onClick={async () => {
                   onClose()
-                  await removeShoppinglistMutation({ id: modalFooter })
+                  await removeShoppinglistMutation({ id: listId })
                   log.info("A shoppinglist was deleted permanently.")
 
                   toast({
