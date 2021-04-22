@@ -1,4 +1,4 @@
-name: Build applicaiton
+name: Lint application
 
 on:
   push:
@@ -60,7 +60,4 @@ jobs:
         run: npx blitz prisma migrate deploy --preview-feature
       - name: Build application
         id: build-application
-        run: npm run build
-      - name: Run unittests
-        id: run-unittests
-        run: npm run test
+        run: npm run lint

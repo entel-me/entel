@@ -1,4 +1,4 @@
-name: Build applicaiton
+name: Test applicaiton
 
 on:
   push:
@@ -58,9 +58,6 @@ jobs:
       - name: Migrate database
         id: migrate-database
         run: npx blitz prisma migrate deploy --preview-feature
-      - name: Build application
-        id: build-application
-        run: npm run build
       - name: Run unittests
         id: run-unittests
         run: npm run test
