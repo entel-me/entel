@@ -11,6 +11,7 @@ import {
   HStack,
   Circle,
   Text,
+  useToast,
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
 import { Head, useMutation, useRouter, Image, useQuery } from "blitz"
@@ -74,11 +75,18 @@ function Header({ user, isMobile }) {
 
 function NavLoggedOut({ user, isMobile }) {
   const router = useRouter()
-
+  const toast = useToast()
   return (
     <>
       <SignupForm
         onSuccess={async () => {
+          toast({
+            title: "Please check your mails",
+            description: "Please verify your mail to create your account.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          })
           await router.push("/")
         }}
       />

@@ -39,6 +39,7 @@ export const SignupForm = (props: SignupFormProps) => {
           try {
             await verifyMailMutaiton(values)
             await props.onSuccess?.()
+            onClose()
             log.info("Sending mail to verify mailaddress was successfull.")
           } catch (error) {
             if (error instanceof AuthenticationError) {
