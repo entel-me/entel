@@ -67,6 +67,22 @@ model Token {
   @@unique([hashedToken, type])
 }
 
+model TokenMailVerification {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  hashedToken    String
+  type           String
+  // See note below about TokenType enum
+  // type        TokenType
+  expiresAt      DateTime
+  sentTo         String
+  hashedPassword String
+  name           String
+
+  @@unique([hashedToken, type])
+}
+
 model Shoppinglist {
   id      Int    @id @default(autoincrement())
   store   String
