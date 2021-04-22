@@ -141,8 +141,7 @@ function NavLoggedIn({ user, isMobile }) {
               paddingX="0.3rem"
               fontSize="lg"
               borderBottomWidth="0.3rem"
-              paddingRight={
-                ? "0" : "0.3rem"}
+              paddingRight={hasUnreadMessage ? "0" : "0.3rem"}
               borderBottomColor={
                 window.location.pathname == "/chats" ? "brandGreen.500" : "brandSilver.200"
               }
