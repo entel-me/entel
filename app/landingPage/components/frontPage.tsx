@@ -1,41 +1,10 @@
-import {
-  Flex,
-  Link,
-  Heading,
-  Menu,
-  MenuList,
-  MenuItem,
-  MenuButton,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  IconButton,
-  ColorModeScript,
-  Modal,
-  ModalOverlay,
-  Button,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  Input,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Box,
-  HStack,
-  Circle,
-  Text,
-  VStack,
-  UnorderedList,
-  ListItem,
-} from "@chakra-ui/react"
+import { Flex, Heading, Box, Text, VStack, UnorderedList, ListItem } from "@chakra-ui/react"
 import { useMediaQuery } from "react-responsive"
 import OwnedList from "./frontPageOwnedList"
 import PublicList from "./frontPagePublicList"
 import Chat from "./frontPageChat"
 import { Image } from "blitz"
+
 export default function FrontPage() {
   const isMobile = useMediaQuery({ query: `(max-width: 850px)` })
   return (

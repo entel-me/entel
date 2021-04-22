@@ -5,10 +5,10 @@ import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
 import { Heading, Flex, Button, useDisclosure, Box } from "@chakra-ui/react"
 import { appLogger as log } from "app/lib/logger"
-type SignupFormProps = {
+
+interface SignupFormProps {
   onSuccess?: () => Promise<void>
 }
-
 export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
   const { isOpen, onOpen, onClose } = useDisclosure()

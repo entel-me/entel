@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react"
 import updatePosition from "app/core/mutations/updatePoisition"
-import { useMutation, useQuery } from "blitz"
-import { useEffect, useState } from "react"
+import { useMutation } from "blitz"
+import { useEffect } from "react"
 
 export function useCurrentPosition() {
   const [updatePositionMutation] = useMutation(updatePosition)

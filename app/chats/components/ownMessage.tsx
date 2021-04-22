@@ -1,11 +1,11 @@
 import { Stack, Box, Text } from "@chakra-ui/react"
 
-interface StrangeMessageProps {
+interface OwnMessageProps {
   content: string
   timeStamp: Date
   userName: string
 }
-export default function OwnMessage({ content, timeStamp, userName }: StrangeMessageProps) {
+export default function OwnMessage({ content, timeStamp, userName }: OwnMessageProps) {
   let today = new Date()
   return (
     <Stack spacing="0.1rem" textAlign="right" margin="0.5rem">
