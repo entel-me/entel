@@ -18,7 +18,6 @@ import renewList from "../mutations/renewList"
 import createAdminMessage from "app/chats/mutations/createAdminMessage"
 import getChatByParticipants from "app/chats/queries/getChatByParticipants"
 import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
-import { Link as BlitzLink } from "blitz"
 import { getDistanceString } from "app/lib/position"
 import { appLogger as log } from "app/lib/logger"
 
@@ -46,7 +45,7 @@ export default function AcceptedList({
   const [undoAcceptMutation] = useMutation(renewList)
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
   const [chat] = useQuery(getChatByParticipants, { ownerId })
-
+  const router = useRouter()
   const toast = useToast()
 
   return (
