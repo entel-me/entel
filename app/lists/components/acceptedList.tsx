@@ -73,14 +73,15 @@ export default function AcceptedList({
             <BiUserCircle />
             <Text>
               Owner: <b>{ownerName}</b>{" "}
-              <BlitzLink href={"/chats/" + chat!.id}>
-                <IconButton
-                  aria-label="link-chats"
-                  variant="brand-chat"
-                  size="xs"
-                  icon={<ChatIcon />}
-                />
-              </BlitzLink>
+              <IconButton
+                onClick={() => {
+                  router.push("/chats/" + chat!.id)
+                }}
+                aria-label="link-chats"
+                variant="brand-chat"
+                size="xs"
+                icon={<ChatIcon />}
+              />
             </Text>
           </HStack>
         </Box>
