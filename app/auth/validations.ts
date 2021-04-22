@@ -2,10 +2,14 @@ import * as z from "zod"
 
 const password = z.string().min(10).max(100)
 
-export const Signup = z.object({
+export const SignupReq = z.object({
   name: z.string(),
   email: z.string().email(),
   password,
+})
+
+export const Signup = z.object({
+  token: z.string(),
 })
 
 export const Login = z.object({
@@ -31,4 +35,10 @@ export const ResetPassword = z
 export const ChangePassword = z.object({
   currentPassword: z.string(),
   newPassword: password,
+})
+
+export const VerifyMail = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password,
 })
