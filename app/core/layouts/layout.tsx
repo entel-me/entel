@@ -53,6 +53,7 @@ export default function Layout({
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
+  const toast = useToast()
 
   return (
     <>
@@ -175,6 +176,13 @@ export default function Layout({
                   <>
                     <SignupForm
                       onSuccess={async () => {
+                        toast({
+                          title: "Please check your mails",
+                          description: "Please verify your mail to create your account.",
+                          status: "success",
+                          duration: 5000,
+                          isClosable: true,
+                        })
                         await router.push("/")
                       }}
                     />
