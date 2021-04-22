@@ -1,9 +1,3 @@
-/* TODO - You need to add a mailer integration in `integrations/` and import here.
- *
- * The integration file can be very simple. Instantiate the email client
- * and then export it. That way you can import here and anywhere else
- * and use it straight away.
- */
 import previewEmail from "preview-email"
 import nodemailer from "nodemailer"
 import { appLogger as log } from "app/lib/logger"
@@ -16,7 +10,6 @@ type NewMessageMailerProps = {
 }
 
 export function newMessageMailer({ to, chatid, from, messageContent }: NewMessageMailerProps) {
-  // In production, set APP_ORIGIN to your production server origin
   const origin = process.env.APP_ORIGIN || process.env.BLITZ_DEV_SERVER_ORIGIN
   const chatUrl = `${origin}/chats/${chatid}`
 

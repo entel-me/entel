@@ -16,10 +16,9 @@ import {
   Modal,
   FormLabel,
   useDisclosure,
-  createStandaloneToast,
+  useToast,
 } from "@chakra-ui/react"
 import { useMutation } from "blitz"
-import { useRouter, BlitzPage } from "blitz"
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import { useState, useEffect } from "react"
 import { Form, Field } from "react-final-form"
@@ -38,7 +37,7 @@ export default function EditLists({ getList }) {
   const [countItems, setCountItems] = useState(getList!.items.length)
   const [idList, setIdList] = useState(Array.from(Array(countItems).keys()))
 
-  const toast = createStandaloneToast()
+  const toast = useToast()
 
   let defaultValues = { store: getList.store, specialWish: getList.comment }
   Array.from(Array(getList.items.length).keys()).forEach((id) => {

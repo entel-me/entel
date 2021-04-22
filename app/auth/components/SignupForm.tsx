@@ -5,10 +5,10 @@ import verifyMail from "../mutations/verifyMail"
 import { SignupReq } from "app/auth/validations"
 import { Heading, Flex, Button, useDisclosure, Box } from "@chakra-ui/react"
 import { appLogger as log } from "app/lib/logger"
-type SignupFormProps = {
+
+interface SignupFormProps {
   onSuccess?: () => Promise<void>
 }
-
 export const SignupForm = (props: SignupFormProps) => {
   const [verifyMailMutaiton] = useMutation(verifyMail)
   const { isOpen, onOpen, onClose } = useDisclosure()

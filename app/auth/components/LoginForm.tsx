@@ -1,16 +1,15 @@
-import { AuthenticationError, Link, useMutation } from "blitz"
+import { AuthenticationError, useMutation } from "blitz"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
-import { Flex, Heading, Button, useDisclosure, Box } from "@chakra-ui/react"
+import { Flex, useDisclosure, Box } from "@chakra-ui/react"
 import ForgotPasswordPage from "app/auth/components/forgot-password"
 import { appLogger as log } from "app/lib/logger"
 
-type LoginFormProps = {
+interface LoginFormProps {
   onSuccess?: () => Promise<void> | void
 }
-
 export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
   const { isOpen, onOpen, onClose } = useDisclosure()
