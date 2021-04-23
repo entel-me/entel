@@ -42,7 +42,6 @@ export function verifyMailMailer({ to, token }: verifyMailMailerProps) {
 
   return {
     async send() {
-      await smtp.sendMail(msg)
       if (process.env.NODE_ENV === "production") {
         await smtp.sendMail(msg)
         log.info("An email was sent by verifyMailMailer.")
