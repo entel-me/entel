@@ -1,4 +1,4 @@
-name: Lint application
+name: Lint
 
 on:
   push:
@@ -55,9 +55,6 @@ jobs:
       - name: Install dependencies
         id: install-dependencies
         run: yarn install
-      - name: Migrate database
-        id: migrate-database
-        run: npx blitz prisma migrate deploy --preview-feature
-      - name: Build application
+      - name: Run linter
         id: build-application
         run: npm run lint
