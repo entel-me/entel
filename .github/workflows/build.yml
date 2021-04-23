@@ -55,12 +55,13 @@ jobs:
       - name: Install dependencies
         id: install-dependencies
         run: yarn install
-      - name: Migrate database
-        id: migrate-database
-        run: npx blitz prisma migrate deploy --preview-feature
       - name: Build application
         id: build-application
         run: npm run build
-      - name: Run unittests
-        id: run-unittests
-        run: npm run test
+      - name: Migrate database
+        id: migrate-database
+        run: npx blitz prisma migrate deploy --preview-feature
+      - name: Start application
+        id: start-application
+        timeout-minutes: 1
+        run: npm run start
