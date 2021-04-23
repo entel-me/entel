@@ -63,5 +63,4 @@ jobs:
         run: npx blitz prisma migrate deploy --preview-feature
       - name: Start application
         id: start-application
-        timeout-minutes: 1
         run: timeout 10 npm run start || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
