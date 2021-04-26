@@ -4,7 +4,7 @@ import { Flex, Heading, Text } from "@chakra-ui/react"
 
 const ResetPasswordPage: BlitzPage = () => {
   const query = useRouterQuery()
-  const [signupQuery] = useQuery(signup, { token: query.token as string })
+  const [signupQuery] = useQuery(signup, { token: query.token as string }, { staleTime: Infinity })
 
   return (
     <>
@@ -41,7 +41,7 @@ const ResetPasswordPage: BlitzPage = () => {
               Sorry!
             </Heading>
             <Text>Something went wrong.</Text>
-            <Text>This token doesn't exists.</Text>
+            <Text>This token doesn't exists or has already been used.</Text>
           </>
         )}
       </Flex>
