@@ -41,15 +41,26 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Node.js modules
+        id: yarn-cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Install dependencies
         id: install-dependencies
         run: yarn install
-      - name: Migrate database
-        id: migrate-database
-        run: npx blitz prisma migrate deploy --preview-feature
       - name: Build application
         id: build-application
         run: npm run build
-      - name: Run unittests
-        id: run-unittests
-        run: npm run test
+      - name: Migrate database
+        id: migrate-database
+        run: npx blitz prisma migrate deploy --preview-feature
+      - name: Start application
+        id: start-application
+        run: timeout 10 npm run start || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi

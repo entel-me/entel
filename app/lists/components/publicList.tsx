@@ -9,10 +9,8 @@ import {
   useDisclosure,
   Divider,
   Button,
-  List,
   HStack,
-  createStandaloneToast,
-  Stack,
+  useToast,
 } from "@chakra-ui/react"
 import { InfoIcon } from "@chakra-ui/icons"
 import { useMutation, useQuery } from "blitz"
@@ -50,7 +48,7 @@ export default function PublicList({
   const [createChatMutation] = useMutation(createChat)
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
   const [chat] = useQuery(getChatByParticipants, { ownerId })
-  const toast = createStandaloneToast()
+  const toast = useToast()
 
   return (
     <Flex

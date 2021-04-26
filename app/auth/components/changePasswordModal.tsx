@@ -75,7 +75,7 @@ export function ChangePassword({ isOpen, onClose }) {
               errors["newPasswordRepeat"] = "The passwords doesn't match."
             return errors
           }}
-          render={({ submitError, handleSubmit, form, submitting, pristine, values }) => (
+          render={({ submitError, handleSubmit, submitting }) => (
             <form onSubmit={handleSubmit}>
               <ModalBody id="body">
                 <Field name="currentPassword">

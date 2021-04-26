@@ -5,14 +5,11 @@ import {
   Flex,
   Text,
   UnorderedList,
-  Collapse,
-  useDisclosure,
   Divider,
   HStack,
   Button,
-  List,
   IconButton,
-  createStandaloneToast,
+  useToast,
 } from "@chakra-ui/react"
 import { ChatIcon, InfoIcon } from "@chakra-ui/icons"
 import { useMutation, useQuery, useRouter } from "blitz"
@@ -21,8 +18,7 @@ import renewList from "../mutations/renewList"
 import createAdminMessage from "app/chats/mutations/createAdminMessage"
 import getChatByParticipants from "app/chats/queries/getChatByParticipants"
 import { BiShoppingBag, BiUserCircle, BiStore } from "react-icons/bi"
-import { Link as BlitzLink } from "blitz"
-import { getDistanceString, useCurrentPosition } from "app/lib/position"
+import { getDistanceString } from "app/lib/position"
 import { appLogger as log } from "app/lib/logger"
 
 interface AcceptedListProps {
@@ -48,10 +44,9 @@ export default function AcceptedList({
   const [doneListMutation] = useMutation(doneList)
   const [undoAcceptMutation] = useMutation(renewList)
   const [createAdminMessageMutation] = useMutation(createAdminMessage)
-  const [chat] = useQuery(getChatByParticipants, { ownerId }, { retry: 2 })
+  const [chat] = useQuery(getChatByParticipants, { ownerId })
   const router = useRouter()
-  const toast = createStandaloneToast()
-  useCurrentPosition()
+  const toast = useToast()
 
   return (
     <Flex
@@ -73,14 +68,15 @@ export default function AcceptedList({
             <BiUserCircle />
             <Text>
               Owner: <b>{ownerName}</b>{" "}
-              <BlitzLink href={"/chats/" + chat!.id}>
-                <IconButton
-                  aria-label="link-chats"
-                  variant="brand-chat"
-                  size="xs"
-                  icon={<ChatIcon />}
-                />
-              </BlitzLink>
+              <IconButton
+                onClick={() => {
+                  router.push("/chats/" + chat!.id)
+                }}
+                aria-label="link-chats"
+                variant="brand-chat"
+                size="xs"
+                icon={<ChatIcon />}
+              />
             </Text>
           </HStack>
         </Box>

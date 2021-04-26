@@ -1,21 +1,7 @@
 import { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
-import {
-  useToast,
-  Modal,
-  ModalOverlay,
-  Button,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  Input,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-} from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
 export { FORM_ERROR } from "final-form"
 
 export interface FormProps<S extends z.ZodType<any, any>>
@@ -50,7 +36,7 @@ export function ResetPasswordForm<S extends z.ZodType<any, any>>({
       }}
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, submitError }) => (
-        <form onSubmit={handleSubmit} className="form" {...props}>
+        <form onSubmit={handleSubmit} {...props}>
           {/* Form fields supplied as children are rendered here */}
           {children}
 
@@ -65,12 +51,6 @@ export function ResetPasswordForm<S extends z.ZodType<any, any>>({
               "Reset Password"
             </Button>
           }
-
-          <style global jsx>{`
-            .form > * + * {
-              margin-top: 1rem;
-            }
-          `}</style>
         </form>
       )}
     />

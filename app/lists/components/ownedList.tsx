@@ -9,9 +9,9 @@ import {
   Button,
   IconButton,
   HStack,
-  createStandaloneToast,
+  useToast,
 } from "@chakra-ui/react"
-import { EditIcon, ChatIcon, InfoIcon } from "@chakra-ui/icons"
+import { ChatIcon, InfoIcon } from "@chakra-ui/icons"
 import { useMutation, useQuery, useRouter } from "blitz"
 import renewList from "../mutations/renewList"
 import EditLists from "./editList"
@@ -19,9 +19,23 @@ import RemoveList from "./removeListModal"
 import getChatByParticipants from "app/chats/queries/getChatByParticipants"
 import { BsArchive } from "react-icons/bs"
 import archiveList from "../mutations/archiveList"
-import BrandBadge from "./BrandBadge"
+import BrandBadge from "./brandBadge"
 import { Link as BlitzLink } from "blitz"
 import { appLogger as log } from "app/lib/logger"
+
+function AcceptedBy({ id, name }) {
+  const [chat] = useQuery(getChatByParticipants, { ownerId: id })
+
+  return (
+    <ListItem>
+      <ListIcon as={InfoIcon} color="brandGreen.700" />
+      accepted by <b>{name}</b>{" "}
+      <BlitzLink href={"/chats/" + chat!.id}>
+        <IconButton aria-label="link chats" variant="brand-chat" size="xs" icon={<ChatIcon />} />
+      </BlitzLink>
+    </ListItem>
+  )
+}
 
 interface OwnedListProps {
   marketName: String
@@ -44,10 +58,9 @@ export default function OwnedList({
   refetch,
 }: OwnedListProps) {
   const [renewListMutation] = useMutation(renewList)
-  const [chat] = useQuery(getChatByParticipants, { ownerId: acceptedId })
-  const router = useRouter()
   const [archiveListMutation] = useMutation(archiveList)
-  const toast = createStandaloneToast()
+
+  const toast = useToast()
 
   return (
     <Flex
@@ -76,32 +89,13 @@ export default function OwnedList({
                 <ListIcon as={InfoIcon} color="brandGreen.700" /> {specialWish}
               </ListItem>
             )}
-            {status == 1 && (
-              <ListItem>
-                <ListIcon as={InfoIcon} color="brandGreen.700" />
-                accepted by <b>{acceptedName}</b>{" "}
-                <BlitzLink href={"/chats/" + chat!.id}>
-                  <IconButton
-                    aria-label="link chats"
-                    variant="brand-chat"
-                    size="xs"
-                    icon={<ChatIcon />}
-                  />
-                </BlitzLink>
-              </ListItem>
-            )}
+            {status == 1 && <AcceptedBy id={acceptedId} name={acceptedName} />}
           </List>
         </Box>
         <Flex justifyContent="space-between" flexDirection="column" alignItems="flex-end">
           <HStack>
             <BrandBadge status={status} />
-            {status == 2 && (
-              <RemoveList
-                modalHeader="Confirmation"
-                modalBody="Are you sure you want to delete this Shoppinglist permanently?"
-                modalFooter={listId}
-              />
-            )}
+            {status == 2 && <RemoveList listId={listId} />}
           </HStack>
           <HStack>
             {status == 0 && (

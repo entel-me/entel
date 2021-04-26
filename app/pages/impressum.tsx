@@ -1,29 +1,6 @@
-import { Flex, Heading, Link, Text, Wrap, WrapItem } from "@chakra-ui/react"
-import Layout from "../core/layouts/layout"
-import OwnedList from "../lists/components/ownedList"
-import getArchivedLists from "../lists/queries/getArchivedLists"
-import { Head, useQuery } from "blitz"
-import checkIfUnreadMessage from "app/chats/queries/checkIfUnreadMessages"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { Flex, Heading, Link } from "@chakra-ui/react"
 
-function ImpressumLoggedIn() {
-  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
-  return (
-    <Layout hasUnreadMessage={hasUnreadMessage}>
-      <ImpressumContent />
-    </Layout>
-  )
-}
-
-function ImpressumLoggedOut() {
-  return (
-    <Layout user={false}>
-      <ImpressumContent />
-    </Layout>
-  )
-}
-
-function ImpressumContent() {
+export default function Impressum() {
   return (
     <Flex textAlign="left" direction="column" width="full">
       <Heading
@@ -51,17 +28,5 @@ function ImpressumContent() {
         E-Mail-Adresse: <Link href="mailto:info@antonykamp.de">info@antonykamp.de</Link>.
       </p>
     </Flex>
-  )
-}
-
-export default function Impressum() {
-  const user = useCurrentUser()
-  return (
-    <>
-      <Head>
-        <title>entel | Impressum</title>
-      </Head>
-      {user ? <ImpressumLoggedIn /> : <ImpressumLoggedOut />}
-    </>
   )
 }

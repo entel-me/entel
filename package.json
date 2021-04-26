@@ -39,12 +39,13 @@
     "@react-icons/all-files": "4.1.0",
     "@types/preview-email": "2.0.0",
     "blitz": "0.33.1",
+    "email-templates": "8.0.4",
     "final-form": "4.20.2",
     "framer-motion": "4.0.3",
     "fs": "0.0.1-security",
     "fs-extra": "9.1.0",
+    "hbs": "4.1.2",
     "nodemailer": "6.5.0",
-    "preview-email": "3.0.4",
     "prisma": "~2.19",
     "react": ">=0.14.0",
     "react-dom": "0.0.0-experimental-6a589ad71",
@@ -56,6 +57,7 @@
     "zod": "1.11.13"
   },
   "devDependencies": {
+    "@types/email-templates": "7.1.0",
     "@types/preview-email": "2.0.0",
     "@types/react": "17.0.3",
     "eslint": "7.23.0",
@@ -64,7 +66,6 @@
     "prettier": "2.2.1",
     "prettier-plugin-prisma": "0.6.0",
     "pretty-quick": "3.1.0",
-    "preview-email": "3.0.4",
     "react": ">=0.14.0",
     "typescript-plugin-css-modules": "3.2.0"
   },
