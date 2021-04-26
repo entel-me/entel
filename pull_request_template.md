@@ -1,6 +1,6 @@
 ## Proposed changes
 
-Please describe your changes here to communicate to the maintainers why we should accept this pull request. If it fixes a bug or resolves a feature request, be sure to link to that issue.
+Please describe your changes here. If it fixes a bug or resolves a feature request, be sure to link to that issue.
 If your feature changes current behavior, please argue why your solution is better or start a discussion. 
 
 ## Types of changes
