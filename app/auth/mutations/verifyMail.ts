@@ -1,7 +1,7 @@
 import { resolver, generateToken, hash256, SecurePassword, AuthenticationError } from "blitz"
 import db from "db"
-import { forgotPasswordMailer } from "mailers/forgotPasswordMailer"
-import { verifyMailMailer } from "mailers/verifyMailMailer"
+import { forgotPasswordMailer } from "emails/forgotPasswordMailer"
+import { verifyMailMailer } from "emails/verifyMailMailer"
 import { VerifyMail } from "../validations"
 
 const VERIFY_MAIL_TOKEN_EXPIRATION_IN_HOURS = 4
@@ -27,5 +27,5 @@ export default resolver.pipe(resolver.zod(VerifyMail), async ({ email, name, pas
     },
   })
 
-  await verifyMailMailer({ to: email, token }).send()
+  await verifyMailMailer({ to: email, token })
 })

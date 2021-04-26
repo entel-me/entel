@@ -1,6 +1,6 @@
 import db from "db"
 import { Ctx } from "blitz"
-import { newMessageMailer } from "mailers/newMessageMailer"
+import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
 
 export default async function sendMessage({ content, chatId, partId }, context: Ctx) {
@@ -32,5 +32,5 @@ async function sentMail(chatId, partId, content, context: Ctx) {
     from: me!.name!,
     messageContent: content,
     to: partner!.email,
-  }).send()
+  })
 }

@@ -1,6 +1,6 @@
 import db from "db"
 import { Ctx } from "blitz"
-import { newMessageMailer } from "mailers/newMessageMailer"
+import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
 
 export default async function createAdminMessage({ content, chatId }, context: Ctx) {
@@ -25,7 +25,7 @@ async function sentMail(chatId, content) {
       from: "admin",
       messageContent: content,
       to: part.email,
-    }).send()
+    })
   })
   Promise.all(mailers)
 }

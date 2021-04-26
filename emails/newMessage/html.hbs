@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+    <title>entel | New message from {{form}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap" rel="stylesheet" />
+</head>
+
+<body
+    style="font-family: 'Helvetica Neue','Helvetica','Arial',sans-serif, 'Raleway'; margin: 0; background: #eee; padding: 10px 0 50px;">
+    <table border="0" cellspacing="0" width="100%">
+        <tr>
+            <td></td>
+            <td width="600" style="background: white;">
+                <table border="0" cellspacing="0" width="600" style="background: #939959;">
+                    <tr>
+                        <td></td>
+                        <td width="300">
+                            <img src="cid:entel_logo" alt="entel" width="300" height="300" />
+                            <p
+                                style="font-family: Raleway; font-weight: 800; font-size: 100px; color: white; margin: 0; text-align: center;">
+                                entel
+                            </p>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div style="margin: 30px">
+                    <h1 style="font-weight: 200; margin: 0 0 20px; font-size: 28px;">
+                        You have a new message from {{from}}
+                    </h1>
+                    <p style="margin-bottom: 15px; font-size: 16px;">
+                        {{from}} wrote on entel:
+                    </p>
+                    <p style="margin-bottom: 30px; font-size: 16px;">
+                        <i>{{messageContent}}</i>
+                    </p>
+                    </h1>
+                    <p style="margin-bottom: 15px; font-size: 16px;">
+                        If you want to answer {{from}}, just click the buttom:
+                    </p>
+                    <table border="0" cellspacing="0" width="540" style="margin-bottom: 30px;">
+                        <tr>
+                            <td></td>
+                            <td width="250" style="background: #939959;">
+                                <a href={{chatUrl}} style="text-decoration: none; margin: 10px;">
+                                    <p style="font-size: 18px; margin-top: 0px; margin-bottom: 0px; color: white; text-align: center;">
+                                        <b>ANSWER {{from}}</b>
+                                    </p>
+                                </a>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <p style="margin-bottom: 30px; word-wrap: break-word; font-size: 16px;">
+                        Or use the following link:<br>
+                        {{chatUrl}}
+                    </p>
+                    <p style="margin-bottom: 10px; font-size: 16px;">
+                        greetz <br>
+                        your entel-team 🐒
+                    </p>
+                </div>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
