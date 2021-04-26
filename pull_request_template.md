@@ -33,4 +33,4 @@ _Put an `x` in the boxes that apply. You can also fill these out after creating 
 - [ ] Please avoid making changes to the overall architecture (unless discussed before)
 
 
-Thank you for your contribution! We appreciate your help!
+## Thank you for your contribution! We appreciate your help!
