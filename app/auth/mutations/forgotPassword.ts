@@ -1,6 +1,6 @@
 import { resolver, generateToken, hash256 } from "blitz"
 import db from "db"
-import { forgotPasswordMailer } from "mailers/forgotPasswordMailer"
+import { forgotPasswordMailer } from "emails/forgotPasswordMailer"
 import { ForgotPassword } from "../validations"
 
 const RESET_PASSWORD_TOKEN_EXPIRATION_IN_HOURS = 4
@@ -30,7 +30,7 @@ export default resolver.pipe(resolver.zod(ForgotPassword), async ({ email }) => 
       },
     })
     // 6. Send the email
-    await forgotPasswordMailer({ to: user.email, token }).send()
+    await forgotPasswordMailer({ to: user.email, token })
   } else {
     // 7. If no user found wait the same time so attackers can't tell the difference
     await new Promise((resolve) => setTimeout(resolve, 750))
