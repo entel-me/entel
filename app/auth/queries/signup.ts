@@ -11,6 +11,11 @@ export default async function signup({ token }, context: Ctx) {
   })
   if (!userData) return null
 
+  const doesExists = await db.user.findFirst({
+    where: { email: userData.sentTo },
+  })
+  if (doesExists) return null
+
   const user = await db.user.create({
     data: {
       name: userData.name,

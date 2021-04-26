@@ -44,7 +44,6 @@
     "fs": "0.0.1-security",
     "fs-extra": "9.1.0",
     "nodemailer": "6.5.0",
-    "preview-email": "3.0.4",
     "prisma": "~2.19",
     "react": ">=0.14.0",
     "react-dom": "0.0.0-experimental-6a589ad71",
@@ -64,7 +63,6 @@
     "prettier": "2.2.1",
     "prettier-plugin-prisma": "0.6.0",
     "pretty-quick": "3.1.0",
-    "preview-email": "3.0.4",
     "react": ">=0.14.0",
     "typescript-plugin-css-modules": "3.2.0"
   },

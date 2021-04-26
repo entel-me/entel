@@ -1,4 +1,4 @@
-import previewEmail from "preview-email"
+import smtp from "integrations/mail"
 import nodemailer from "nodemailer"
 import { appLogger as log } from "app/lib/logger"
 
@@ -12,14 +12,6 @@ type NewMessageMailerProps = {
 export function newMessageMailer({ to, chatid, from, messageContent }: NewMessageMailerProps) {
   const origin = process.env.APP_ORIGIN || process.env.BLITZ_DEV_SERVER_ORIGIN
   const chatUrl = `${origin}/chats/${chatid}`
-
-  var smtp = nodemailer.createTransport({
-    host: process.env.MAIL_HOST,
-    auth: {
-      user: process.env.MAIL_MAIL,
-      pass: process.env.MAIL_PASSWORD,
-    },
-  })
 
   const msg = {
     from: process.env.MAIL_MAIL,
@@ -37,13 +29,17 @@ export function newMessageMailer({ to, chatid, from, messageContent }: NewMessag
 
   return {
     async send() {
-      if (process.env.NODE_ENV === "production") {
+      if (process.env.APP_ENV === "production") {
         await smtp.sendMail(msg)
         log.info("An email was sent by newMessageMailer.")
       } else {
         // Preview email in the browser
-        await previewEmail(msg)
-        log.info("An preview mail was created by newMessageMailer.")
+        const info = await smtp.sendMail(msg)
+        log.info(
+          `An preview mail was created by newMessageMailer at ${nodemailer.getTestMessageUrl(
+            info
+          )}.`
+        )
       }
     },
   }
