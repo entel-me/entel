@@ -31,37 +31,4 @@ export async function verifyMailMailer({ to, token }: verifyMailMailerProps) {
   if (process.env.APP_ENV !== "production") {
     log.info(`You can see the mail at ${nodemailer.getTestMessageUrl(info)}.`)
   }
-  /*
-
-  const msg = {
-    from: process.env.MAIL_MAIL,
-    to: to,
-    subject: "entel: Verify your E-Mail",
-    html: `
-      <h1>Verify your E-Mail</h1>
-      <a href="${verifyUrl}">
-        Click here
-      </a>
-      <p>or use the following link to verify your E-Mail:</p>
-      <p>${verifyUrl}</p>
-    `,
-  }
-
-  return {
-    async send() {
-      if (process.env.APP_ENV === "production") {
-        await smtp.sendMail(msg)
-        log.info("An email was sent by verifyMailMailer.")
-      } else {
-        // Preview email in the browser
-        const info = await smtp.sendMail(msg)
-        log.info(
-          `An preview mail was created by verifyMailMailer at ${nodemailer.getTestMessageUrl(
-            info
-          )}.`
-        )
-      }
-    },
-  }
-  */
 }

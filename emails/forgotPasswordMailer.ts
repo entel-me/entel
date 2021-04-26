@@ -24,37 +24,4 @@ export async function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   if (process.env.APP_ENV !== "production") {
     log.info(`You can see the mail at ${nodemailer.getTestMessageUrl(info)}.`)
   }
-
-  /*
-  const msg = {
-    from: process.env.MAIL_MAIL,
-    to: to,
-    subject: "Reset the password of your entel account",
-    html: `
-      <h1>Reset Your Password</h1>
-      <a href="${resetUrl}">
-        Click here
-      </a>
-      <p>or use the following link to set a new password:</p>
-      <p>${resetUrl}</p>
-    `,
-  }
-  
-  return {
-    async send() {
-      if (process.env.APP_ENV === "production") {
-        await smtp.sendMail(msg)
-        log.info("An email was sent by fotgotPasswordMailer.")
-      } else {
-        // Preview email in the browser
-        const info = await smtp.sendMail(msg)
-        log.info(
-          `An preview mail was created by fotgotPasswordMailer at ${nodemailer.getTestMessageUrl(
-            info
-          )}.`
-        )
-      }
-    },
-  }
-  */
 }
