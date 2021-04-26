@@ -22,6 +22,13 @@ export async function newMessageMailer({
     template: "newMessage",
     message: {
       to: to,
+      attachments: [
+        {
+          filename: "entel.png",
+          path: "public/logo_1.png",
+          cid: "entel_logo",
+        },
+      ],
     },
     locals: {
       messageContent: messageContent,
