@@ -22,6 +22,7 @@ export async function newMessageMailer({
     template: "newMessage",
     message: {
       to: to,
+      from: process.env.MAIL_MAIL,
       attachments: [
         {
           filename: "entel.png",
