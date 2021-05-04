@@ -8,7 +8,7 @@
     "start": "blitz start",
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
-    "test": "jest",
+    "test": "jest --silent",
     "start:production": "blitz start --port $PORT",
     "test:watch": "jest --watch"
   },
