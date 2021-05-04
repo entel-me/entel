@@ -1,6 +1,7 @@
 import { hash256, Ctx } from "blitz"
 import forgotPassword from "./forgotPassword"
 import db from "db"
+import Email from "email-templates"
 
 beforeEach(async () => {
   await db.$reset()
@@ -14,7 +15,9 @@ jest.mock("blitz", () => ({
 
 describe("forgotPassword mutation", () => {
   it("does not throw error if user doesn't exist", async () => {
+    const sendMock = (Email.prototype.send = jest.fn())
     await expect(forgotPassword({ email: "no-user@email.com" }, {} as Ctx)).resolves.not.toThrow()
+    expect(sendMock).not.toBeCalled()
   })
 
   it("works correctly", async () => {
@@ -35,6 +38,8 @@ describe("forgotPassword mutation", () => {
       include: { tokens: true },
     })
 
+    const sendMock = (Email.prototype.send = jest.fn())
+
     // Invoke the mutation
     await forgotPassword({ email: user.email }, {} as Ctx)
 
@@ -49,5 +54,6 @@ describe("forgotPassword mutation", () => {
     expect(token.sentTo).toBe(user.email)
     expect(token.hashedToken).toBe(hash256(generatedToken))
     expect(token.expiresAt > new Date()).toBe(true)
+    expect(sendMock).toBeCalled()
   })
 })

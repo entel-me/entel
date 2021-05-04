@@ -1,6 +1,7 @@
 import resetPassword from "./resetPassword"
 import db from "db"
 import { hash256, SecurePassword } from "blitz"
+import * as login from "./login"
 
 beforeEach(async () => {
   await db.$reset()
@@ -8,7 +9,7 @@ beforeEach(async () => {
 
 const mockCtx: any = {
   session: {
-    $create: jest.fn,
+    $create: jest.fn(),
   },
 }
 
@@ -72,6 +73,13 @@ describe("resetPassword mutation", () => {
     // Delete's the token
     const numberOfTokens = await db.token.count({ where: { userId: user.id } })
     expect(numberOfTokens).toBe(0)
+
+    // Created session
+    expect(mockCtx.session.$create).toBeCalled()
+
+    // Verify authentification
+    const authUser = await login.authenticateUser("user@example.com", newPassword)
+    expect(authUser.id).toBe(user.id)
 
     // Updates user's password
     const updatedUser = await db.user.findFirst({ where: { id: user.id } })
