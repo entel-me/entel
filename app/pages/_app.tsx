@@ -5,10 +5,10 @@ import {
   AuthenticationError,
   AuthorizationError,
   ErrorFallbackProps,
+  useQueryErrorResetBoundary,
 } from "blitz"
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { queryCache } from "react-query"
 import { ChakraProvider, extendTheme, shadow } from "@chakra-ui/react"
 import Loading from "../core/components/loading"
 import Layout from "app/core/layouts/layout"
@@ -121,11 +121,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <ErrorBoundary
         FallbackComponent={RootErrorFallback}
         resetKeys={[router.asPath]}
-        onReset={() => {
-          // This ensures the Blitz useQuery hooks will automatically refetch
-          // data any time you reset the error boundary
-          queryCache.resetErrorBoundaries()
-        }}
+        onReset={useQueryErrorResetBoundary().reset}
       >
         <Suspense fallback={<Loading />}>
           <Layout>
