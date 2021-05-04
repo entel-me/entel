@@ -16,6 +16,7 @@ const mockCtx: any = {
 describe("resetPassword mutation", () => {
   it("works correctly", async () => {
     expect(true).toBe(true)
+    const spy = jest.spyOn(login, "default")
 
     // Create test user
     const goodToken = "randomPasswordResetToken"
@@ -77,9 +78,9 @@ describe("resetPassword mutation", () => {
     // Created session
     expect(mockCtx.session.$create).toBeCalled()
 
-    // Verify authentification
-    const authUser = await login.authenticateUser("user@example.com", newPassword)
-    expect(authUser.id).toBe(user.id)
+    // Verify login
+    const loggedInUser = await spy.mock.results[0].value
+    expect(loggedInUser.id).toBe(user.id)
 
     // Updates user's password
     const updatedUser = await db.user.findFirst({ where: { id: user.id } })
