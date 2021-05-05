@@ -14,6 +14,7 @@ export async function verifyMailMailer({ to, token }: verifyMailMailerProps) {
     template: "verifyMail",
     message: {
       to: to,
+      from: process.env.MAIL_MAIL,
       attachments: [
         {
           filename: "entel.png",

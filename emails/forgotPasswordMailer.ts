@@ -14,6 +14,7 @@ export async function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
     template: "forgotPassword",
     message: {
       to: to,
+      from: process.env.MAIL_MAIL,
       attachments: [
         {
           filename: "entel.png",
