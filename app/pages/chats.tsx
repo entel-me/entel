@@ -36,7 +36,7 @@ export default function Chats() {
                   <ChatPreview
                     chatId={chat.id}
                     userName={
-                      chat.participatingUsers.filter((u) => u.id != currentUser?.id)[0].name!
+                      chat.participatingUsers.filter((u) => u.id != currentUser?.id)[0]!.name!
                     }
                     lastMessage={chat.lastMessage!}
                     unreadMessagesCnt={chat.unreadMessagesCnt}

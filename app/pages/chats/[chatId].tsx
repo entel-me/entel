@@ -68,7 +68,7 @@ export default function Chat() {
         >
           <HStack>
             <BiUserCircle />
-            <Text>{oppositeName.name}</Text>
+            <Text>{oppositeName!.name}</Text>
           </HStack>
         </Heading>
         <Box
@@ -118,7 +118,7 @@ export default function Chat() {
               await sendMessageMutation({
                 content: values.content,
                 chatId: chatId,
-                partId: oppositeName.id,
+                partId: oppositeName!.id,
               })
               log.warn("A message was sent successfully.")
 
