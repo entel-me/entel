@@ -10,7 +10,8 @@
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
     "start:production": "blitz start --port $PORT",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepare": "husky install"
   },
   "prisma": {
     "schema": "db/schema.prisma"
@@ -18,12 +19,6 @@
   "prettier": {
     "semi": false,
     "printWidth": 100
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && pretty-quick --staged",
-      "pre-push": "tsc && npm run lint && npm run test"
-    }
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
