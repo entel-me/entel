@@ -1,7 +1,7 @@
-import resetPassword from "app/auth/mutations/resetPassword"
+import resetPassword from "./resetPassword"
 import db from "db"
 import { hash256, SecurePassword } from "blitz"
-import * as login from "app/auth/mutations/login"
+import * as login from "./login"
 
 beforeEach(async () => {
   await db.$reset()
