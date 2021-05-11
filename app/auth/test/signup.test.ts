@@ -1,6 +1,6 @@
-import { hash256, Ctx, generateToken, SecurePassword } from "blitz"
+import { hash256, Ctx } from "blitz"
 import db from "db"
-import signup from "./signup"
+import signup from "app/auth/queries/signup"
 
 beforeEach(async () => {
   await db.$reset()

@@ -1,9 +1,8 @@
-import { AuthorizationError, hash256, Ctx, resolver, SecurePassword } from "blitz"
+import { hash256, Ctx, resolver } from "blitz"
 import db from "db"
 import { Signup } from "app/auth/validations"
-import { Role } from "types"
 
-export default async function signup({ token }, context: Ctx) {
+export default resolver.pipe(resolver.zod(Signup), async ({ token }, context: Ctx) => {
   const hashedToken = hash256(token)
   const userData = await db.tokenMailVerification.findFirst({
     where: { hashedToken: hashedToken, type: "LOGIN_VERIFY" },
@@ -28,4 +27,4 @@ export default async function signup({ token }, context: Ctx) {
   })
 
   return user
-}
+})
