@@ -1,7 +1,7 @@
 import { hash256, Ctx, SecurePassword } from "blitz"
 import Email from "email-templates"
 import db from "db"
-import verifyMail from "app/auth/mutations/verifyMail"
+import verifyMail from "./verifyMail"
 
 beforeEach(async () => {
   await db.$reset()
