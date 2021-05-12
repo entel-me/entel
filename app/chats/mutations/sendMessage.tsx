@@ -1,22 +1,27 @@
 import db from "db"
-import { Ctx } from "blitz"
+import { Ctx, resolver } from "blitz"
 import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
+import { UserMessage } from "../validation"
 
-export default async function sendMessage({ content, chatId, partId }, context: Ctx) {
-  context.session.$authorize()
-  await db.message.create({
-    data: {
-      content: content,
-      sentIn: { connect: { id: chatId } },
-      sentFrom: { connect: { id: context.session.userId } },
-      sentTo: { connect: { id: partId } },
-    },
-  })
+export default resolver.pipe(
+  resolver.zod(UserMessage),
+  resolver.authorize(),
+  async ({ content, chatId, partId }, context: Ctx) => {
+    context.session.$authorize()
+    await db.message.create({
+      data: {
+        content: content,
+        sentIn: { connect: { id: chatId } },
+        sentFrom: { connect: { id: context.session.userId } },
+        sentTo: { connect: { id: partId } },
+      },
+    })
 
-  sentMail(chatId, partId, content, context)
-  log.info("A Message was sent.")
-}
+    sentMail(chatId, partId, content, context)
+    log.info("A Message was sent.")
+  }
+)
 
 async function sentMail(chatId, partId, content, context: Ctx) {
   const partner = await db.user.findFirst({
