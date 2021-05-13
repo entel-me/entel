@@ -1,14 +1,21 @@
 import db from "db"
-import { Ctx, resolver } from "blitz"
+import { AuthenticationError, Ctx, resolver } from "blitz"
 import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
-import { UserMessage } from "../validation"
+import { Message } from "../validation"
 
 export default resolver.pipe(
-  resolver.zod(UserMessage),
+  resolver.zod(Message),
   resolver.authorize(),
-  async ({ content, chatId, partId }, context: Ctx) => {
+  async ({ content, chatId }, context: Ctx) => {
     context.session.$authorize()
+    const part = await db.user.findFirst({
+      where: {participatesIn: {some: {id: chatId}}, NOT: {id: context.session.userId}},
+      select: {id: true}
+    })
+    if(!part)
+      throw new AuthenticationError("You are not allowed to send this user a message.")
+    const partId = part.id
     await db.message.create({
       data: {
         content: content,

@@ -2,10 +2,10 @@ import db from "db"
 import { Ctx, resolver } from "blitz"
 import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
-import { AdminMessage } from "../validation"
+import { Message } from "../validation"
 
 export default resolver.pipe(
-  resolver.zod(AdminMessage),
+  resolver.zod(Message),
   resolver.authorize(),
   async ({ content, chatId }, context: Ctx) => {
     context.session.$authorize()
