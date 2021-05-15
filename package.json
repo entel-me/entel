@@ -45,7 +45,7 @@
     "fs": "0.0.1-security",
     "fs-extra": "9.1.0",
     "hbs": "4.1.2",
-    "nodemailer": "6.5.0",
+    "nodemailer": "6.6.0",
     "prisma": "~2.19",
     "react": ">=0.14.0",
     "react-dom": "0.0.0-experimental-6a589ad71",
