@@ -33,7 +33,7 @@
   "dependencies": {
     "@chakra-ui/icons": "1.0.13",
     "@chakra-ui/react": "1.6.1",
-    "@emotion/react": "11.1.5",
+    "@emotion/react": "11.4.0",
     "@emotion/styled": "11.3.0",
     "@prisma/client": "~2.19",
     "@react-icons/all-files": "4.1.0",
