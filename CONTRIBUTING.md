@@ -1,105 +1,56 @@
 # Contributing
 
-- Weclome
-- Rules
+We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
-## Local setup ✨
+- Reporting a bug
+- Discussing the current state of the code
+- Submitting a fix
+- Proposing new features
+- Becoming a maintainer
 
-To run entel locally, you need to install [NodeJS](https://nodejs.org/en/) and [npm](https://www.npmjs.com/). Additionally, you should be able to run PostgreSQL on your machine. You can achieve this by
+## We Develop with Github
 
-- installing it natively on your computer or
-- via docker.
+We use github to host code, to track issues and feature requests, as well as accept pull requests.
 
-But first of all, you have to clone and open this repository.
+## We Use [git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow), So All Code Changes Happen Through Pull Requests on develop
 
-```bash
-git clone https://github.com/entel-me/entel.git
-cd entel
-```
+Pull requests are the best way to propose changes to the codebase (we use [git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)). We actively welcome your pull requests:
 
-After that, you should be able to install the dependencies with npm.
+1. Fork the repo and create your branch from `develop`.
+2. If you've added code that should be tested, add tests.
+3. Ensure the test suite passes.
+4. Make sure your code lints.
+5. Open a pull request!
 
-```bash
-npm i
-```
+After opening a pull request, write to a maintainer if you want to run your version under "real world" conditions. We're using a second enviroment ["entel-dev"](https://entelme-dev.herokuapp.com) to test the `develop` branch and pull requests separately to the [entel.me](https://entel.me) main enviroment.
 
-Great! Let's start with setting up environment variables. 🔥
+## Any contributions you make will be under the GNU General Public License v2.0
 
-### Enviroment variables & mailer📝
+In short, when you submit code changes, your submissions are understood to be under the same [GNU General Public License v2.0](https://choosealicense.com/licenses/gpl-2.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
-First, you have to create two empty files`.env.local` and `env.test.local`. You can specify environment variables in these files. Afterward, you call them with `process.env.`.
+## Report bugs using Github's [issues](https://github.com/entel-me/entel/issues)
 
-`DATABASE_URL` is an important variable that connects the PostgreSQL database with our application. If you're running PostgreSQL in docker, you set
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/entel-me/entel/issues/new/choose) and choose the template *Report Bug*; it's that easy!
 
-- username,
-- password,
-- the name of the database
-  on your own and include them in a URL. Here is an example:
+## Write bug reports with detail, background, and sample code
 
-```txt
-POSTGRES_USER=entel
-POSTGRES_PASSWORD=crazypassword
-POSTGRES_DB=enteldb
-DATABASE_URL=postgresql://entel:crazypassword@localhost:5432/enteldb
-```
+**Great Bug Reports** tend to have:
 
-If you're running PostgreSQL natively on your computer, you have to enter the URL of your database in each `.local` file. Please be aware that you have to remove the [`predev` script](https://github.com/entel-me/entel/blob/1f352942b6f9cec4aabad566766f752c4c3c82f5/package.json#L5) from package.json to run entel without errors.
+- A quick summary and/or background
+- What you expected would happen
+- What actually happens
+- Steps to reproduce (be specific and give sample code if you can)
+- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
-```txt
-DATABASE_URL=postgresql://entel:crazypassword@localhost:5432/enteldb
-```
+People *love* thorough bug reports. I'm not even kidding.
 
-If you want to test the mailer in [`mailers/`](https://github.com/entel-me/entel/tree/develop/mailers), you have to add your
+## Use a Consistent Coding Style
 
-- mail,
-- password,
-- and mail host
-  to the `.local` files too:
+We're borrowing these from [BlitzJS](https://blitzjs.com), which automatically generated a code style for us.
 
-```txt
-MAIL_HOST=mail.privateemail.com
-MAIL_MAIL=info@antonykamp.de
-MAIL_PASSWORD=crazypassword
-```
+- 2 spaces for indentation rather than tabs
+- You can try running `npm run lint` for style unification
 
-TODO: mailer stuff
+## License
 
-Great! After that, we take care of the database itself.
-
-### Run database 📋
-
-TODO Used datamodel (ER-Diagramm)
-
-The last thing we have to do is migrating the database with [prisma](https://www.prisma.io/). For the following step, the database should already be running. You can achieve this with docker with the command:
-
-```bash
-docker-compose up -d
-```
-
-Now you can set up the database by entering:
-
-```bash
-blitz prisma migrate dev --preview-feature
-```
-
-Btw, if you change something in [schema.prisma](https://github.com/entel-me/entel/blob/develop/db/schema.prisma) you have to re-run the last command.
-Now we can try out our application. 🥳
-
-### Run application
-
-
-To run entel you execute
-
-```bash
-blitz dev
-```
-
-and view your new app at [http://localhost:3000/](http://localhost:3000/)! Perfect 🎉
-
-Have fun with the app :)
-
-## Branches, environments and their intention
-
-### master vs develop
-
-### entel vs entel-dev
+By contributing, you agree that your contributions will be licensed under its GNU General Public License v2.0.
