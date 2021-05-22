@@ -1,12 +1,12 @@
 import { AuthorizationError, Ctx } from "blitz"
 import db from "db"
-import addItem from "./addItem"
+import updateStoreComment from "./updateStoreComment"
 
 beforeEach(async () => {
   await db.$reset()
 })
 
-describe("addItem mutation", () => {
+describe("updateStoreComment mutation", () => {
   it("throws error if unauthorized", async () => {
     const userA = await db.user.create({
       data: {
@@ -32,7 +32,7 @@ describe("addItem mutation", () => {
 
     // Create list
     const store = "Entel shop"
-    const comment = "just entel things please"
+    const comment = "just entel things"
     const list = await db.shoppinglist.create({
       data: {
         createdBy: { connect: { id: userA.id } },
@@ -44,10 +44,15 @@ describe("addItem mutation", () => {
     })
 
     // Invoke the mutation illegally
-    const itemName = "Item"
+    const newStore = "Another entel shop"
+    const newComment = "just entel things please"
     await expect(
-      async () => await addItem({ listId: list.id, itemName: itemName }, mockCtx as Ctx)
-    ).rejects.toThrowError(AuthorizationError)
+      async () =>
+        await updateStoreComment(
+          { id: list.id, comment: newComment, store: newStore },
+          mockCtx as Ctx
+        )
+    ).rejects.toThrow(AuthorizationError)
   })
 
   it("works correctly", async () => {
@@ -75,21 +80,20 @@ describe("addItem mutation", () => {
         createdBy: { connect: { id: user.id } },
         store: store,
         comment: comment,
-        status: 0,
+        status: 2,
       },
       select: { id: true },
     })
 
     // Invoke the mutation
-    const itemsName = ["Item1", "Item2", "Item3"]
-    await addItem({ listId: list.id, itemName: itemsName[0] }, mockCtx as Ctx)
-    await addItem({ listId: list.id, itemName: itemsName[1] }, mockCtx as Ctx)
-    await addItem({ listId: list.id, itemName: itemsName[2] }, mockCtx as Ctx)
+    const newStore = "Another entel shop"
+    const newComment = "just entel things please"
+    await updateStoreComment({ id: list.id, comment: newComment, store: newStore }, mockCtx as Ctx)
 
-    const items = await db.item.findMany({
-      where: { listId: list.id },
+    const updatedList = await db.shoppinglist.findFirst({
+      where: { id: list.id },
     })
-    expect(items.length).toBe(3)
-    expect(items.map((item) => item.name).sort()).toEqual(itemsName.sort())
+    expect(updatedList?.comment).toBe(newComment)
+    expect(updatedList?.store).toBe(newStore)
   })
 })

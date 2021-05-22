@@ -1,12 +1,12 @@
 import { AuthorizationError, Ctx } from "blitz"
 import db from "db"
-import addItem from "./addItem"
+import archiveList from "./archiveList"
 
 beforeEach(async () => {
   await db.$reset()
 })
 
-describe("addItem mutation", () => {
+describe("archiveList mutation", () => {
   it("throws error if unauthorized", async () => {
     const userA = await db.user.create({
       data: {
@@ -44,10 +44,9 @@ describe("addItem mutation", () => {
     })
 
     // Invoke the mutation illegally
-    const itemName = "Item"
-    await expect(
-      async () => await addItem({ listId: list.id, itemName: itemName }, mockCtx as Ctx)
-    ).rejects.toThrowError(AuthorizationError)
+    await expect(async () => await archiveList({ id: list.id }, mockCtx as Ctx)).rejects.toThrow(
+      AuthorizationError
+    )
   })
 
   it("works correctly", async () => {
@@ -81,15 +80,11 @@ describe("addItem mutation", () => {
     })
 
     // Invoke the mutation
-    const itemsName = ["Item1", "Item2", "Item3"]
-    await addItem({ listId: list.id, itemName: itemsName[0] }, mockCtx as Ctx)
-    await addItem({ listId: list.id, itemName: itemsName[1] }, mockCtx as Ctx)
-    await addItem({ listId: list.id, itemName: itemsName[2] }, mockCtx as Ctx)
+    await archiveList({ id: list.id }, mockCtx as Ctx)
 
-    const items = await db.item.findMany({
-      where: { listId: list.id },
+    const archivedList = await db.shoppinglist.findFirst({
+      where: { id: list.id },
     })
-    expect(items.length).toBe(3)
-    expect(items.map((item) => item.name).sort()).toEqual(itemsName.sort())
+    expect(archivedList?.status).toBe(2)
   })
 })
