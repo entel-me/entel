@@ -1,5 +1,5 @@
 import db from "db"
-import { Ctx, resolver } from "blitz"
+import { AuthorizationError, Ctx, resolver } from "blitz"
 import { dbLogger as log } from "app/lib/logger"
 import { StoreCommentUpdate } from "../validation"
 
@@ -8,6 +8,12 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ id, store, comment }, context: Ctx) => {
     context.session.$authorize()
+
+    const listToChange = await db.shoppinglist.findFirst({
+      where: { id: id, creatorId: context.session.userId },
+    })
+    if (!listToChange) throw new AuthorizationError("You are not allowed to archive this list.")
+
     await db.shoppinglist.update({
       where: { id: id },
       data: { store: store, comment: comment },
