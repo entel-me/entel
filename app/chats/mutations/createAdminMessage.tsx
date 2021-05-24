@@ -1,5 +1,5 @@
 import db from "db"
-import { Ctx, resolver } from "blitz"
+import { AuthorizationError, Ctx, resolver } from "blitz"
 import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
 import { Message } from "../validation"
@@ -9,6 +9,14 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ content, chatId }, context: Ctx) => {
     context.session.$authorize()
+
+    const participants = await db.chat.findFirst({
+      where: {id: chatId},
+      include: {participatingUsers: true}
+    })
+    if(!participants?.participatingUsers.find(part => part.id === context.session.userId))
+      throw new AuthorizationError("You are not part of this chat.")
+
     await db.adminMessage.create({
       data: { content: content, sentIn: { connect: { id: chatId } } },
     })
