@@ -1,13 +1,13 @@
 import { AuthorizationError, Ctx } from "blitz"
 import Email from "email-templates"
 import db from "db"
-import createAdminMessage from "./createAdminMessage"
+import sendMessage from "./sendMessage"
 
 beforeEach(async () => {
   await db.$reset()
 })
 
-describe("createAdminMessage mutation", () => {
+describe("sendMessage mutation", () => {
   it("does throw error if user isn't part of the chat", async () => {
     // create test user
     const userA = await db.user.create({
@@ -39,16 +39,18 @@ describe("createAdminMessage mutation", () => {
       },
     }
 
-    // try to send an AdminMessage without being part of the chat
+    // try to send a Message without being part of the chat
     const content = "entel rocks"
-    expect(
-      createAdminMessage({ content: content, chatId: chat.id }, mockCtx as Ctx)
-    ).rejects.toThrow(AuthorizationError)
+    expect(sendMessage({ content: content, chatId: chat.id }, mockCtx as Ctx)).rejects.toThrow(
+      AuthorizationError
+    )
   })
 
   it("works correctly", async () => {
     const sendMock = (Email.prototype.send = jest.fn())
     // Create test user
+    const users = await db.user.findMany({})
+    console.log(users)
     const userA = await db.user.create({
       data: {
         email: "userA@email.com",
@@ -74,18 +76,18 @@ describe("createAdminMessage mutation", () => {
     }
     // Call mutation
     const content = "entel rocks"
-    await createAdminMessage({ content: content, chatId: chat.id }, mockCtx as Ctx)
-    const messages = await db.adminMessage.findMany({
-      where: { sentInId: chat.id },
-      include: { wasReadBy: true },
-    })
+    await sendMessage({ content: content, chatId: chat.id }, mockCtx as Ctx)
 
+    const messages = await db.message.findMany({
+      where: { sentInId: chat.id },
+    })
     expect(messages.length).toBe(1)
     const message = messages[0]
     expect(message.content).toBe(content)
     expect(message.sentInId).toBe(chat.id)
-
-    expect(message.wasReadBy.length).toBe(0)
-    expect(sendMock).toBeCalledTimes(2)
+    expect(message.sentFromId).toBe(userA.id)
+    expect(message.sentToId).toBe(userB.id)
+    expect(message.wasRead).toBeFalsy()
+    expect(sendMock).toBeCalledTimes(1)
   })
 })
