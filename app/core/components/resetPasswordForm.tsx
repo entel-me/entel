@@ -47,8 +47,8 @@ export function ResetPasswordForm<S extends z.ZodType<any, any>>({
           )}
 
           {
-            <Button type="submit" variant="brand" disabled={submitting}>
-              "Reset Password"
+            <Button type="submit" variant="brand" disabled={submitting} marginY="1rem">
+              Reset Password
             </Button>
           }
         </form>
