@@ -15,7 +15,6 @@ const mockCtx: any = {
 
 describe("resetPassword mutation", () => {
   it("works correctly", async () => {
-    expect(true).toBe(true)
     const spy = jest.spyOn(login, "default")
 
     // Create test user
