@@ -23,7 +23,6 @@ export default resolver.pipe(resolver.zod(Signup), async ({ token }, context: Ct
       hashedPassword: userData?.hashedPassword,
       role: "USER",
     },
-    select: { id: true, name: true, email: true, role: true },
   })
 
   return user
