@@ -12,7 +12,7 @@ export default resolver.pipe(
     await db.adminMessage.create({
       data: { content: content, sentIn: { connect: { id: chatId } } },
     })
-    await sentMail(chatId, content)
+    sentMail(chatId, content)
 
     log.info("AdminMessage was sent")
   }
