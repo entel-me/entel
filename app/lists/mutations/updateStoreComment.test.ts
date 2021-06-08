@@ -47,11 +47,7 @@ describe("updateStoreComment mutation", () => {
     const newStore = "Another entel shop"
     const newComment = "just entel things please"
     await expect(
-      async () =>
-        await updateStoreComment(
-          { id: list.id, comment: newComment, store: newStore },
-          mockCtx as Ctx
-        )
+      updateStoreComment({ id: list.id, comment: newComment, store: newStore }, mockCtx as Ctx)
     ).rejects.toThrow(AuthorizationError)
   })
 
