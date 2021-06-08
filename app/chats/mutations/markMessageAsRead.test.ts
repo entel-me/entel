@@ -57,7 +57,7 @@ describe("markMessageAsRead mutation", () => {
 
     expect(messages.length).toBe(1)
     const message = messages[0]
-    expect(message.wasRead).toBeFalsy()
+    expect(message.wasRead).toBe(false)
   })
 
   it("doesn't change anything if the other user opens the message", async () => {
@@ -100,7 +100,7 @@ describe("markMessageAsRead mutation", () => {
 
     expect(messages.length).toBe(1)
     const message = messages[0]
-    expect(message.wasRead).toBeFalsy()
+    expect(message.wasRead).toBe(false)
   })
 
   it("works correctly", async () => {
@@ -143,6 +143,6 @@ describe("markMessageAsRead mutation", () => {
 
     expect(messages.length).toBe(1)
     const message = messages[0]
-    expect(message.wasRead).toBeTruthy()
+    expect(message.wasRead).toBe(true)
   })
 })

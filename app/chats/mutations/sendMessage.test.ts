@@ -87,7 +87,7 @@ describe("sendMessage mutation", () => {
     expect(message.sentInId).toBe(chat.id)
     expect(message.sentFromId).toBe(userA.id)
     expect(message.sentToId).toBe(userB.id)
-    expect(message.wasRead).toBeFalsy()
+    expect(message.wasRead).toBe(false)
     expect(sendMock).toBeCalledTimes(1)
   })
 })
