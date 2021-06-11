@@ -1,5 +1,5 @@
 import db from "db"
-import { AuthenticationError, Ctx, resolver } from "blitz"
+import { AuthenticationError, resolver } from "blitz"
 import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
 import { Message } from "../validation"
@@ -7,14 +7,12 @@ import { Message } from "../validation"
 export default resolver.pipe(
   resolver.zod(Message),
   resolver.authorize(),
-  async ({ content, chatId }, context: Ctx) => {
-    context.session.$authorize()
+  async ({ content, chatId }, context) => {
     const part = await db.user.findFirst({
-      where: {participatesIn: {some: {id: chatId}}, NOT: {id: context.session.userId}},
-      select: {id: true}
+      where: { participatesIn: { some: { id: chatId } }, NOT: { id: context.session.userId } },
+      select: { id: true },
     })
-    if(!part)
-      throw new AuthenticationError("You are not allowed to send this user a message.")
+    if (!part) throw new AuthenticationError("You are not allowed to send this user a message.")
     const partId = part.id
     await db.message.create({
       data: {
@@ -30,7 +28,7 @@ export default resolver.pipe(
   }
 )
 
-async function sentMail(chatId, partId, content, context: Ctx) {
+async function sentMail(chatId, partId, content, context) {
   const partner = await db.user.findFirst({
     where: { id: partId },
     select: { email: true },
