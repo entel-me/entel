@@ -39,7 +39,7 @@
     "@react-icons/all-files": "4.1.0",
     "@types/preview-email": "2.0.0",
     "blitz": "0.34.3",
-    "email-templates": "8.0.4",
+    "email-templates": "8.0.7",
     "final-form": "4.20.2",
     "framer-motion": "4.0.3",
     "fs": "0.0.1-security",
