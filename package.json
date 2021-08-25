@@ -35,7 +35,7 @@
     "@chakra-ui/react": "1.6.1",
     "@emotion/react": "11.1.5",
     "@emotion/styled": "11.3.0",
-    "@prisma/client": "~2.19",
+    "@prisma/client": "~2.30.0",
     "@react-icons/all-files": "4.1.0",
     "@types/preview-email": "2.0.0",
     "blitz": "0.34.3",
