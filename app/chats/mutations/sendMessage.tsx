@@ -37,7 +37,7 @@ async function sentMail(chatId, partId, content, context) {
     where: { id: context.session.userId! },
     select: { name: true },
   })
-  newMessageMailer({
+  await newMessageMailer({
     chatid: chatId,
     from: me!.name!,
     messageContent: content,
