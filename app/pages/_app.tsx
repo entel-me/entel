@@ -9,7 +9,7 @@ import {
 } from "blitz"
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { ChakraProvider, extendTheme, shadow } from "@chakra-ui/react"
+import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import Loading from "../core/components/loading"
 import Layout from "app/core/layouts/layout"
 
