@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@types/email-templates": "7.1.0",
-    "@types/preview-email": "2.0.0",
+    "@types/preview-email": "2.0.1",
     "@types/react": "17.0.5",
     "eslint": "7.32.0",
     "husky": "4.3.8",
