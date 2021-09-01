@@ -39,7 +39,7 @@ export async function newMessageMailer({
   })
 
   log.info("An email was sent by newMessageMailer.")
-  if (process.env.APP_ENV !== "production") {
+  if (process.env.APP_ENV === "development") {
     log.info(`You can see the mail at ${nodemailer.getTestMessageUrl(info)}.`)
   }
 }
