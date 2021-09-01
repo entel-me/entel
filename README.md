@@ -151,7 +151,7 @@ Have fun with the app :)
 
 We use a second environment called ["entel-dev"](https://entelme-dev.herokuapp.com) to test entel under real-world conditions. If you want, you can run your version of the application on this environment before merging it into `develop`. Just write to @Till-B or @antonykamp 💻.
 
-For security reasons, these "review apps" are using the same database as "entel-dev" but not as the public environment "entel.me". Also, if you send emails, they will land at the [ethereal mailbox](https://ethereal.email/) of Carolina 😉. Therefore, use the following email and password:
+For security reasons, these "review apps" are using the same database as "entel-dev" but not as the public environment [entel.me](https://entel.me). Also, if you send emails, they will land at the [ethereal mailbox](https://ethereal.email/) of Carolina 😉. Therefore, use the following email and password:
 
 ```bash
 email: carolina38@ethereal.email
