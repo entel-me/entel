@@ -23,7 +23,7 @@ export default resolver.pipe(
       },
     })
 
-    sentMail(chatId, partId, content, context)
+    await sentMail(chatId, partId, content, context)
     log.info("A Message was sent.")
   }
 )
