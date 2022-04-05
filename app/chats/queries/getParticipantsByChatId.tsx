@@ -10,5 +10,5 @@ export default async function getParticipantsByChatId({ id }, context: Ctx) {
       id: true,
     },
   })
-  return list!
+  return list
 }

@@ -1,9 +1,9 @@
 import db from "db"
-import { Ctx } from "blitz"
+import { resolver } from "blitz"
 import { dbLogger as log } from "app/lib/logger"
+import { List } from "../validation"
 
-export default async function removeShoppinglist({ id }, context: Ctx) {
-  context.session.$authorize()
+export default resolver.pipe(resolver.zod(List), resolver.authorize(), async ({ id }, context) => {
   await db.item.deleteMany({
     where: { listId: id },
   })
@@ -12,4 +12,4 @@ export default async function removeShoppinglist({ id }, context: Ctx) {
     where: { id: id },
   })
   log.debug("A shoopinglist was removed.")
-}
+})
