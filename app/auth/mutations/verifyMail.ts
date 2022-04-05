@@ -1,6 +1,5 @@
 import { resolver, generateToken, hash256, SecurePassword, AuthenticationError } from "blitz"
 import db from "db"
-import { forgotPasswordMailer } from "emails/forgotPasswordMailer"
 import { verifyMailMailer } from "emails/verifyMailMailer"
 import { VerifyMail } from "../validations"
 
@@ -10,6 +9,8 @@ export default resolver.pipe(resolver.zod(VerifyMail), async ({ email, name, pas
   const user = await db.user.findFirst({ where: { email: email.toLowerCase() } })
   if (user) throw new AuthenticationError()
 
+  // 4. Delete any existing password reset tokens
+  await db.tokenMailVerification.deleteMany({ where: { type: "LOGIN_VERIFY", sentTo: email } })
   const hashedPassword = await SecurePassword.hash(password.trim())
 
   const token = generateToken()
