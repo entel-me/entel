@@ -5,7 +5,7 @@ import getChatsWithLastMessage from "../chats/queries/getChatsWithLastMessage"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 export default function Chats() {
-  const [chats] = useQuery(getChatsWithLastMessage, null, { refetchInterval: 2000 })
+  const [chats] = useQuery(getChatsWithLastMessage, null, { staleTime: 2000 })
   const currentUser = useCurrentUser()
 
   return (

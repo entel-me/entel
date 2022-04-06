@@ -13,12 +13,12 @@ import CreateLists from "../lists/components/createLists"
 import FrontPage from "../landingPage/components/frontPage"
 
 function App() {
-  const [acceptedLists] = useQuery(getOwnListByStatus, 1, { refetchInterval: 2000 })
-  const [pendingLists] = useQuery(getOwnListByStatus, 0, { refetchInterval: 2000 })
+  const [acceptedLists] = useQuery(getOwnListByStatus, 1, { staleTime: 2000 })
+  const [pendingLists] = useQuery(getOwnListByStatus, 0, { staleTime: 2000 })
   useCurrentPosition()
   const [{ user_latitude, user_longitude }] = useQuery(getPosition, null)
   const [availableLists, availableListsExtras] = useQuery(getAvailableLists, null, {
-    refetchInterval: 2000,
+    staleTime: 2000,
   })
 
   const [numLists, setNumLists] = useState(10)
