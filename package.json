@@ -12,6 +12,10 @@
     "start:production": "blitz start --port $PORT",
     "test:watch": "jest --watch"
   },
+  "engines" : { 
+    "npm" : ">=7.0.0",
+    "node" : ">=16.0.0"
+  },
   "prisma": {
     "schema": "db/schema.prisma"
   },
