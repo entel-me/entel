@@ -1,5 +1,5 @@
 import db from "db"
-import { Ctx, resolver } from "blitz"
+import { AuthenticationError, resolver } from "blitz"
 import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
 import { Message } from "../validation"
@@ -8,14 +8,12 @@ import checkIfPartOfChat from "./checkIfPartOfChat"
 export default resolver.pipe(
   resolver.zod(Message),
   resolver.authorize(),
-  async ({ content, chatId }, context: Ctx) => {
-    context.session.$authorize()
+  async ({ content, chatId }, context) => {
 
     const users = await checkIfPartOfChat({ chatId }, context)
 
     const part = users.find((user) => user.id !== context.session.userId)!
     const me = users.find((user) => user.id === context.session.userId)!
-
     await db.message.create({
       data: {
         content: content,
@@ -33,3 +31,4 @@ export default resolver.pipe(
     log.info("A Message was sent.")
   }
 )
+

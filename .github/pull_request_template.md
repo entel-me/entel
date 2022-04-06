@@ -1,11 +1,11 @@
 ## Proposed changes
 
 Please describe your changes here. If it fixes a bug or resolves a feature request, be sure to link to that issue.
-If your feature changes current behavior, please argue why your solution is better or start a discussion. 
+If your feature changes current behavior, please argue why your solution is better or start a discussion.
 
 ## Types of changes
 
-What types of changes does your code introduce to Appium?
+What types of changes does your code introduce to entel?
 _Put an `x` in the boxes that apply_
 
 - [ ] Bugfix (non-breaking change which fixes an issue)
@@ -21,6 +21,5 @@ _Put an `x` in the boxes that apply. You can also fill these out after creating 
 - [ ] Have you added necessary documentation (README) (if appropriate)
 - [ ] Keep pull requests small and please open seperate pull-requests for different issues so they can be easily reviewed
 - [ ] Please avoid making changes to the overall architecture (unless discussed before)
-
 
 ## Thank you for your contribution! We appreciate your help!

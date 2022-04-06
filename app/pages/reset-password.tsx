@@ -3,14 +3,25 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { ResetPasswordForm, FORM_ERROR } from "app/core/components/resetPasswordForm"
 import { ResetPassword } from "app/auth/validations"
 import resetPassword from "app/auth/mutations/resetPassword"
+import { Heading } from "@chakra-ui/react"
 
 const ResetPasswordPage: BlitzPage = () => {
   const query = useRouterQuery()
   const [resetPasswordMutation, { isSuccess }] = useMutation(resetPassword)
 
   return (
-    <div>
-      <h1>Set a New Password</h1>
+    <div style={{ alignSelf: "center", width: "min(100vw, 600px)", padding: "0.5rem" }}>
+      <Heading
+        as="h2"
+        fontFamily="Raleway"
+        fontWeight="bolder"
+        fontSize="4xl"
+        textAlign="center"
+        alignSelf="center"
+        marginY="1rem"
+      >
+        Set a new password
+      </Heading>
 
       {isSuccess ? (
         <div>
