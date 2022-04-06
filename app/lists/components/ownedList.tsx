@@ -44,7 +44,7 @@ interface OwnedListProps {
   acceptedName?: string
   acceptedId?: number
   specialWish?: String
-  listId: Number
+  listId: number
   refetch?
 }
 export default function OwnedList({
@@ -106,7 +106,7 @@ export default function OwnedList({
                 backgroundColor="white"
                 _hover={{ backgroundColor: "brandGreen.500", color: "white" }}
                 onClick={async () => {
-                  await archiveListMutation(listId)
+                  await archiveListMutation({ id: listId })
                   log.info("The status of a shoppinglist changed from 'pending' to 'archived'")
 
                   toast({
@@ -132,7 +132,7 @@ export default function OwnedList({
           variant="brand"
           marginTop="0.5rem"
           onClick={async () => {
-            await renewListMutation(listId)
+            await renewListMutation({ id: listId })
             refetch()
             log.info("The status of a shoppinglist changed from 'archived' to 'pending'")
 

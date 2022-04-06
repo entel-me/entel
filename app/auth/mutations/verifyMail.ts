@@ -1,6 +1,5 @@
 import { resolver, generateToken, hash256, SecurePassword, AuthenticationError } from "blitz"
 import db from "db"
-import { forgotPasswordMailer } from "emails/forgotPasswordMailer"
 import { verifyMailMailer } from "emails/verifyMailMailer"
 import { VerifyMail } from "../validations"
 

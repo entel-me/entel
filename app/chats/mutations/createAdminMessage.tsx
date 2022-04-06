@@ -1,17 +1,21 @@
 import db from "db"
-import { Ctx } from "blitz"
+import { resolver } from "blitz"
 import { newMessageMailer } from "emails/newMessageMailer"
 import { dbLogger as log } from "app/lib/logger"
+import { Message } from "../validation"
 
-export default async function createAdminMessage({ content, chatId }, context: Ctx) {
-  context.session.$authorize()
-  await db.adminMessage.create({
-    data: { content: content, sentIn: { connect: { id: chatId } } },
-  })
-  await sentMail(chatId, content)
+export default resolver.pipe(
+  resolver.zod(Message),
+  resolver.authorize(),
+  async ({ content, chatId }, context) => {
+    await db.adminMessage.create({
+      data: { content: content, sentIn: { connect: { id: chatId } } },
+    })
+    await sentMail(chatId, content)
 
-  log.info("AdminMessage was sent")
-}
+    log.info("AdminMessage was sent")
+  }
+)
 
 async function sentMail(chatId, content) {
   const parti = await db.user.findMany({

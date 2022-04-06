@@ -14,6 +14,7 @@ export async function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
     template: "forgotPassword",
     message: {
       to: to,
+      from: process.env.MAIL_MAIL,
       attachments: [
         {
           filename: "entel.png",
@@ -28,7 +29,7 @@ export async function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   })
 
   log.info("An email was sent by fotgotPasswordMailer.")
-  if (process.env.APP_ENV !== "production") {
+  if (process.env.APP_ENV === "development") {
     log.info(`You can see the mail at ${nodemailer.getTestMessageUrl(info)}.`)
   }
 }

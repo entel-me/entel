@@ -14,6 +14,7 @@ export async function verifyMailMailer({ to, token }: verifyMailMailerProps) {
     template: "verifyMail",
     message: {
       to: to,
+      from: process.env.MAIL_MAIL,
       attachments: [
         {
           filename: "entel.png",
@@ -28,7 +29,7 @@ export async function verifyMailMailer({ to, token }: verifyMailMailerProps) {
   })
 
   log.info("An email was sent by verifyMailMailer.")
-  if (process.env.APP_ENV !== "production") {
+  if (process.env.APP_ENV === "development") {
     log.info(`You can see the mail at ${nodemailer.getTestMessageUrl(info)}.`)
   }
 }
