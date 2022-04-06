@@ -6,7 +6,7 @@ import AcceptedList from "../lists/components/acceptedList"
 import { getDistanceByHaversine } from "../lib/position"
 
 export default function ActiveLists() {
-  const [activeList, activeListsExtras] = useQuery(getActiveLists, null, { refetchInterval: 2000 })
+  const [activeList, activeListsExtras] = useQuery(getActiveLists, null)
   const [{ user_latitude, user_longitude }] = useQuery(getPosition, null)
   return (
     <>

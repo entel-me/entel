@@ -35,7 +35,7 @@ export default function Chat() {
   const [messages, messagesExtra] = useQuery(
     getMessagesByChat,
     { chatId },
-    { refetchInterval: 1000 }
+    { staleTime: 1000 }
   )
   const [sendMessageMutation] = useMutation(sendMessage)
 
