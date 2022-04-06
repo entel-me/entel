@@ -103,7 +103,7 @@ function NavLoggedOut({ user, isMobile }) {
 function NavLoggedIn({ user, isMobile }) {
   const [logoutMutation] = useMutation(logout)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { refetchInterval: 5000 })
+  const [hasUnreadMessage] = useQuery(checkIfUnreadMessage, null, { staleTime: 5000 })
 
   return (
     <>
