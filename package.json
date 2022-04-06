@@ -14,7 +14,7 @@
   },
   "engines" : { 
     "npm" : ">=7.0.0",
-    "node" : ">=16.0.0"
+    "node" : ">=14 <15"
   },
   "prisma": {
     "schema": "db/schema.prisma"
