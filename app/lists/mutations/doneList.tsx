@@ -1,13 +1,12 @@
 import db from "db"
-import { AuthorizationError, Ctx, resolver } from "blitz"
+import { AuthorizationError, resolver } from "blitz"
 import { dbLogger as log } from "app/lib/logger"
 import { List } from "../validation"
 
 export default resolver.pipe(
   resolver.zod(List),
   resolver.authorize(),
-  async ({ id }, context: Ctx) => {
-    context.session.$authorize()
+  async ({ id }, context) => {
 
     const accpetedList = await db.shoppinglist.findFirst({
       where: { id: id, acceptorId: context.session.userId },
@@ -22,3 +21,4 @@ export default resolver.pipe(
     log.debug("List changed status to '2'.")
   }
 )
+

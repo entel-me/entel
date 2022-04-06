@@ -1,8 +1,7 @@
 import db from "db"
-import { Ctx, resolver } from "blitz"
+import { resolver } from "blitz"
 
-export default resolver.pipe(resolver.authorize(), async (_ = null, context: Ctx) => {
-  context.session.$authorize()
+export default resolver.pipe(resolver.authorize(), async (_ = null, context) => {
   const position = await db.user.findUnique({
     where: { id: context.session.userId },
     select: { last_latitude: true, last_longitude: true },

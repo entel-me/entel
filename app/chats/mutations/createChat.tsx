@@ -1,13 +1,12 @@
 import db from "db"
-import { Ctx, resolver } from "blitz"
+import { resolver } from "blitz"
 import { dbLogger as log } from "app/lib/logger"
 import { NewChat } from "../validation"
 
 export default resolver.pipe(
   resolver.zod(NewChat),
   resolver.authorize(),
-  async ({ opponentId }, context: Ctx) => {
-    context.session.$authorize()
+  async ({ opponentId }, context) => {
     const lists = await db.chat.create({
       data: {
         participatingUsers: { connect: [{ id: context.session.userId }, { id: opponentId }] },

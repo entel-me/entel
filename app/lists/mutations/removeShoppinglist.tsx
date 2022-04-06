@@ -1,5 +1,5 @@
 import db from "db"
-import { AuthorizationError, Ctx, resolver } from "blitz"
+import { AuthorizationError, resolver } from "blitz"
 import { dbLogger as log } from "app/lib/logger"
 import { List } from "../validation"
 import removeAllItems from "./removeAllItems"
@@ -7,8 +7,7 @@ import removeAllItems from "./removeAllItems"
 export default resolver.pipe(
   resolver.zod(List),
   resolver.authorize(),
-  async ({ id }, context: Ctx) => {
-    context.session.$authorize()
+  async ({ id }, context) => {
 
     const listToChange = await db.shoppinglist.findFirst({
       where: { id: id, creatorId: context.session.userId },
@@ -17,9 +16,8 @@ export default resolver.pipe(
 
     await removeAllItems({id: id}, context)
 
-    await db.shoppinglist.delete({
-      where: { id: id },
-    })
-    log.debug("A shoopinglist was removed.")
-  }
-)
+  await db.shoppinglist.delete({
+    where: { id: id },
+  })
+  log.debug("A shoopinglist was removed.")
+})

@@ -29,7 +29,7 @@ export async function verifyMailMailer({ to, token }: verifyMailMailerProps) {
   })
 
   log.info("An email was sent by verifyMailMailer.")
-  if (process.env.APP_ENV !== "production") {
+  if (process.env.APP_ENV === "development") {
     log.info(`You can see the mail at ${nodemailer.getTestMessageUrl(info)}.`)
   }
 }

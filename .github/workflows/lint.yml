@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Lint
     runs-on: ubuntu-latest
     services:
       # Label used to access the service container
