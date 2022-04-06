@@ -12,3 +12,6 @@ export const MarkMessage = z.object({
 export const NewChat = z.object({
   opponentId: z.number().int(),
 })
+export const CheckIfPartOfChat = z.object({
+  chatId: z.number().int(),
+})
