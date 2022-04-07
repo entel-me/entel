@@ -28,7 +28,7 @@ interface AcceptedListProps {
   ownerName: String
   ownerId: Number
   specialWish?: String
-  listId: Number
+  listId: number
   refetch
 }
 export default function AcceptedList({
@@ -115,7 +115,7 @@ export default function AcceptedList({
             flex={1}
             margin="0.2rem"
             onClick={async () => {
-              await doneListMutation(listId)
+              await doneListMutation({ id: listId })
               await createAdminMessageMutation({
                 content: "The helper bought your item. Hurray!",
                 chatId: chat!.id,
@@ -139,7 +139,7 @@ export default function AcceptedList({
             flex={1}
             margin="0.2rem"
             onClick={async () => {
-              await undoAcceptMutation(listId)
+              await undoAcceptMutation({ id: listId })
               await createAdminMessageMutation({
                 content: "The list has unfortunately returned to the ' is pending' state",
                 chatId: chat!.id,

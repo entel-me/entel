@@ -4,7 +4,7 @@ import OwnMessage from "app/chats/components/ownMessage"
 import StrangeMessage from "app/chats/components/strangeMessage"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import getMessagesByChat from "app/chats/queries/getMessagesByChat"
-import { useQuery, useParam, useMutation, Head, AuthorizationError } from "blitz"
+import { useQuery, useParam, useMutation, Head, AuthorizationError, NotFoundError, AuthenticationError } from "blitz"
 import { Form, Field } from "react-final-form"
 import { FORM_ERROR } from "final-form"
 import getParticipantsByChatId from "../../chats/queries/getParticipantsByChatId"
@@ -18,19 +18,24 @@ import { appLogger as log } from "app/lib/logger"
 
 export default function Chat() {
   const chatId = useParam("chatId", "number")
+  if(!chatId)
+    throw new NotFoundError("Invalid id.")
 
   const currentUser = useCurrentUser()
-  const [participants] = useQuery(getParticipantsByChatId, { id: chatId! })
-
-  if (!participants.map((part) => part.id).includes(currentUser!.id)) {
+  if(!currentUser)
+    throw new AuthenticationError("Please login or signup.")
+  
+  const [participants] = useQuery(getParticipantsByChatId, { id: chatId })
+  if(!participants)
+    throw new NotFoundError("This chat doesn't exists.")
+  if (!participants.map((part) => part.id).includes(currentUser.id))
     throw new AuthorizationError("You're not part of this chat.")
-  }
 
-  const oppositeName = participants.filter((part) => part.id != currentUser?.id)[0]
+  const oppositeName = participants.filter((part) => part.id != currentUser.id)[0]
   const [messages, messagesExtra] = useQuery(
     getMessagesByChat,
     { chatId },
-    { refetchInterval: 1000 }
+    { staleTime: 1000 }
   )
   const [sendMessageMutation] = useMutation(sendMessage)
 
@@ -91,7 +96,7 @@ export default function Chat() {
             {messages.map((m) => {
               if (!m.sentFrom) {
                 return <AdminMessage content={m.content} timeStamp={m.sentAt} />
-              } else if (m.sentFrom.id == currentUser!.id) {
+              } else if (m.sentFrom.id == currentUser.id) {
                 return (
                   <OwnMessage
                     content={m.content}
@@ -118,7 +123,6 @@ export default function Chat() {
               await sendMessageMutation({
                 content: values.content,
                 chatId: chatId,
-                partId: oppositeName.id,
               })
               log.warn("A message was sent successfully.")
 

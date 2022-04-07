@@ -30,7 +30,7 @@ interface PublicListProps {
   ownerName: String
   ownerId: number
   specialWish?: String
-  listId: Number
+  listId: number
   refetch
 }
 export default function PublicList({
@@ -105,7 +105,7 @@ export default function PublicList({
             variant="brand"
             marginTop="0.5rem"
             onClick={async () => {
-              await acceptListMutation(listId)
+              await acceptListMutation({ id: listId })
               refetch()
               if (chat) {
                 await createAdminMessageMutation({

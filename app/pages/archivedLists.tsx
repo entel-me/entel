@@ -4,9 +4,7 @@ import getArchivedLists from "../lists/queries/getArchivedLists"
 import { Head, useQuery } from "blitz"
 
 export default function ArchivedLists() {
-  const [archivedLists, archivedListsExtras] = useQuery(getArchivedLists, null, {
-    refetchInterval: 2000,
-  })
+  const [archivedLists, archivedListsExtras] = useQuery(getArchivedLists, null)
   return (
     <>
       <Head>

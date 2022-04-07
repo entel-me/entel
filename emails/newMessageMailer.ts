@@ -22,6 +22,7 @@ export async function newMessageMailer({
     template: "newMessage",
     message: {
       to: to,
+      from: process.env.MAIL_MAIL,
       attachments: [
         {
           filename: "entel.png",
@@ -38,7 +39,7 @@ export async function newMessageMailer({
   })
 
   log.info("An email was sent by newMessageMailer.")
-  if (process.env.APP_ENV !== "production") {
+  if (process.env.APP_ENV === "development") {
     log.info(`You can see the mail at ${nodemailer.getTestMessageUrl(info)}.`)
   }
 }
